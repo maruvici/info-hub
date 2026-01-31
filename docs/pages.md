@@ -55,3 +55,15 @@
             - Each comment is a card containing the profile icon and name of its author, the comment's creation date, the content of the comment, the number of likes of the comment, a like button, and a reply button
                 - If the reply button is pressed, a input text box with a user's icon on the left and a reply button on the right must appear
             - Comments which are replies to other comments follow the same format as a normal comment, but must appear nested under the parent comment
+6. Create Post Page
+    - Features:
+        - Sticky header with logo and title on the left
+        - Sticky header with user icon and global search that filters through titles, contents, tags, and post type on the right
+        - At the top of the main content area includes a "What post do you want to make?" type of prompty as header
+        - Main content area includes a section to specify post type
+        - Main content area includes input text boxes for title and for content
+        - Main content area includes a section to add tags
+        - The input text box for post content should be rich text editor which supports text styling (e.g. bold, italic, lists, links, code)
+            - If the rich text editor also supports attachments and can display the file name and file type after upload, ignore the next feature
+        - Below the content text box, there should be an upload attachments button whereupon the successful upload of attachment displays the filename and filetype above it
+        - At the end of the main content area, there should be a submit post button which submits the post and redirects to the dashboard

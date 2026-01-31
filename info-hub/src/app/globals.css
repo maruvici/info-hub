@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+/* 1. Define your theme variables for Tailwind v4 */
+@theme {
+  --color-background: rgb(var(--background));
+  --color-foreground: rgb(var(--foreground));
+  --color-primary: rgb(var(--primary));
+  --color-card: rgb(var(--card));
+  --color-card-foreground: rgb(var(--card-foreground));
+  --shadow-soft: 0 4px 20px -2px rgba(0, 0, 0, 0.05), 0 2px 10px -4px rgba(0, 0, 0, 0.05);
+  --background-image-primary-gradient: linear-gradient(135deg, #0ea5e9 0%, #1d4ed8 100%);
+}
+
+/* 2. Define the raw CSS variables for Light/Dark modes */
+@layer base {
+  :root {
+    /* Light Mode: White + Light Gray + Sky Blue */
+    --background: 255 255 255;
+    --foreground: 15 23 42;
+    --primary: 14 165 233; /* Sky Blue */
+    --card: 245 245 245; /* Slightly bluer/lighter gray */
+    --card-foreground: 15 23 42;
+  }
+
+  .dark {
+    /* Dark Mode: Black + Dark Gray + Navy Blue */
+    --background: 10 15 28; /* Deeper black/navy */
+    --foreground: 248 250 252;
+    --primary: 14 165 233;
+    --card: 31 51 68; /* Navy tone */
+    --card-foreground: 226 232 240;
+  }
+}
+
+/* 3. Apply the base styles */
+@layer base {
+  body {
+    background-color: rgb(var(--background));
+    color: rgb(var(--foreground));
+    /* Use standard CSS here instead of @apply to avoid build-order errors */
+    transition-property: color, background-color;
+    transition-duration: 300ms;
+  }
+}
+
+@utility text-gradient {
+  background-image: var(--background-image-primary-gradient);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  display: inline-flex; 
+  align-items: center;
+  gap: 0.5rem;
+}
