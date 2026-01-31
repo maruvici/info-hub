@@ -1,9 +1,28 @@
 "use client";
 
 import { useState } from "react";
-import { User, FileText, Settings, Mail, Shield, Users, Heart, Eye } from "lucide-react";
+import { User, FileText, Settings, Mail, Shield, Users, Heart, Eye, BookOpen, MessageSquare, HelpCircle } from "lucide-react";
+import Link from "next/link";
 
 type Tab = "Details" | "Posts" | "Settings";
+
+// Types for our Mock Data
+interface PostPreview {
+  id: string;
+  title: string;
+  author: string;
+  type: 'Article' | 'Discussion' | 'Inquiry';
+  tags: string[];
+  views: number;
+  likes: number;
+  date: string;
+}
+
+const MOCK_POSTS: PostPreview[] = [
+  { id: "1", title: "Standard Operating Procedures for Security Patching", author: "Mark Tech", type: "Article", tags: ["Security", "Infrastructure"], views: 1204, likes: 45, date: "2 days ago" },
+  { id: "2", title: "How do we handle client-side state in the new hub?", author: "Sarah Dev", type: "Inquiry", tags: ["Product", "Frontend"], views: 89, likes: 12, date: "5 hours ago" },
+  { id: "3", title: "Brainstorming: 2026 Q1 Digital Transformation Goals", author: "Alex Lead", type: "Discussion", tags: ["Digital Transformation"], views: 450, likes: 67, date: "1 week ago" },
+];
 
 export default function UserPage() {
   const [activeTab, setActiveTab] = useState<Tab>("Details");
@@ -35,7 +54,7 @@ export default function UserPage() {
       {/* Content Area */}
       <main className="flex-1 bg-card rounded-3xl p-8 shadow-sm">
         {activeTab === "Details" && <UserDetails />}
-        {activeTab === "Posts" && <p className="text-muted-foreground">Rendering PostCards here... (reuse PostCard component)</p>}
+        {activeTab === "Posts" && <UserPosts />}
         {activeTab === "Settings" && <UserSettings />}
       </main>
     </div>
@@ -84,6 +103,19 @@ function UserDetails() {
   );
 }
 
+function UserPosts() {
+  return (
+    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2">
+      <h3 className="text-xl font-black border-b pb-4">My Posts</h3>
+      <div className="space-y-4">
+        {MOCK_POSTS.map((post) => (
+          <PostCard key={post.id} post={post} />
+        ))}
+      </div>
+    </div>
+  )
+}
+
 function UserSettings() {
   return (
     <div className="space-y-6">
@@ -108,6 +140,49 @@ function DetailItem({ icon, label, value }: { icon: React.ReactNode, label: stri
       <div>
         <p className="text-[10px] uppercase font-black text-muted-foreground tracking-widest">{label}</p>
         <p className="font-bold">{value}</p>
+      </div>
+    </div>
+  );
+}
+
+function PostCard({ post }: { post: PostPreview }) {
+  const Icon = post.type === "Article" ? BookOpen : post.type === "Discussion" ? MessageSquare : HelpCircle;
+  
+  return (
+    <div className="bg-background rounded-2xl p-5 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group cursor-pointer border-l-4 border-l-transparent hover:border-l-primary">
+      <div className="flex gap-4">
+        <div className="shrink-0 w-12 h-12 rounded-xl bg-background border flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors shadow-inner">
+          <Icon size={24} />
+        </div>
+        <div className="flex-1 space-y-2">
+          <div className="flex justify-between items-start">
+            <Link href={`/post/${post.id}`} className="text-lg font-bold group-hover:text-primary transition-colors leading-tight">
+                {post.title}
+            </Link>
+          </div>
+          
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted-foreground">
+            <span className="flex gap-x-2 font-bold text-foreground"><User size={16}></User> {post.author}</span>
+            <span>•</span>
+            <span>{post.date}</span>
+            <div className="flex gap-1">
+              {post.tags.map(t => (
+                <span key={t} className="px-2 py-0.5 rounded-full bg-background border text-[10px] font-bold">#{t}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-4 flex items-center gap-6 pt-3">
+        <div className="flex items-center gap-1.5 text-xs font-bold hover:text-red-500 transition-colors">
+          <Heart size={16} />
+          <span>{post.likes} Likes</span>
+        </div>
+        <div className="flex items-center gap-1.5 text-xs font-bold">
+          <Eye size={16} />
+          <span>{post.views} Views</span>
+        </div>
       </div>
     </div>
   );

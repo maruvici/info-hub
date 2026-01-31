@@ -126,15 +126,6 @@ export default function DashboardPage() {
   );
 }
 
-function FilterGroup({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <div className="space-y-3">
-      <p className="text-[10px] font-black uppercase text-muted-foreground tracking-widest">{title}</p>
-      <div className="space-y-2">{children}</div>
-    </div>
-  );
-}
-
 function PostCard({ post }: { post: PostPreview }) {
   const Icon = post.type === "Article" ? BookOpen : post.type === "Discussion" ? MessageSquare : HelpCircle;
   
