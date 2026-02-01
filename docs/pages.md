@@ -67,3 +67,9 @@
             - If the rich text editor also supports attachments and can display the file name and file type after upload, ignore the next feature
         - Below the content text box, there should be an upload attachments button whereupon the successful upload of attachment displays the filename and filetype above it
         - At the end of the main content area, there should be a submit post button which submits the post and redirects to the dashboard
+7. Sign Up Page
+    - Features:
+        - Minimalist modern looking page with centered sign up box
+        - The sign up box contains full name, email address, team, password, confirm password and optional photo id field
+        - In the lower section of sign up box contains "Create Account" button
+        - Directly below sign up box includes "Already have an account? Log in"

@@ -8,10 +8,10 @@ export default function LandingPage() {
       {/* 1. Sticky Header */}
       <header className="sticky top-0 z-50 w-full bg-card backdrop-blur">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2 font-bold text-xl text-gradient">
+          <Link href="/" className="flex items-center gap-2 font-bold text-xl text-gradient">
             <BookOpen className="h-6 w-6 text-primary" />
             <span>info-hub</span>
-          </div>
+          </Link>
           <div className="flex items-center gap-4">
             <ThemeToggle />
             <Link 
