@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { User, FileText, Settings, Mail, Shield, Users, Heart, Eye, BookOpen, MessageSquare, HelpCircle } from "lucide-react";
 import Link from "next/link";
+import { LogoutButton } from "@/components/ui/logout-button"
 
 type Tab = "Details" | "Posts" | "Settings";
 
@@ -129,6 +130,7 @@ function UserSettings() {
       <button className="w-full p-4 border rounded-xl font-bold hover:bg-background transition-colors flex justify-between">
         Update Profile Picture <span>→</span>
       </button>
+      <LogoutButton />
     </div>
   );
 }

@@ -26,7 +26,7 @@ erDiagram
         uuid author_id FK
         string title
         text content
-        enum post_type "Article, Discussion, Inquiry"
+        enum type "Article, Discussion, Inquiry"
         string_array tags
         int views
         datetime created_at
@@ -44,7 +44,8 @@ erDiagram
     LIKE {
         uuid id PK
         uuid user_id FK
-        uuid target_id FK "References Post or Comment"
+        uuid post_id FK "nullable"
+        uuid comment_id FK "nullable"
         datetime created_at
     }
 
