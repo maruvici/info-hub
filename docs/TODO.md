@@ -6,3 +6,8 @@
 1. Login with Microsoft
 2. Refactor to modularize components and actions
 3. Implement storage system for attachments
+    - Implement Attachments in General
+
+# List of Features to Improve:
+1. Search Result Ranking
+2. Improve regex search of tags

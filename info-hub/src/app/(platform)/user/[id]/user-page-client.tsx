@@ -1,18 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { User, FileText, Settings, Mail, Shield, Users, Heart, Eye, Calendar } from "lucide-react";
-import Link from "next/link";
+import { User, FileText, Settings, Mail, Shield, Users, Heart, Eye, Calendar, BookOpen, MessageSquare, HelpCircle, Trash2 } from "lucide-react";
 import { LogoutButton } from "@/components/ui/logout-button";
+import Link from "next/link";
 
 type Tab = "Details" | "Posts" | "Settings";
 
 interface UserPageClientProps {
-  user: any; // Using your DB user type
+  user: any; 
   initialTab: Tab;
 }
 
-export default function UserPageClient({ user, initialTab }: UserPageClientProps) {
+export default function UserPageClient({ user, posts, stats, initialTab }: any) {
   const [activeTab, setActiveTab] = useState<Tab>(initialTab);
 
   return (
@@ -41,8 +41,8 @@ export default function UserPageClient({ user, initialTab }: UserPageClientProps
 
       {/* Content Area */}
       <main className="flex-1 bg-card rounded-3xl p-8 shadow-sm">
-        {activeTab === "Details" && <UserDetails user={user} />}
-        {activeTab === "Posts" && <UserPosts />}
+        {activeTab === "Details" && <UserDetails user={user} stats={stats} />}
+        {activeTab === "Posts" && <UserPosts posts={posts} />}
         {activeTab === "Settings" && <UserSettings />}
       </main>
     </div>
@@ -50,37 +50,34 @@ export default function UserPageClient({ user, initialTab }: UserPageClientProps
 }
 
 // Logic components remain identical but accept 'user' props
-function UserDetails({ user }: { user: any }) {
+function UserDetails({ user, stats }: { user: any, stats: any }) {
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2">
-      <h3 className="text-xl font-black border-b pb-4">Personal Information</h3>
+      <h3 className="text-xl font-black border-b border-primary/5 pb-4">Personal Information</h3>
       <div className="grid sm:grid-cols-2 gap-6">
         <DetailItem icon={<Mail/>} label="Email" value={user.email} />
         <DetailItem icon={<Users/>} label="Team" value={user.team || "Not assigned"} />
         <DetailItem icon={<Shield/>} label="Role" value={user.role || "User"} />
-        <DetailItem icon={<Calendar/>} label="Joined On" value={user.createdAt.toLocaleDateString() || "Not Sure"} />
+        <DetailItem icon={<Calendar/>} label="Joined On" value={user.createdAt} />
       </div>
       
       <div className="grid sm:grid-cols-2 gap-4 pt-8">
         <div className="p-6 bg-primary/5 rounded-2xl border border-primary/10">
-          <p className="text-sm font-bold text-primary mb-1">Total Post Views</p>
+          <p className="text-sm font-bold text-primary mb-1 uppercase tracking-tighter">Total Post Views</p>
           <div className="flex items-center gap-2 text-3xl font-black">
-            <Eye className="text-primary"/> 0
+            <Eye className="text-primary"/> {stats.totalViews.toLocaleString()}
           </div>
         </div>
         <div className="p-6 bg-red-500/5 rounded-2xl border border-red-500/10">
-          <p className="text-sm font-bold text-red-500 mb-1">Total Likes Received</p>
+          <p className="text-sm font-bold text-red-500 mb-1 uppercase tracking-tighter">Total Likes Received</p>
           <div className="flex items-center gap-2 text-3xl font-black">
-            <Heart className="text-red-500"/> 0
+            <Heart className="text-red-500"/> {stats.totalLikes}
           </div>
         </div>
       </div>
     </div>
   );
 }
-
-// ... Keep your TabButton, UserPosts, PostCard, DetailItem, and UserSettings exactly as they were ...
-// Ensure UserSettings contains the <LogoutButton /> you already built.
 
 function TabButton({ active, onClick, icon, label }: { active: boolean, onClick: () => void, icon: React.ReactNode, label: string }) {
   return (
@@ -96,8 +93,46 @@ function TabButton({ active, onClick, icon, label }: { active: boolean, onClick:
   );
 }
 
-function UserPosts() {
-    return <div className="text-muted-foreground italic">No posts found yet.</div>;
+function UserPosts({ posts }: { posts: any[] }) {
+    if (posts.length === 0) {
+        return (
+            <div className="text-center py-20 bg-background/50 rounded-3xl border border-dashed border-primary/10">
+                <p className="text-muted-foreground font-bold">You haven't posted anything yet.</p>
+            </div>
+        );
+    }
+
+    return (
+        <div className="space-y-4 animate-in fade-in slide-in-from-bottom-2">
+            <h3 className="text-xl font-black border-b border-primary/5 pb-4">My Contributions</h3>
+            <div className="grid gap-4">
+                {posts.map((post) => {
+                    const Icon = post.type === "Article" ? BookOpen : post.type === "Discussion" ? MessageSquare : HelpCircle;
+                    return (
+                        <div key={post.id} className="bg-background/50 p-5 rounded-2xl border border-primary/5 hover:border-primary/20 transition-all group">
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-4">
+                                    <div className="p-3 bg-card rounded-xl text-primary group-hover:bg-primary group-hover:text-white transition-colors">
+                                        <Icon size={20} />
+                                    </div>
+                                    <div>
+                                        <Link href={`/post/${post.id}`} className="font-black hover:text-primary transition-colors line-clamp-1">
+                                            {post.title}
+                                        </Link>
+                                        <div className="flex gap-3 text-[10px] font-bold text-muted-foreground uppercase tracking-widest mt-1">
+                                            <span>{post.createdAt}</span>
+                                            <span>•</span>
+                                            <span className="flex items-center gap-1"><Eye size={10}/> {post.views}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
+        </div>
+    );
 }
 
 function UserSettings() {

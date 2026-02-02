@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { db } from "@/db";
 import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
+import GlobalSearch from "@/components/ui/global-search";
 
 export default async function PlatformLayout({ children }: { children: React.ReactNode }) {
   const session = await auth();
@@ -37,14 +38,7 @@ export default async function PlatformLayout({ children }: { children: React.Rea
 
           <div className="container mx-auto px-4 h-16 flex items-center justify-end gap-4">
             {/* Global Search */}
-            <div className="flex-1 max-w-xl relative group">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
-              <input
-                type="text"
-                placeholder="Search titles, content, tags, or type..."
-                className="w-full pl-10 pr-4 py-2 bg-background rounded-full text-sm focus:ring-2 focus:ring-primary outline-none transition-all"
-              />
-            </div>
+            <GlobalSearch />
             <div className="flex items-center gap-2 shrink-0">
               <ThemeToggle />
               <Link href="/user/me" className="p-2 rounded-full hover:bg-card transition-colors">
