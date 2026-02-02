@@ -1,8 +1,30 @@
 import { BookOpen, Search, User, LogOut, LayoutDashboard, UserCircle, Settings } from "lucide-react";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import Link from "next/link";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
+import { db } from "@/db";
+import { users } from "@/db/schema";
+import { eq } from "drizzle-orm";
 
-export default function PlatformLayout({ children }: { children: React.ReactNode }) {
+export default async function PlatformLayout({ children }: { children: React.ReactNode }) {
+  const session = await auth();
+
+  // 1. Hard check: If no session, bounce to login
+  if (!session?.user?.email) {
+    redirect("/login");
+  }
+
+  // 2. Database check: Ensure the user actually exists in Postgres
+  // (Prevents ghost sessions from deleted users)
+  const currentUser = await db.query.users.findFirst({
+    where: eq(users.email, session.user.email),
+  });
+
+  if (!currentUser) {
+    redirect("/login");
+  }
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       {/* Sticky Global Header */}

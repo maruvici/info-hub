@@ -1,38 +1,34 @@
 import { auth } from "@/auth";
+import { NextResponse } from "next/server";
 
 export default auth((req) => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
 
-  // 1. Define your page types
-  const isPublicPage = nextUrl.pathname === "/login" || nextUrl.pathname === "/signup";
-  // Assuming your dashboard and user pages are under these paths
+  // 1. Explicitly define paths
+  const isLoginPage = nextUrl.pathname === "/login";
+  const isSignupPage = nextUrl.pathname === "/signup";
+  const isPublicPage = isLoginPage || isSignupPage;
+  
   const isPlatformPage = nextUrl.pathname.startsWith("/dashboard") || 
                          nextUrl.pathname.startsWith("/user") ||
                          nextUrl.pathname.startsWith("/post");
 
-  // 2. Redirect Logic
+  // 2. Logic: If trying to access platform while logged out -> Send to Login
   if (isPlatformPage && !isLoggedIn) {
-    // Not logged in? Send to login
-    return Response.redirect(new URL("/login", nextUrl));
+    return NextResponse.redirect(new URL("/login", nextUrl));
   }
 
+  // 3. Logic: If trying to access login/signup while logged IN -> Send to Dashboard
+  // IMPORTANT: We use nextUrl.pathname check to prevent looping
   if (isPublicPage && isLoggedIn) {
-    // Already logged in? Don't show login/signup, send to dashboard
-    return Response.redirect(new URL("/dashboard", nextUrl));
+    return NextResponse.redirect(new URL("/dashboard", nextUrl));
   }
 
-  return; // Continue to the requested page
+  return NextResponse.next();
 });
 
-// 3. The Matcher (Crucial for Performance)
 export const config = {
-  /*
-   * Match all request paths except for the ones starting with:
-   * - api (API routes)
-   * - _next/static (static files)
-   * - _next/image (image optimization files)
-   * - favicon.ico (favicon file)
-   */
+  // We MUST exclude the internal Next.js paths and static assets
   matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
 };

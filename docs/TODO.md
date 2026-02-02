@@ -5,3 +5,4 @@
 # List of Features to Implement:
 1. Login with Microsoft
 2. Refactor to modularize components and actions
+3. Implement storage system for attachments
