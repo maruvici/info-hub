@@ -1,24 +1,26 @@
 ```mermaid
 graph TD
-    subgraph Client ["Client Layer (Browser)"]
-        UI[User Interface / React]
-        Store[Client State / Context]
+    subgraph Client_Browser ["Client (Browser)"]
+        UI["React Components (Tailwind/Lucide)"]
+        State["URL State (?type=...&q=...)"]
     end
 
-    subgraph Server ["Server Layer (Next.js)"]
-        Router[App Router / Layouts]
-        Auth[Auth Middleware]
-        API[Server Actions / APIs]
+    subgraph NextJS_Server ["Next.js Server (Node.js)"]
+        Auth["Auth.js (Session Management)"]
+        Page["Server Components (Data Fetching)"]
+        Actions["Server Actions (View Increment, Likes)"]
     end
 
-    subgraph Data ["Data Layer"]
-        DB[(PostgreSQL Database)]
-        Blob[File Storage / Attachments]
+    subgraph Database_Layer ["Database Layer"]
+        Drizzle["Drizzle ORM (Type-safe SQL)"]
+        Postgres[(PostgreSQL Database)]
     end
 
-    UI -->|Interacts| Router
-    Router -->|Validates| Auth
-    Auth -->|Authorized| API
-    API -->|Query| DB
-    API -->|Upload/Download| Blob
+    UI -->|Router.push| State
+    State -->|Triggers| Page
+    Page -->|Session Check| Auth
+    Page -->|Query| Drizzle
+    Actions -->|Update| Drizzle
+    Drizzle --> Postgres
+    Page -->|Render HTML| UI
 ```

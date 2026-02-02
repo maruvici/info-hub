@@ -6,7 +6,7 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen flex flex-col">
       {/* 1. Sticky Header */}
-      <header className="sticky top-0 z-50 w-full bg-card backdrop-blur">
+      <header className="sticky top-0 z-50 w-full bg-card backdrop-blur px-4">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 font-bold text-xl text-gradient">
             <BookOpen className="h-6 w-6 text-primary" />

@@ -48,8 +48,6 @@ export const comments = pgTable("comments", {
 });
 
 // To strictly enforce Referential Integrity for Likes, we use nullable FKs.
-// If you specifically want a single 'target_id' column, we lose DB-level FK constraints.
-// I will implement the robust way: Nullable FKs.
 export const likes = pgTable("likes", {
   id: uuid("id").defaultRandom().primaryKey(),
   userId: uuid("user_id").references(() => users.id, { onDelete: 'cascade' }).notNull(),

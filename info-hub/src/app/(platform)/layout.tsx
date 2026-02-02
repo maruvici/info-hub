@@ -29,7 +29,7 @@ export default async function PlatformLayout({ children }: { children: React.Rea
   return (
     <div className="min-h-screen flex flex-col bg-background">
       {/* Sticky Global Header */}
-      <header className="sticky top-0 z-40 w-full bg-card backdrop-blur py-1">
+      <header className="sticky top-0 z-40 w-full bg-card backdrop-blur py-1 px-4">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between gap-4">
           <Link href="/dashboard" className="flex items-center gap-2 font-bold text-xl text-gradient shrink-0">
             <BookOpen className="h-6 w-6 text-primary" />

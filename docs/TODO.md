@@ -3,10 +3,14 @@
 2. Restrict non "@ssiph.com" emails
 
 # List of Features to Implement:
-1. Login with Microsoft
-2. Refactor to modularize components and actions
-3. Implement storage system for attachments
+1. Comments and Comment Nesting
+2. Login with Microsoft
+3. Refactor to modularize components and actions
+4. Implement storage system for attachments
     - Implement Attachments in General
+5. Deleting Posts and Comments
+    - User: Own Posts and Comments
+    - Admin: Any Posts and Comments
 
 # List of Features to Improve:
 1. Search Result Ranking
