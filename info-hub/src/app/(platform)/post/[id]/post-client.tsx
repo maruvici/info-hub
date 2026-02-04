@@ -1,10 +1,44 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { Heart, Eye, Paperclip, MessageCircle, Send, CornerDownRight } from "lucide-react";
+import { toggleLike } from "@/app/actions/likes";
 
-export default function PostClient({ post }: { post: any }) {
-  const [likes, setLikes] = useState(0); // Placeholder for likes logic
+export default function PostClient({
+  post, 
+  initialLikeCount, 
+  initialIsLiked,
+  comments,
+}: { 
+  post: any, 
+  initialLikeCount: number, 
+  initialIsLiked: boolean,
+  comments: any[],
+}) {
+
+  const [isPending, startTransition] = useTransition();
+  
+  // Optimistic UI state
+  const [likeCount, setLikeCount] = useState(initialLikeCount);
+  const [isLiked, setIsLiked] = useState(initialIsLiked);
+
+  const handleLike = () => {
+    // Optimistically update the UI before the server responds
+    setIsLiked(!isLiked);
+    setLikeCount(prev => isLiked ? prev - 1 : prev + 1);
+
+    startTransition(async () => {
+      try {
+        await toggleLike(post.id);
+      } catch (error) {
+        // Rollback on error
+        setIsLiked(isLiked);
+        setLikeCount(likeCount);
+        console.error("Failed to toggle like:", error);
+      }
+    });
+  };
+
 
   return (
     <div className="max-w-6xl mx-auto space-y-8 py-10 px-6">
@@ -43,10 +77,16 @@ export default function PostClient({ post }: { post: any }) {
 
         <div className="flex items-center gap-6 pt-8 border-t border-primary/5">
           <button 
-            onClick={() => setLikes(prev => prev + 1)}
-            className="flex items-center gap-2 px-6 py-3 bg-red-500/10 text-red-500 rounded-2xl font-black hover:bg-red-500 hover:text-white transition-all active:scale-95"
+            onClick={handleLike}
+            disabled={isPending}
+            className={`flex items-center gap-2 px-6 py-3 rounded-2xl font-black transition-all active:scale-95 ${
+              isLiked
+                ? "bg-red-500 text-white shadow-lg shadow-red-500/30"
+                : "bg-red-500/10 text-red-500 hover:bg-red-500/20"
+            }`}
           >
-            <Heart size={20} fill={likes > 0 ? "currentColor" : "none"}/> {likes}
+            <Heart size={20} fill={isLiked ? "white" : "none"} /> 
+            {likeCount}
           </button>
           <div className="flex items-center gap-2 text-muted-foreground font-black uppercase tracking-widest text-xs">
             <Eye size={20} className="text-primary"/> {post.views.toLocaleString()} Views
@@ -61,7 +101,7 @@ export default function PostClient({ post }: { post: any }) {
         </h3>
 
         {/* New Comment Input */}
-        <div className="flex gap-4 bg-card p-5 rounded-[24px] shadow-soft border border-primary/5">
+        <div className="flex gap-4 bg-card p-5 rounded-3xl shadow-soft border border-primary/5">
           <div className="w-10 h-10 rounded-full bg-primary-gradient shrink-0" />
           <div className="flex-1 relative">
             <textarea 
@@ -89,7 +129,7 @@ export default function PostClient({ post }: { post: any }) {
 
 function CommentItem({ author, date, content, likes, isReply = false }: any) {
   return (
-    <div className="bg-card rounded-[24px] p-6 space-y-4 shadow-soft border border-primary/5 relative">
+    <div className="bg-card rounded-3xl p-6 space-y-4 shadow-soft border border-primary/5 relative">
       {isReply && <CornerDownRight className="absolute -left-7 top-6 text-primary/30" size={20}/>}
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-3">

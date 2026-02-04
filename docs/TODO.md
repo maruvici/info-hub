@@ -8,9 +8,10 @@
 3. Refactor to modularize components and actions
 4. Implement storage system for attachments
     - Implement Attachments in General
-5. Deleting Posts and Comments
+5. Editing and Deleting Posts and Comments
     - User: Own Posts and Comments
     - Admin: Any Posts and Comments
+6. Implement tags properly
 
 # List of Features to Improve:
 1. Search Result Ranking

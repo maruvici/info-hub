@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, uuid, pgEnum, integer, varchar } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, uuid, pgEnum, integer, varchar, uniqueIndex } from "drizzle-orm/pg-core";
 
 // --- Enums ---
 export const roleEnum = pgEnum("role", ["User", "Admin"]);
@@ -54,7 +54,12 @@ export const likes = pgTable("likes", {
   postId: uuid("post_id").references(() => posts.id, { onDelete: 'cascade' }),
   commentId: uuid("comment_id").references(() => comments.id, { onDelete: 'cascade' }),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-});
+}, (table) => ({
+  // Prevents duplicate likes on the same post by the same user
+  uniquePostLike: uniqueIndex("unique_post_like").on(table.userId, table.postId),
+  // Prevents duplicate likes on the same comment
+  uniqueCommentLike: uniqueIndex("unique_comment_like").on(table.userId, table.commentId),
+}));
 
 export const attachments = pgTable("attachments", {
   id: uuid("id").defaultRandom().primaryKey(),

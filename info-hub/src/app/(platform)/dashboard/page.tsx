@@ -1,6 +1,6 @@
 import { db } from "@/db";
-import { posts, users } from "@/db/schema";
-import { ilike, or, and, eq, arrayContains, desc } from "drizzle-orm";
+import { posts, users, likes } from "@/db/schema";
+import { ilike, or, and, eq, arrayContains, desc, count, sql } from "drizzle-orm";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import DashboardClient from "./dashboard-client";
@@ -40,8 +40,7 @@ export default async function DashboardPage(props: {
       orderColumn = desc(posts.views);
       break;
     case "Liked":
-      // Default to createdAt for now so it doesn't crash.
-      orderColumn = desc(posts.createdAt); 
+      orderColumn = desc(sql`count(${likes.id})`); 
       break;
     default:
       orderColumn = desc(posts.createdAt); // "Recent"
@@ -56,9 +55,12 @@ export default async function DashboardPage(props: {
       views: posts.views,
       createdAt: posts.createdAt,
       authorName: users.fullName,
+      likeCount: count(likes.id),
     })
     .from(posts)
     .leftJoin(users, eq(posts.authorId, users.id))
+    .leftJoin(likes, eq(posts.id, likes.postId))
+    .groupBy(posts.id, users.id)
     .where(conditions.length > 0 ? and(...conditions) : undefined)
     .orderBy(orderColumn);
 
@@ -69,7 +71,7 @@ export default async function DashboardPage(props: {
     type: post.type as 'Article' | 'Discussion' | 'Inquiry',
     tags: post.tags || [],
     views: post.views,
-    likes: 0,
+    likes: post.likeCount,
     date: post.createdAt.toLocaleDateString(),
   }));
 

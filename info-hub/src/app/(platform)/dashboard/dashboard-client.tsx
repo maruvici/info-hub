@@ -183,7 +183,7 @@ function PostCard({ post }: { post: PostPreview }) {
   const Icon = post.type === "Article" ? BookOpen : post.type === "Discussion" ? MessageSquare : HelpCircle;
   
   return (
-    <div className="bg-card rounded-[32px] p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group cursor-pointer border border-transparent hover:border-primary/10">
+    <div className="bg-card rounded-4xl p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group cursor-pointer border border-transparent hover:border-primary/10">
       <div className="flex gap-5">
         <div className="shrink-0 w-14 h-14 rounded-2xl bg-background border border-primary/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-colors shadow-inner">
           <Icon size={28} />
@@ -211,7 +211,7 @@ function PostCard({ post }: { post: PostPreview }) {
       </div>
 
       <div className="mt-6 flex items-center gap-6 pt-4 border-t border-primary/5">
-        <div className="flex items-center gap-2 text-xs font-black uppercase tracking-widest hover:text-red-500 transition-colors">
+        <div className="flex items-center gap-2 text-xs font-black uppercase tracking-widest">
           <Heart size={16} />
           <span>{post.likes} Likes</span>
         </div>

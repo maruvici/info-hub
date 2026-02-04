@@ -15,10 +15,16 @@
 3. Create DB: `CREATE DATABASE infohub_db;`   
 4. Grant User with SU Access to DB: `GRANT ALL PRIVILEGES ON DATABASE infohub_db TO dbadmin;`
 
+## Local Environment Setup
+1. Create .env.local in project root: `touch .env.local`
+2. Enter DatabaseURL: `DATABASE_URL="postgresql://dbadmin:infohubpasswd_123@localhost:5432/infohub_db"`
+3. Generate Secret: `npx auth secret`
+
 ##  Drizzle ORM
 1. Install postgresql (precaution) and drizzle orm: `npm install postgres drizzle-orm`
 2. Install Drizzle Dependencies: `npm install -D drizzle-kit`
 3. Install dotenv (for local env var): `npm install dotenv`
+4. Create .env.local with `DATABASE_URL="postgresql://dbadmin:infohubpasswd_123@localhost:5432/infohub_db"`
 4. Sync Drizzle Schema with Local Postgres DB: `npx drizzle-kit push`
 
 ## Other Dependencies
