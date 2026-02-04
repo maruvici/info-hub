@@ -100,5 +100,5 @@ export async function loginUser(prevState: any, formData: FormData) {
 }
 
 export async function handleLogout() {
-  await signOut({ redirectTo: "/login" });
+  await signOut({ redirectTo: "/" });
 }

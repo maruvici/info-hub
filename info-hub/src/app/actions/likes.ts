@@ -35,3 +35,27 @@ export async function toggleLike(postId: string) {
   revalidatePath("/dashboard");
   revalidatePath(`/post/${postId}`);
 }
+
+export async function toggleCommentLike(commentId: string) {
+  const session = await auth();
+  if (!session?.user?.id) throw new Error("Unauthorized");
+
+  const userId = session.user.id;
+
+  const existingLike = await db
+    .select()
+    .from(likes)
+    .where(and(eq(likes.commentId, commentId), eq(likes.userId, userId)))
+    .limit(1);
+
+  if (existingLike.length > 0) {
+    await db.delete(likes).where(eq(likes.id, existingLike[0].id));
+  } else {
+    await db.insert(likes).values({
+      userId,
+      commentId,
+    });
+  }
+  // Revalidate so the UI updates
+  revalidatePath("/post/[id]", "page");
+}

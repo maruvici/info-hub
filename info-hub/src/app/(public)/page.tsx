@@ -1,8 +1,17 @@
+"use client";
+
 import Link from "next/link";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { ArrowRight, BookOpen, MessageSquare, Search, Shield, Users, Zap } from "lucide-react";
+import { useEffect } from 'react';
 
 export default function LandingPage() {
+  
+  // Ensure no leftover sessions
+  useEffect(() => {
+    sessionStorage.clear();
+  }, []);
+  
   return (
     <div className="min-h-screen flex flex-col">
       {/* 1. Sticky Header */}

@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 import { db } from "@/db";
-import { users, posts, likes } from "@/db/schema";
-import { eq, desc, inArray } from "drizzle-orm";
+import { users, posts, likes, comments } from "@/db/schema";
+import { eq, desc, inArray, or } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import UserPageClient from "./user-page-client";
 
@@ -27,10 +27,23 @@ export default async function UserPage(props: {
     .where(eq(posts.authorId, currentUser.id))
     .orderBy(desc(posts.createdAt));
 
-  const userLikes = await db
+  const userComments = await db
     .select()
-    .from(likes)
-    .where(inArray(likes.postId, userPosts.map((post) => post.id)));
+    .from(comments)
+    .where(eq(comments.authorId, currentUser.id))
+  
+  const postIds = userPosts.map((post) => post.id);
+  const commentIds = userComments.map((comment) => comment.id);
+  
+  const userLikes = await db
+  .select()
+  .from(likes)
+  .where(
+    or(
+      postIds.length > 0 ? inArray(likes.postId, postIds) : undefined,
+      commentIds.length > 0 ? inArray(likes.commentId, commentIds) : undefined
+    )
+  );
 
   const stats = {
     totalViews: userPosts.reduce((acc, post) => acc + post.views, 0),

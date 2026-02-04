@@ -3,7 +3,7 @@
 2. Restrict non "@ssiph.com" emails
 
 # List of Features to Implement:
-1. Comments and Comment Nesting
+1. ~~Comments and Comment Nesting~~
 2. Login with Microsoft
 3. Refactor to modularize components and actions
 4. Implement storage system for attachments
