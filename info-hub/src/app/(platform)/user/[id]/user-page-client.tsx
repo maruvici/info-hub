@@ -19,7 +19,7 @@ export default function UserPageClient({ user, posts, stats, initialTab }: any) 
     <div className="flex flex-col md:flex-row gap-8 max-w-6xl mx-auto">
       {/* Sidebar Profile Card */}
       <aside className="w-full md:w-80 shrink-0">
-        <div className="bg-card rounded-3xl p-8 text-center space-y-12 shadow-sm sticky top-24">
+        <div className="bg-card rounded-3xl p-8 text-center space-y-8 shadow-sm sticky top-24">
           <div className="relative mx-auto w-32 h-32 rounded-full border-4 border-primary p-1">
             <div className="w-full h-full rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
                <User size={64} className="text-gray-400" />
@@ -116,12 +116,12 @@ function UserPosts({ posts }: { posts: any[] }) {
                                         <Icon size={20} />
                                     </div>
                                     <div>
-                                        <Link href={`/post/${post.id}`} className="font-black hover:text-primary transition-colors line-clamp-1">
+                                        <Link href={`/post/${post.id}`} className="font-black text-lg hover:text-primary transition-colors line-clamp-1">
                                             {post.title}
                                         </Link>
-                                        <div className="flex gap-3 text-[10px] font-bold text-muted-foreground uppercase tracking-widest mt-1">
+                                        <div className="flex gap-3 text-xs items-center justify-center font-bold text-muted-foreground uppercase tracking-widest mt-1">
                                             <span>{post.createdAt}</span>
-                                            <span>•</span>
+                                            <span className="flex items-center gap-1"><Heart size={10}/>{post.likes}</span>
                                             <span className="flex items-center gap-1"><Eye size={10}/> {post.views}</span>
                                         </div>
                                     </div>

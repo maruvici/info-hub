@@ -23,9 +23,6 @@ export default function PostClient({
   const [likeCount, setLikeCount] = useState(initialLikeCount);
   const [isLiked, setIsLiked] = useState(initialIsLiked);
 
-  // Build the tree from the flat comments array
-  console.log("Raw Comments:", comments);
-
   const handleLike = () => {
     setIsLiked(!isLiked);
     setLikeCount((prev) => (isLiked ? prev - 1 : prev + 1));
@@ -103,7 +100,7 @@ export default function PostClient({
             <Heart size={22} fill={isLiked ? "white" : "none"} />
             {likeCount}
           </button>
-          <div className="flex items-center gap-2 text-muted-foreground font-black uppercase tracking-widest text-[10px] bg-secondary/50 px-5 py-4 rounded-3xl">
+          <div className="flex items-center gap-2 text-muted-foreground font-black uppercase tracking-widest text-sm bg-secondary/50 px-5 py-4 rounded-3xl">
             <Eye size={18} className="text-primary" /> {post.views.toLocaleString()} Views
           </div>
         </div>
@@ -116,7 +113,7 @@ export default function PostClient({
             <MessageCircle size={32} className="text-primary" /> Discussion
           </h3>
           <div className="px-4 py-2 bg-primary/10 text-primary text-[10px] font-black rounded-full uppercase tracking-widest">
-            {comments.length} Comments
+            {comments.length} Comment Threads
           </div>
         </div>
 

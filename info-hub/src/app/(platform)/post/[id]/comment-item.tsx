@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { Heart, Reply, User } from "lucide-react";
+import { Heart, Reply, User, CornerDownRight } from "lucide-react";
 import { toggleCommentLike } from "@/app/actions/likes";
+import CommentForm from "./comment-form";
 
 export default function CommentItem({ comment, postId }: { comment: any; postId: string }) {
   const [isPending, startTransition] = useTransition();
@@ -48,7 +49,7 @@ export default function CommentItem({ comment, postId }: { comment: any; postId:
             <button 
               onClick={handleLike}
               disabled={isPending}
-              className={`flex items-center gap-1.5 text-[10px] font-black transition-all hover:scale-110 ${
+              className={`flex items-center gap-1.5 text-xs font-black transition-all hover:scale-110 ${
                 isLiked ? "text-red-500" : "text-muted-foreground hover:text-red-500"
               }`}
             >
@@ -58,13 +59,34 @@ export default function CommentItem({ comment, postId }: { comment: any; postId:
 
             <button
               onClick={() => setIsReplying(!isReplying)}
-              className="flex items-center gap-1.5 text-[10px] font-black text-muted-foreground hover:text-primary transition-colors uppercase tracking-widest"
+              className="flex items-center gap-1.5 text-xs font-black text-muted-foreground hover:text-primary transition-colors uppercase tracking-widest"
             >
               <Reply size={14} /> {isReplying ? "Cancel" : "Reply"}
             </button>
           </div>
 
-          {/* ... nested ReplyForm and recursive CommentItems ... */}
+          {/* Reply Form (Conditionally Rendered) */}
+          {isReplying && (
+            <div className="mt-4 pl-4 border-l-2 border-primary/10 relative">
+               <CornerDownRight className="absolute -left-[9px] top-0 text-primary/30 bg-background" size={16}/>
+              <CommentForm 
+                postId={postId} 
+                parentId={comment.id} 
+                placeholder={`Replying to ${comment.authorName}...`}
+                onSuccess={() => setIsReplying(false)} 
+              />
+            </div>
+          )}
+
+          {/* 2. RECURSION: The Magic Part */}
+          {/* This checks if the current comment has children (replies) and renders them */}
+          {comment.replies && comment.replies.length > 0 && (
+            <div className="mt-4 space-y-6 border-l-2 border-primary/5 pl-6 md:pl-8 relative">
+              {comment.replies.map((reply: any) => (
+                <CommentItem key={reply.id} comment={reply} postId={postId} />
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>

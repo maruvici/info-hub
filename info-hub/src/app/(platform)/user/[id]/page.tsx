@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 import { db } from "@/db";
 import { users, posts, likes, comments } from "@/db/schema";
-import { eq, desc, inArray, or } from "drizzle-orm";
+import { eq, desc, inArray, or, count } from "drizzle-orm";
 import { redirect } from "next/navigation";
 import UserPageClient from "./user-page-client";
 
@@ -22,9 +22,19 @@ export default async function UserPage(props: {
   if (!currentUser) redirect("/login");
 
   const userPosts = await db
-    .select()
+    .select({
+      id: posts.id,
+      title: posts.title,
+      type: posts.type,
+      tags: posts.tags,
+      views: posts.views,
+      createdAt: posts.createdAt,
+      likeCount: count(likes.id),
+    })
     .from(posts)
+    .leftJoin(likes, eq(posts.id, likes.postId))
     .where(eq(posts.authorId, currentUser.id))
+    .groupBy(posts.id)
     .orderBy(desc(posts.createdAt));
 
   const userComments = await db
@@ -53,6 +63,7 @@ export default async function UserPage(props: {
   const formattedPosts = userPosts.map(post => ({
     ...post,
     createdAt: post.createdAt.toLocaleDateString(),
+    likes: post.likeCount
   }));
 
   // Pass the real user data into your original UI structure
