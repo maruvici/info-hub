@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { posts, users, likes, comments } from "@/db/schema";
+import { posts, users, likes, comments, attachments } from "@/db/schema";
 import { eq, and, sql, count, desc } from "drizzle-orm";
 import { notFound } from "next/navigation";
 import { incrementViewCount } from "@/app/actions/posts";
@@ -95,9 +95,16 @@ export default async function PostPage(props: { params: Promise<{ id: string }> 
 
   const commentTree = buildCommentTree(formattedComments);
 
+  // 10. Fetch attachments for this post
+  const postAttachments = await db
+    .select()
+    .from(attachments)
+    .where(eq(attachments.postId, id));
+
   return (
     <PostClient 
-      post={formattedPost} 
+      post={formattedPost}
+      attachments={postAttachments}
       initialLikeCount={likeCountResult.count} 
       initialIsLiked={!!userLike} 
       comments={commentTree}

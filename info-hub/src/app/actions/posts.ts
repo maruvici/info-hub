@@ -14,24 +14,23 @@ export async function createPost(data: {
   tags: string[];
 }) {
   const session = await auth();
+  if (!session?.user?.id) throw new Error("You must be logged in to post.");
 
-  if (!session?.user?.id) {
-    throw new Error("You must be logged in to post.");
-  }
-
-  // Insert into PostgreSQL
-  await db.insert(posts).values({
+  // 1. Insert and RETURN the ID
+  const [newPost] = await db.insert(posts).values({
     authorId: session.user.id,
     title: data.title,
     content: data.content,
     type: data.type,
     tags: data.tags,
-  });
+  }).returning({ id: posts.id });
 
-  // Refresh the dashboard so the new post appears immediately
+  if (!newPost) throw new Error("Failed to create post record.");
+
   revalidatePath("/dashboard");
-  // Send them to the dashboard
-  redirect("/dashboard");
+  
+  // 2. Return the ID to the client, DO NOT redirect here
+  return { id: newPost.id };
 }
 
 export async function incrementViewCount(postId: string) {

@@ -56,5 +56,7 @@ erDiagram
         string file_url
         string file_name
         string file_type
+        int file_size "Maximum: 25MB"
+        datetime created_at
     }
 ```

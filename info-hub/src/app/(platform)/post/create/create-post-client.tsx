@@ -1,11 +1,25 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { 
   Bold, Italic, List, Link as LinkIcon, Code, 
-  Send, X, Hash, BookOpen, MessageSquare, HelpCircle 
+  Send, X, Hash, BookOpen, MessageSquare, HelpCircle,
+  Paperclip, FileText, FileWarning
 } from "lucide-react";
 import { createPost } from "@/app/actions/posts";
+import { uploadAttachment } from "@/app/actions/attachments";
+
+const MAX_FILE_SIZE = 25 * 1024 * 1024; // 25MB
+const MAX_FILES = 3;
+const ALLOWED_TYPES = [
+  'image/jpeg', 'image/png', 'image/gif', 'image/svg+xml', 'image/webp',
+  'video/mp4', 'video/x-msvideo', 'video/quicktime', 'video/webm',
+  'audio/mpeg', 'audio/wav', 'audio/ogg',
+  'application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', // doc, docx
+  'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // xls, xlsx
+  'text/plain', 'text/csv'
+];
 
 type PostType = 'Article' | 'Discussion' | 'Inquiry';
 
@@ -14,6 +28,44 @@ export default function CreatePostClient({ user }: { user: any }) {
   const [tagInput, setTagInput] = useState("");
   const [tags, setTags] = useState<string[]>([]);
   const [isPending, setIsPending] = useState(false);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const newFiles = Array.from(e.target.files);
+      
+      // 1. Check Total Count
+      if (selectedFiles.length + newFiles.length > MAX_FILES) {
+        alert(`You can only upload a maximum of ${MAX_FILES} files.`);
+        return;
+      }
+
+      // 2. Validate Each File
+      const validFiles = newFiles.filter(file => {
+        // Size Check
+        if (file.size > MAX_FILE_SIZE) {
+          alert(`File "${file.name}" is too large (Max 25MB).`);
+          return false;
+        }
+        // Type Check
+        if (!ALLOWED_TYPES.includes(file.type)) {
+          alert(`File "${file.name}" format is not supported.`);
+          return false;
+        }
+        return true;
+      });
+
+      setSelectedFiles(prev => [...prev, ...validFiles]);
+    }
+    // Reset input so you can select the same file again if needed
+    e.target.value = ""; 
+  };
+
+  const removeFile = (index: number) => {
+    setSelectedFiles(prev => prev.filter((_, i) => i !== index));
+  };
 
   const addTag = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && tagInput.trim()) {
@@ -37,14 +89,30 @@ export default function CreatePostClient({ user }: { user: any }) {
 
     setIsPending(true);
     try {
-      await createPost({
+      // 1. Create the post and get the ID back
+      const result = await createPost({
         title,
         content,
         type: postType,
         tags: tags,
       });
+
+      // 2. Only proceed to uploads if we have an ID
+      if (result?.id && selectedFiles.length > 0) {
+        for (const file of selectedFiles) {
+          const fileData = new FormData();
+          fileData.append("file", file);
+          await uploadAttachment(result.id, fileData); // 👈 Wait for each upload
+        }
+      }
+
+      // 3. NOW we redirect manually
+      router.push(`/post/${result.id}`);
+      router.refresh();
+
     } catch (error) {
-      console.error(error);
+      console.error("Publishing Error:", error);
+      alert("Something went wrong. Check the server console for details.");
     } finally {
       setIsPending(false);
     }
@@ -117,6 +185,40 @@ export default function CreatePostClient({ user }: { user: any }) {
                placeholder="Write your content here..."
                className="w-full min-h-[300px] bg-transparent border-none outline-none resize-none text-lg leading-relaxed placeholder:opacity-20 focus:ring-0"
              />
+          </div>
+
+          {/* 5. ATTACHMENT SYSTEM */}
+          <div className="space-y-4 pt-4 border-t border-primary/5">
+            <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-2">Attachments</p>
+            
+            <div className="flex flex-wrap gap-3">
+              {selectedFiles.map((file, index) => (
+                <div key={index} className="flex items-center gap-2 px-4 py-2 bg-primary/5 border border-primary/10 rounded-xl animate-in fade-in zoom-in-95">
+                  <FileText size={14} className="text-primary" />
+                  <span className="text-xs font-bold truncate max-w-[150px]">{file.name}</span>
+                  <button type="button" onClick={() => removeFile(index)} className="text-muted-foreground hover:text-red-500 transition-colors">
+                    <X size={14} />
+                  </button>
+                </div>
+              ))} 
+
+              {selectedFiles.length < MAX_FILES && (
+              <button 
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                className="flex items-center gap-2 px-4 py-2 border-2 border-dashed border-primary/20 rounded-xl text-primary/60 hover:border-primary/40 hover:text-primary transition-all text-xs font-black uppercase"
+              >
+                <Paperclip size={14} /> Add Files
+              </button>
+              )}
+              <input 
+                type="file" 
+                multiple 
+                ref={fileInputRef} 
+                onChange={handleFileChange} 
+                className="hidden" 
+              />
+            </div>
           </div>
 
           <div className="pt-10 flex justify-end">

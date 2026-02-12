@@ -73,9 +73,10 @@ export default function SignUpPage() {
                 <select 
                   name="team"
                   className="w-full pl-12 pr-10 py-4 bg-background/50 rounded-2xl border-none outline-none appearance-none focus:ring-2 focus:ring-primary/20 transition-all font-medium"
+                  defaultValue=""
                   required
                 >
-                  <option value="" disabled selected>Select your team...</option>
+                  <option value="" disabled>Select your team...</option>
                   <option value="Digital Transformation">Digital Transformation</option>
                   <option value="Service Delivery">Service Delivery</option>
                   <option value="Project Management">Project Management</option>

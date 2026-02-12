@@ -32,4 +32,5 @@
     - For Typescript: `npm install -D @types/bcrypt`
 2. Install form validator: `npm install zod`
 3. Install auth.js: `npm install next-auth@beta @auth/drizzle-adapter`
+4. Install uuid: `npm install uuid` `npm install -D @types/uuid`s
 

@@ -1,15 +1,31 @@
 "use client";
 
 import { useState, useTransition, useEffect, useRef } from "react";
-import { Heart, Eye, Paperclip, MessageCircle, MoreVertical, Edit, Trash2 } from "lucide-react";
+import { 
+  Heart, Eye, Paperclip, MessageCircle, MoreVertical, Edit, 
+  Trash2, DownloadCloud, ExternalLink, FileText, FileImage, 
+  FileAudio, FileVideo, File 
+} from "lucide-react";
 import { toggleLike } from "@/app/actions/likes";
 import { deletePost } from "@/app/actions/posts";
 import CommentForm from "./comment-form";
 import CommentItem from "./comment-item";
 import Link from "next/link"
 
+function getFileIcon(fileName: string) {
+  const ext = fileName.split('.').pop()?.toLowerCase();
+  
+  if (['jpg', 'jpeg', 'png', 'gif', 'svg', 'webp'].includes(ext!)) return <FileImage size={20} className="text-purple-500" />;
+  if (['mp4', 'avi', 'mov', 'webm'].includes(ext!)) return <FileVideo size={20} className="text-red-500" />;
+  if (['mp3', 'wav', 'ogg'].includes(ext!)) return <FileAudio size={20} className="text-yellow-500" />;
+  if (['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt', 'csv'].includes(ext!)) return <FileText size={20} className="text-blue-500" />;
+  
+  return <File size={20} className="text-gray-500" />; // Fallback
+}
+
 export default function PostClient({
   post,
+  attachments = [],
   initialLikeCount,
   initialIsLiked,
   comments,
@@ -17,6 +33,7 @@ export default function PostClient({
   currentUserRole,
 }: {
   post: any;
+  attachments?: any[];
   initialLikeCount: number;
   initialIsLiked: boolean;
   comments: any[];
@@ -142,14 +159,53 @@ export default function PostClient({
         </div>
 
         {/* Attachments Section */}
-        <div className="pt-8 space-y-4">
-          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground flex items-center gap-2">
-            <Paperclip size={14} className="text-primary" /> Attachments
-          </p>
-          <div className="p-6 bg-primary/5 rounded-3xl border border-dashed border-primary/20 text-primary/50 font-bold italic text-sm text-center">
-            No files attached to this post.
+        {attachments && attachments.length > 0 && (
+          <div className="pt-10 border-t border-primary/5">
+            <h3 className="text-xs font-black uppercase tracking-widest text-muted-foreground mb-6">
+              Attachments ({attachments.length})
+            </h3>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {attachments.map((file: any) => (
+                <div key={file.id} className="group flex items-center p-3 bg-card border border-primary/5 rounded-2xl hover:border-primary/20 transition-all hover:shadow-sm">
+                  {/* Icon Box */}
+                  <div className="p-3 bg-secondary/50 rounded-xl mr-4 group-hover:scale-110 transition-transform">
+                    {getFileIcon(file.fileName)}
+                  </div>
+                  
+                  {/* File Details */}
+                  <div className="flex-1 min-w-0 mr-4">
+                    <p className="text-sm font-bold truncate text-foreground/90">{file.fileName}</p>
+                    <p className="text-[10px] text-muted-foreground uppercase font-black tracking-wider">
+                      {(file.fileSize / (1024 * 1024)).toFixed(2)} MB
+                    </p>
+                  </div>
+                  
+                  {/* Actions */}
+                  <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <a 
+                      href={file.fileUrl} 
+                      download={file.fileName}
+                      className="p-2 text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-lg transition-colors"
+                      title="Download"
+                    >
+                      <DownloadCloud size={16} />
+                    </a>
+                    <a 
+                      href={file.fileUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="p-2 text-muted-foreground hover:text-primary hover:bg-primary/5 rounded-lg transition-all"
+                      title="View"
+                    >
+                      <ExternalLink size={18} />
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Stats & Like Button */}
         <div className="flex items-center gap-6 pt-10 border-t border-primary/5">

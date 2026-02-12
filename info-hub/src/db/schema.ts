@@ -68,4 +68,6 @@ export const attachments = pgTable("attachments", {
   fileUrl: text("file_url").notNull(),
   fileName: text("file_name").notNull(),
   fileType: text("file_type").notNull(),
+  fileSize: integer("file_size"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
 });
