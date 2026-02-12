@@ -25,6 +25,7 @@ export default async function PostPage(props: { params: Promise<{ id: string }> 
       views: posts.views,
       createdAt: posts.createdAt,
       authorName: users.fullName,
+      authorId: users.id,
     })
     .from(posts)
     .leftJoin(users, eq(posts.authorId, users.id))
@@ -37,8 +38,18 @@ export default async function PostPage(props: { params: Promise<{ id: string }> 
     .select({ count: count() })
     .from(likes)
     .where(eq(likes.postId, id));
+  
+  // 5. Fetch Current User's Role (if logged in)
+  let currentUserRole = null;
+  if (session?.user?.id) {
+    const [user] = await db
+      .select({ role: users.role })
+      .from(users)
+      .where(eq(users.id, session.user.id));
+    currentUserRole = user?.role;
+  }
 
-  // 5. Check if the logged-in user has liked this post
+  // 6. Check if the logged-in user has liked this post
   const userLike = session?.user?.id 
     ? await db.query.likes.findFirst({
         where: and(
@@ -48,7 +59,7 @@ export default async function PostPage(props: { params: Promise<{ id: string }> 
       })
     : null;
 
-  // 6. Format posts for the client component
+  // 7. Format posts for the client component
   const formattedPost = {
     ...postData,
     createdAt: postData.createdAt.toLocaleDateString('en-US', {
@@ -59,7 +70,7 @@ export default async function PostPage(props: { params: Promise<{ id: string }> 
     tags: postData.tags || [],
   };
 
-  // 7. Fetch Data: Comment Details for Post
+  // 8. Fetch Data: Comment Details for Post
   const allComments = await db
   .select({
     id: comments.id,
@@ -75,7 +86,7 @@ export default async function PostPage(props: { params: Promise<{ id: string }> 
   .where(eq(comments.postId, id))
   .orderBy(desc(comments.createdAt));
 
-  // 8. Format comments for the client component
+  // 9. Format comments for the client component
   const formattedComments = allComments.map(c => ({
     ...c,
     date: c.createdAt.toLocaleDateString()
@@ -89,6 +100,8 @@ export default async function PostPage(props: { params: Promise<{ id: string }> 
       initialLikeCount={likeCountResult.count} 
       initialIsLiked={!!userLike} 
       comments={commentTree}
+      currentUserId={session?.user?.id || null}
+      currentUserRole={currentUserRole}
     />
   );
 }

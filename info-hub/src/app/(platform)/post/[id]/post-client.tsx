@@ -1,27 +1,61 @@
 "use client";
 
-import { useState, useTransition } from "react";
-import { Heart, Eye, Paperclip, MessageCircle, User } from "lucide-react";
+import { useState, useTransition, useEffect, useRef } from "react";
+import { Heart, Eye, Paperclip, MessageCircle, MoreVertical, Edit, Trash2 } from "lucide-react";
 import { toggleLike } from "@/app/actions/likes";
+import { deletePost } from "@/app/actions/posts";
 import CommentForm from "./comment-form";
 import CommentItem from "./comment-item";
+import Link from "next/link"
 
 export default function PostClient({
   post,
   initialLikeCount,
   initialIsLiked,
   comments,
+  currentUserId,
+  currentUserRole,
 }: {
   post: any;
   initialLikeCount: number;
   initialIsLiked: boolean;
   comments: any[];
+  currentUserId: string | null;
+  currentUserRole: "User" | "Admin" | null;
 }) {
   const [isPending, startTransition] = useTransition();
-
-  // Optimistic UI state for Likes
   const [likeCount, setLikeCount] = useState(initialLikeCount);
   const [isLiked, setIsLiked] = useState(initialIsLiked);
+
+  const [showMenu, setShowMenu] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setShowMenu(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleDelete = () => {
+    if (!confirm("Are you sure you want to delete this post? This cannot be undone.")) return;
+    
+    startTransition(async () => {
+      try {
+        await deletePost(post.id);
+      } catch (err: any) {
+        if (err.message !== "NEXT_REDIRECT") {
+          alert("Failed to delete post.");
+        }
+      }
+    });
+  };
+
+  // Permission Check
+  const canEdit = currentUserId && (currentUserRole === "Admin" || currentUserId === post.authorId);
 
   const handleLike = () => {
     setIsLiked(!isLiked);
@@ -43,9 +77,40 @@ export default function PostClient({
       {/* 1. Post Content Section */}
       <article className="bg-card rounded-[40px] p-8 md:p-14 shadow-soft border border-primary/5 space-y-8">
         <div className="space-y-6">
-          <h1 className="text-4xl md:text-5xl font-black leading-tight tracking-tighter">
-            {post.title}
-          </h1>
+          <div className="flex justify-between">
+            <h1 className="text-4xl md:text-5xl font-black leading-tight tracking-tighter pr-12">
+              {post.title}
+            </h1>
+            {/* ACTION MENU */}
+            {canEdit && (
+              <div className="relative" ref={menuRef}>
+                <button
+                  onClick={() => setShowMenu(!showMenu)}
+                  className="p-3 bg-secondary/50 hover:bg-primary/10 rounded-full transition-all text-muted-foreground hover:text-primary shadow-sm border border-primary/5"
+                  aria-label="Post options"
+                >
+                  <MoreVertical size={24} />
+                </button>
+
+                {showMenu && (
+                  <div className="absolute right-0 mt-3 w-56 bg-card border border-primary/10 shadow-2xl rounded-3xl overflow-hidden z-[60] animate-in fade-in zoom-in-95 duration-200">
+                    <Link
+                      href={`/post/${post.id}/edit`}
+                      className="flex items-center gap-3 px-6 py-4 text-sm font-black hover:bg-primary/5 text-foreground/80 hover:text-primary transition-colors border-b border-primary/5"
+                    >
+                      <Edit size={18} /> EDIT POST
+                    </Link>
+                    <button
+                      onClick={handleDelete}
+                      className="flex items-center gap-3 px-6 py-4 text-sm font-black hover:bg-red-500/10 text-red-500 transition-colors w-full text-left"
+                    >
+                      <Trash2 size={18} /> DELETE POST
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
           <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground font-bold">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-full bg-primary-gradient flex items-center justify-center text-[10px] text-white">

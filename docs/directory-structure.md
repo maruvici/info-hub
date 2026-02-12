@@ -6,7 +6,6 @@ src/
 │   ├── layout/          # Navbar, Sidebar, Footer
 │   └── features/        # Feature-specific components (e.g., PostCard, CommentTree)
 ├── lib/                 # Utility functions & Database clients
-├── types/               # TypeScript interfaces (Crucial for you)
-├── styles/              # Global styles
+├── types/               # TypeScript interfaces
 └── db/                  # Database schemas and migrations
 ```
