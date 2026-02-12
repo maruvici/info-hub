@@ -95,6 +95,5 @@ export async function updatePost(
 
   if (!updated.length) throw new Error("Failed to update post");
 
-  revalidatePath(`/post/${postId}`);
-  redirect(`/post/${postId}`);
+  return { success: true };
 }

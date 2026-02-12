@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { toggleLike } from "@/app/actions/likes";
 import { deletePost } from "@/app/actions/posts";
+import { deleteAttachment } from "@/app/actions/attachments";
 import CommentForm from "./comment-form";
 import CommentItem from "./comment-item";
 import Link from "next/link"
@@ -46,6 +47,20 @@ export default function PostClient({
 
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+
+  const [isDeleting, startDeleteTransition] = useTransition();
+
+  const handleDeleteAttachment = (id: string) => {
+    if (!confirm("Are you sure you want to permanently delete this attachment?")) return;
+    
+    startDeleteTransition(async () => {
+      try {
+        await deleteAttachment(id);
+      } catch (err) {
+        alert("Failed to delete file.");
+      }
+    });
+  };
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -159,53 +174,61 @@ export default function PostClient({
         </div>
 
         {/* Attachments Section */}
-        {attachments && attachments.length > 0 && (
-          <div className="pt-10 border-t border-primary/5">
-            <h3 className="text-xs font-black uppercase tracking-widest text-muted-foreground mb-6">
-              Attachments ({attachments.length})
-            </h3>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="pt-8 space-y-4">
+           <p className="text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground flex items-center gap-2">
+            <Paperclip size={14} className="text-primary" /> Attachments
+          </p>
+          
+          {attachments.length === 0 ? (
+            <div className="p-6 bg-primary/5 rounded-3xl border border-dashed border-primary/20 text-primary/50 font-bold italic text-sm text-center">
+              No files attached to this post.
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {attachments.map((file: any) => (
-                <div key={file.id} className="group flex items-center p-3 bg-card border border-primary/5 rounded-2xl hover:border-primary/20 transition-all hover:shadow-sm">
-                  {/* Icon Box */}
-                  <div className="p-3 bg-secondary/50 rounded-xl mr-4 group-hover:scale-110 transition-transform">
-                    {getFileIcon(file.fileName)}
+                <div key={file.id} className="group flex items-center p-3 bg-primary/30 border border-secondary/50 rounded-2xl hover:border-primary/50 transition-all">
+                  <div className="p-3 bg-card rounded-xl mr-3">{getFileIcon(file.fileName)}</div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-bold truncate">{file.fileName}</p>
+                    <p className="text-[10px] text-muted-foreground font-black uppercase">{(file.fileSize / 1024).toFixed(1)} KB</p>
                   </div>
-                  
-                  {/* File Details */}
-                  <div className="flex-1 min-w-0 mr-4">
-                    <p className="text-sm font-bold truncate text-foreground/90">{file.fileName}</p>
-                    <p className="text-[10px] text-muted-foreground uppercase font-black tracking-wider">
-                      {(file.fileSize / (1024 * 1024)).toFixed(2)} MB
-                    </p>
-                  </div>
-                  
-                  {/* Actions */}
-                  <div className="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                  {/* ATTACHMENT ACTIONS */}
+                  <div className="flex gap-1">
+                    {/* DOWNLOAD */}
                     <a 
                       href={file.fileUrl} 
                       download={file.fileName}
-                      className="p-2 text-muted-foreground hover:text-primary hover:bg-primary/10 rounded-lg transition-colors"
+                      className="p-2 text-muted-foreground hover:text-primary rounded-lg transition-all"
                       title="Download"
                     >
-                      <DownloadCloud size={16} />
+                      <DownloadCloud size={18} />
                     </a>
+                    {/* VIEW */}
                     <a 
                       href={file.fileUrl} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="p-2 text-muted-foreground hover:text-primary hover:bg-primary/5 rounded-lg transition-all"
+                      className="p-2 text-muted-foreground hover:text-primary rounded-lg transition-all"
                       title="View"
                     >
                       <ExternalLink size={18} />
                     </a>
+                    {/* DELETE */}
+                    {canEdit && (
+                      <button 
+                        disabled={isDeleting}
+                        onClick={() => handleDeleteAttachment(file.id)}
+                        className="p-2 text-muted-foreground hover:text-red-500 transition-colors disabled:opacity-30"
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    )}
                   </div>
                 </div>
               ))}
             </div>
-          </div>
-        )}
+          )}
+        </div>
 
         {/* Stats & Like Button */}
         <div className="flex items-center gap-6 pt-10 border-t border-primary/5">

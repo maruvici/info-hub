@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { posts } from "@/db/schema";
+import { posts, attachments } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { auth } from "@/auth";
 import { notFound, redirect } from "next/navigation";
@@ -11,6 +11,7 @@ export default async function EditPostPage({ params }: { params: Promise<{ id: s
 
   if (!session?.user?.id) redirect("/login");
 
+  // 1. Fetch Post Data
   const [postData] = await db
     .select()
     .from(posts)
@@ -18,11 +19,22 @@ export default async function EditPostPage({ params }: { params: Promise<{ id: s
 
   if (!postData) notFound();
 
-  // Basic security check: Only author or admin (you can expand this logic)
+  // 2. Fetch Initial Attachments for this post
+  const postAttachments = await db
+    .select()
+    .from(attachments)
+    .where(eq(attachments.postId, id));
+
+  // Basic security check
   if (postData.authorId !== session.user.id) {
-    // You could fetch the user role here if you want admins to edit too
-    // redirect(`/post/${id}`); 
+     redirect(`/post/${id}`); 
   }
 
-  return <EditPostClient post={postData} />;
+  // 3. Pass the data to the client component
+  return (
+    <EditPostClient 
+      post={postData} 
+      initialAttachments={postAttachments} 
+    />
+  );
 }

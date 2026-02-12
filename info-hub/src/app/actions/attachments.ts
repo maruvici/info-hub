@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/db";
-import { attachments } from "@/db/schema";
+import { attachments, users } from "@/db/schema";
 import { eq, sql } from "drizzle-orm";
 import { auth } from "@/auth";
 import { revalidatePath } from "next/cache";
@@ -80,5 +80,47 @@ export async function uploadAttachment(postId: string, formData: FormData) {
   } catch (error) {
     console.error("Upload Error:", error);
     throw new Error("Failed to save attachment");
+  }
+}
+
+export async function deleteAttachment(attachmentId: string) {
+  const session = await auth();
+  if (!session?.user?.id) throw new Error("Unauthorized");
+
+  // 1. Fetch attachment and verify existence
+  const [attachment] = await db
+    .select()
+    .from(attachments)
+    .where(eq(attachments.id, attachmentId));
+
+  if (!attachment) throw new Error("Attachment not found");
+
+  // 2. Permission Check (Admin or Author of the attachment/post)
+  const [currentUser] = await db
+    .select({ role: users.role })
+    .from(users)
+    .where(eq(users.id, session.user.id));
+
+  const isAuthorized = currentUser.role === "Admin" || attachment.ownerId === session.user.id;
+  if (!isAuthorized) throw new Error("You do not have permission to delete this file.");
+
+  try {
+    // 3. Remove physical file from /public/uploads
+    // We extract the filename from the saved URL (/uploads/filename.ext)
+    const fileName = path.basename(attachment.fileUrl);
+    const filePath = path.join(process.cwd(), "public", "uploads", fileName);
+    
+    await fs.unlink(filePath).catch((err) => {
+      console.warn("File already missing from disk, proceeding with DB deletion:", err.message);
+    });
+
+    // 4. Delete DB record
+    await db.delete(attachments).where(eq(attachments.id, attachmentId));
+
+    revalidatePath(`/post/${attachment.postId}`);
+    return { success: true };
+  } catch (error) {
+    console.error("Deletion Error:", error);
+    throw new Error("Failed to delete attachment");
   }
 }

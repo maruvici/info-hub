@@ -1,18 +1,47 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { 
   Bold, Italic, List, Link as LinkIcon, Code, 
-  Save, X, Hash, BookOpen, MessageSquare, HelpCircle 
+  Save, X, Hash, BookOpen, MessageSquare, HelpCircle,
+  Paperclip, FileText, Trash2, Undo2
 } from "lucide-react";
 import { updatePost } from "@/app/actions/posts";
+import { uploadAttachment, deleteAttachment } from "@/app/actions/attachments";
 
-export default function EditPostClient({ post }: { post: any }) {
+// Validation Constants (Same as Create Post)
+const MAX_FILE_SIZE = 25 * 1024 * 1024; // 25MB
+const MAX_FILES = 3;
+const ALLOWED_TYPES = [
+  'image/jpeg', 'image/png', 'image/gif', 'image/svg+xml', 'image/webp',
+  'video/mp4', 'video/x-msvideo', 'video/quicktime', 'video/webm',
+  'audio/mpeg', 'audio/wav', 'audio/ogg',
+  'application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+  'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+  'text/plain', 'text/csv'
+];
+
+export default function EditPostClient({ post, initialAttachments = [] }: { post: any, initialAttachments?: any[] }) {
+  const router = useRouter();
+  
+  // Existing States
   const [postType, setPostType] = useState(post.type);
   const [tagInput, setTagInput] = useState("");
   const [tags, setTags] = useState<string[]>(post.tags || []);
   const [isPending, setIsPending] = useState(false);
 
+  // New File States
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [deletedFileIds, setDeletedFileIds] = useState<string[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Filter out attachments that are marked for deletion for the UI
+  const visibleExistingAttachments = initialAttachments.filter(
+    (file) => !deletedFileIds.includes(file.id)
+  );
+
+  // --- 1. Tag Logic (Unchanged) ---
   const addTag = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && tagInput.trim()) {
       e.preventDefault();
@@ -27,6 +56,48 @@ export default function EditPostClient({ post }: { post: any }) {
     setTags(tags.filter(t => t !== tagToRemove));
   };
 
+  // --- 2. Attachment Logic (Adapted from Create Post) ---
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const newFiles = Array.from(e.target.files);
+      
+      // Check Total Count (Existing + New)
+      const currentTotal = initialAttachments.length + selectedFiles.length;
+      if (currentTotal + newFiles.length > MAX_FILES) {
+        alert(`You can only upload a maximum of ${MAX_FILES} files.`);
+        return;
+      }
+
+      // Validate Each File
+      const validFiles = newFiles.filter(file => {
+        if (file.size > MAX_FILE_SIZE) {
+          alert(`File "${file.name}" is too large (Max 25MB).`);
+          return false;
+        }
+        if (!ALLOWED_TYPES.includes(file.type)) {
+          alert(`File "${file.name}" format is not supported.`);
+          return false;
+        }
+        return true;
+      });
+
+      setSelectedFiles(prev => [...prev, ...validFiles]);
+    }
+    e.target.value = ""; 
+  };
+
+  const removeSelectedFile = (index: number) => {
+    setSelectedFiles(prev => prev.filter((_, i) => i !== index));
+  };
+
+  // --- Toggle Deletion State instead of calling Action ---
+  const toggleDeleteExisting = (id: string) => {
+    setDeletedFileIds(prev => 
+      prev.includes(id) ? prev.filter(itemId => itemId !== id) : [...prev, id]
+    );
+  };
+
+  // --- 3. Submit Logic ---
   const handleUpdate = async (formData: FormData) => {
     const title = formData.get("title") as string;
     const content = formData.get("content") as string;
@@ -35,12 +106,32 @@ export default function EditPostClient({ post }: { post: any }) {
 
     setIsPending(true);
     try {
+      // 1. Update text content
       await updatePost(post.id, {
         title,
         content,
         type: postType,
         tags: tags,
       });
+
+      // 2. Perform PENDING DELETIONS now that user clicked "Save"
+      if (deletedFileIds.length > 0) {
+        for (const id of deletedFileIds) {
+          await deleteAttachment(id);
+        }
+      }
+
+      // 3. Upload NEW files
+      if (selectedFiles.length > 0) {
+        for (const file of selectedFiles) {
+          const fileData = new FormData();
+          fileData.append("file", file);
+          await uploadAttachment(post.id, fileData);
+        }
+      }
+      router.push(`/post/${post.id}`);
+      router.refresh();
+
     } catch (err: any) {
         if (err.message !== "NEXT_REDIRECT") {
             alert("Failed to update post.");
@@ -120,6 +211,66 @@ export default function EditPostClient({ post }: { post: any }) {
              />
           </div>
 
+          {/* 5. ATTACHMENT SYSTEM */}
+          <div className="space-y-4 pt-4 border-t border-primary/5">
+            <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-2">
+              Attachments ({visibleExistingAttachments.length + selectedFiles.length}/{MAX_FILES})
+            </p>
+            
+            <div className="flex flex-wrap gap-3">
+              {/* A. Existing Attachments */}
+              {initialAttachments.map((file) => {
+                const isMarkedForDeletion = deletedFileIds.includes(file.id);
+                return (
+                  <div 
+                    key={file.id} 
+                    className={`flex items-center gap-2 px-4 py-2 border rounded-xl transition-all ${
+                      isMarkedForDeletion 
+                        ? "bg-red-500/10 border-red-500/20 opacity-60 grayscale" 
+                        : "bg-secondary/50 border-primary/10"
+                    }`}
+                  >
+                    <FileText size={14} className={isMarkedForDeletion ? "text-red-500" : "text-primary"} />
+                    <span className={`text-xs font-bold truncate max-w-[150px] ${isMarkedForDeletion ? "line-through text-red-500" : ""}`}>
+                      {file.fileName}
+                    </span>
+                    <button 
+                      type="button" 
+                      onClick={() => toggleDeleteExisting(file.id)} 
+                      className="text-muted-foreground hover:text-primary transition-colors"
+                      title={isMarkedForDeletion ? "Undo deletion" : "Remove file"}
+                    >
+                      {isMarkedForDeletion ? <Undo2 size={14} /> : <Trash2 size={14} />}
+                    </button>
+                  </div>
+                );
+              })}
+
+              {/* B. New Uploads (Pending) */}
+              {selectedFiles.map((file, index) => (
+                <div key={index} className="flex items-center gap-2 px-4 py-2 bg-primary/5 border border-primary/10 rounded-xl">
+                  <FileText size={14} className="text-primary" />
+                  <span className="text-xs font-bold truncate max-w-[150px]">{file.name} (New)</span>
+                  <button type="button" onClick={() => removeSelectedFile(index)} className="text-muted-foreground hover:text-red-500">
+                    <X size={14} />
+                  </button>
+                </div>
+              ))}
+
+              {/* C. Add Button */}
+              {(visibleExistingAttachments.length + selectedFiles.length) < MAX_FILES && (
+                <button 
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  className="flex items-center gap-2 px-4 py-2 border-2 border-dashed border-primary/20 rounded-xl text-primary/60 hover:border-primary/40 hover:text-primary transition-all text-xs font-black uppercase"
+                >
+                  <Paperclip size={14} /> Add Files
+                </button>
+              )}
+              <input type="file" multiple ref={fileInputRef} onChange={handleFileChange} className="hidden" />
+            </div>
+          </div>
+          
           <div className="pt-10 flex justify-end gap-4">
              <a href={`/post/${post.id}`} className="px-8 py-4 font-bold text-muted-foreground hover:text-foreground transition-colors">
                Cancel
@@ -139,7 +290,7 @@ export default function EditPostClient({ post }: { post: any }) {
   );
 }
 
-// Reuse your helpers
+// Reuse helpers
 function TypeButton({ active, onClick, icon, label }: any) {
   return (
     <button type="button" onClick={onClick} className={`flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold transition-all ${active ? "bg-card text-primary shadow-soft" : "text-muted-foreground hover:bg-background hover:text-foreground"}`}>

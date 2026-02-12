@@ -30,10 +30,6 @@ export async function toggleLike(postId: string) {
       postId,
     });
   }
-
-  // 4. Refresh the data
-  revalidatePath("/dashboard");
-  revalidatePath(`/post/${postId}`);
 }
 
 export async function toggleCommentLike(commentId: string) {
