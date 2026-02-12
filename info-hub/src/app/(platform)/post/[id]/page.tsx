@@ -78,6 +78,7 @@ export default async function PostPage(props: { params: Promise<{ id: string }> 
     parentId: comments.parentId,
     createdAt: comments.createdAt,
     authorName: users.fullName,
+    authorId: users.id,
     likeCount: sql<number>`(SELECT count(*) FROM ${likes} WHERE ${likes.commentId} = ${comments.id})`,
     isLiked: sql<boolean>`EXISTS(SELECT 1 FROM ${likes} WHERE ${likes.commentId} = ${comments.id} AND ${likes.userId} = ${session?.user?.id})`
   })

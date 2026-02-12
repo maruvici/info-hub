@@ -197,7 +197,9 @@ export default function PostClient({
               <CommentItem 
                 key={comment.id} 
                 comment={comment} 
-                postId={post.id} 
+                postId={post.id}
+                currentUserId={currentUserId}
+                currentUserRole={currentUserRole}
               />
             ))
           ) : (
