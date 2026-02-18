@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { createPost } from "@/app/actions/posts";
 import { uploadAttachment } from "@/app/actions/attachments";
+import RichTextEditor from "@/components/ui/rich-text-editor";
 
 const MAX_FILE_SIZE = 25 * 1024 * 1024; // 25MB
 const MAX_FILES = 3;
@@ -29,6 +30,7 @@ export default function CreatePostClient({ user }: { user: any }) {
   const [tags, setTags] = useState<string[]>([]);
   const [isPending, setIsPending] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [editorJSON, setEditorJSON] = useState<any>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
@@ -85,14 +87,14 @@ export default function CreatePostClient({ user }: { user: any }) {
     const title = formData.get("title") as string;
     const content = formData.get("content") as string;
 
-    if (!title || !content) return alert("Please fill in all fields");
+    if (!title || !editorJSON) return alert("Please fill in all fields");
 
     setIsPending(true);
     try {
       // 1. Create the post and get the ID back
       const result = await createPost({
         title,
-        content,
+        content: JSON.stringify(editorJSON),
         type: postType,
         tags: tags,
       });
@@ -127,7 +129,7 @@ export default function CreatePostClient({ user }: { user: any }) {
           <p className="text-muted-foreground font-medium">Categorize your thoughts and share them with the hub.</p>
         </div>
 
-        <form action={handlePublish} className="bg-card shadow-soft rounded-[40px] p-8 md:p-12 space-y-8 relative overflow-hidden">
+        <form autoComplete="off" action={handlePublish} className="bg-card shadow-soft rounded-[40px] p-8 md:p-12 space-y-8 relative overflow-hidden">
           <div className="absolute top-0 left-0 right-0 h-1.5 bg-primary-gradient opacity-80" />
 
           {/* 1. Post Type Selector */}
@@ -170,22 +172,10 @@ export default function CreatePostClient({ user }: { user: any }) {
             </div>
           </div>
 
-          {/* 4. Rich Text Placeholder */}
-          <div className="space-y-4">
-             <div className="flex flex-wrap items-center gap-1 pb-4 border-b border-primary/5">
-                <EditorToolbarButton icon={<Bold size={18}/>} />
-                <EditorToolbarButton icon={<Italic size={18}/>} />
-                <EditorToolbarButton icon={<List size={18}/>} />
-                <EditorToolbarButton icon={<LinkIcon size={18}/>} />
-                <EditorToolbarButton icon={<Code size={18}/>} />
-             </div>
-             <textarea 
-               name="content"
-               required
-               placeholder="Write your content here..."
-               className="w-full min-h-[300px] bg-transparent border-none outline-none resize-none text-lg leading-relaxed placeholder:opacity-20 focus:ring-0"
-             />
-          </div>
+          {/* 4. Rich Text Editor */}
+          <RichTextEditor 
+            onChange={(json) => setEditorJSON(json)} 
+          />
 
           {/* 5. ATTACHMENT SYSTEM */}
           <div className="space-y-4 pt-4 border-t border-primary/5">
@@ -195,7 +185,7 @@ export default function CreatePostClient({ user }: { user: any }) {
               {selectedFiles.map((file, index) => (
                 <div key={index} className="flex items-center gap-2 px-4 py-2 bg-primary/5 border border-primary/10 rounded-xl animate-in fade-in zoom-in-95">
                   <FileText size={14} className="text-primary" />
-                  <span className="text-xs font-bold truncate max-w-[150px]">{file.name}</span>
+                  <span className="text-xs font-bold truncate max-w-37.5">{file.name}</span>
                   <button type="button" onClick={() => removeFile(index)} className="text-muted-foreground hover:text-red-500 transition-colors">
                     <X size={14} />
                   </button>

@@ -8,10 +8,11 @@ import {
 } from "lucide-react";
 import { toggleLike } from "@/app/actions/likes";
 import { deletePost } from "@/app/actions/posts";
-import { deleteAttachment } from "@/app/actions/attachments";
 import CommentForm from "./comment-form";
 import CommentItem from "./comment-item";
 import Link from "next/link"
+import { useEditor, EditorContent } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
 
 function getFileIcon(fileName: string) {
   const ext = fileName.split('.').pop()?.toLowerCase();
@@ -48,19 +49,25 @@ export default function PostClient({
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
-  const [isDeleting, startDeleteTransition] = useTransition();
-
-  const handleDeleteAttachment = (id: string) => {
-    if (!confirm("Are you sure you want to permanently delete this attachment?")) return;
-    
-    startDeleteTransition(async () => {
+  // --- TIPTAP READ-ONLY SETUP ---
+  const editor = useEditor({
+    extensions: [StarterKit],
+    content: (() => {
       try {
-        await deleteAttachment(id);
-      } catch (err) {
-        alert("Failed to delete file.");
+        return JSON.parse(post.content);
+      } catch (e) {
+        return post.content; // Fallback if content is old plain text/HTML
       }
-    });
-  };
+    })(),
+    editable: false, // Disables all editing capabilities
+    immediatelyRender: false,
+    editorProps: {
+      attributes: {
+        // We preserve your original font-medium and text colors, adding Tailwind Typography classes
+        class: "prose prose-invert max-w-none text-lg leading-relaxed text-foreground/80 font-medium [&_ul]:list-disc [&_ul]:ml-6 [&_ol]:list-decimal [&_ol]:ml-6 [&_pre]:bg-[#1e1e1e] [&_pre]:p-5 [&_pre]:rounded-2xl",
+      },
+    },
+  });
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -125,7 +132,7 @@ export default function PostClient({
                 </button>
 
                 {showMenu && (
-                  <div className="absolute right-0 mt-3 w-56 bg-card border border-primary/10 shadow-2xl rounded-3xl overflow-hidden z-[60] animate-in fade-in zoom-in-95 duration-200">
+                  <div className="absolute right-0 mt-3 w-56 bg-card border border-primary/10 shadow-2xl rounded-3xl overflow-hidden z-60 animate-in fade-in zoom-in-95 duration-200">
                     <Link
                       href={`/post/${post.id}/edit`}
                       className="flex items-center gap-3 px-6 py-4 text-sm font-black hover:bg-primary/5 text-foreground/80 hover:text-primary transition-colors border-b border-primary/5"
@@ -169,8 +176,8 @@ export default function PostClient({
           </div>
         </div>
 
-        <div className="text-lg leading-relaxed text-foreground/80 space-y-6 border-t border-primary/5 pt-10 whitespace-pre-wrap font-medium">
-          {post.content}
+        <div className="border-t border-primary/5 pt-10">
+          <EditorContent editor={editor} />
         </div>
 
         {/* Attachments Section */}
@@ -213,16 +220,6 @@ export default function PostClient({
                     >
                       <ExternalLink size={18} />
                     </a>
-                    {/* DELETE */}
-                    {canEdit && (
-                      <button 
-                        disabled={isDeleting}
-                        onClick={() => handleDeleteAttachment(file.id)}
-                        className="p-2 text-muted-foreground hover:text-red-500 transition-colors disabled:opacity-30"
-                      >
-                        <Trash2 size={16} />
-                      </button>
-                    )}
                   </div>
                 </div>
               ))}

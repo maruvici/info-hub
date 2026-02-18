@@ -52,3 +52,13 @@
   align-items: center;
   gap: 0.5rem;
 }
+
+/* TipTap Editor Placeholder Styling */
+.tiptap p.is-editor-empty:first-child::before {
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+  opacity: 0.5;
+}

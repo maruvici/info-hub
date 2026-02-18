@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { updatePost } from "@/app/actions/posts";
 import { uploadAttachment, deleteAttachment } from "@/app/actions/attachments";
+import RichTextEditor from "@/components/ui/rich-text-editor";
 
 // Validation Constants (Same as Create Post)
 const MAX_FILE_SIZE = 25 * 1024 * 1024; // 25MB
@@ -35,6 +36,16 @@ export default function EditPostClient({ post, initialAttachments = [] }: { post
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [deletedFileIds, setDeletedFileIds] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const [editorJSON, setEditorJSON] = useState<any>(() => {
+    try {
+      // Parse the JSON string from the database back into an object
+      return JSON.parse(post.content);
+    } catch (e) {
+      // Fallback if the post was created before the rich text update
+      return post.content; 
+    }
+  });
 
   // Filter out attachments that are marked for deletion for the UI
   const visibleExistingAttachments = initialAttachments.filter(
@@ -102,14 +113,14 @@ export default function EditPostClient({ post, initialAttachments = [] }: { post
     const title = formData.get("title") as string;
     const content = formData.get("content") as string;
 
-    if (!title || !content) return alert("Please fill in all fields");
+    if (!title || !editorJSON) return alert("Please fill in all fields");
 
     setIsPending(true);
     try {
       // 1. Update text content
       await updatePost(post.id, {
         title,
-        content,
+        content: JSON.stringify(editorJSON),
         type: postType,
         tags: tags,
       });
@@ -193,21 +204,11 @@ export default function EditPostClient({ post, initialAttachments = [] }: { post
             </div>
           </div>
 
-          {/* 4. Content */}
-          <div className="space-y-4">
-             <div className="flex flex-wrap items-center gap-1 pb-4 border-b border-primary/5">
-                <EditorToolbarButton icon={<Bold size={18}/>} />
-                <EditorToolbarButton icon={<Italic size={18}/>} />
-                <EditorToolbarButton icon={<List size={18}/>} />
-                <EditorToolbarButton icon={<LinkIcon size={18}/>} />
-                <EditorToolbarButton icon={<Code size={18}/>} />
-             </div>
-             <textarea 
-               name="content"
-               defaultValue={post.content}
-               required
-               placeholder="Write your content here..."
-               className="w-full min-h-[300px] bg-transparent border-none outline-none resize-none text-lg leading-relaxed placeholder:opacity-20 focus:ring-0"
+          {/* 4. Rich Text Editor */}
+          <div className="space-y-4 pt-4 border-t border-primary/5">
+             <RichTextEditor 
+               content={editorJSON} 
+               onChange={(json) => setEditorJSON(json)} 
              />
           </div>
 
@@ -231,7 +232,7 @@ export default function EditPostClient({ post, initialAttachments = [] }: { post
                     }`}
                   >
                     <FileText size={14} className={isMarkedForDeletion ? "text-red-500" : "text-primary"} />
-                    <span className={`text-xs font-bold truncate max-w-[150px] ${isMarkedForDeletion ? "line-through text-red-500" : ""}`}>
+                    <span className={`text-xs font-bold truncate max-w-37.5 ${isMarkedForDeletion ? "line-through text-red-500" : ""}`}>
                       {file.fileName}
                     </span>
                     <button 
@@ -250,7 +251,7 @@ export default function EditPostClient({ post, initialAttachments = [] }: { post
               {selectedFiles.map((file, index) => (
                 <div key={index} className="flex items-center gap-2 px-4 py-2 bg-primary/5 border border-primary/10 rounded-xl">
                   <FileText size={14} className="text-primary" />
-                  <span className="text-xs font-bold truncate max-w-[150px]">{file.name} (New)</span>
+                  <span className="text-xs font-bold truncate max-w-37.5">{file.name} (New)</span>
                   <button type="button" onClick={() => removeSelectedFile(index)} className="text-muted-foreground hover:text-red-500">
                     <X size={14} />
                   </button>
