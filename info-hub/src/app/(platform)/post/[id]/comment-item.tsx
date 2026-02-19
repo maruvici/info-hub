@@ -191,7 +191,6 @@ export default function CommentItem({ comment, postId, currentUserId, currentUse
                   key={reply.id} 
                   comment={reply} 
                   postId={postId} 
-                  // 👇 Critical: Pass permissions to children
                   currentUserId={currentUserId}
                   currentUserRole={currentUserRole}
                 />

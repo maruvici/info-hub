@@ -8,7 +8,6 @@ export interface User {
   email: string;
   role: Role;
   team: Team;
-  photo_url?: string;
   created_at: string;
 }
 

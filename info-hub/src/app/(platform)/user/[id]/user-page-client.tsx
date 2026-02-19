@@ -119,7 +119,7 @@ function UserPosts({ posts }: { posts: any[] }) {
                                         <Link href={`/post/${post.id}`} className="font-black text-lg hover:text-primary transition-colors line-clamp-1">
                                             {post.title}
                                         </Link>
-                                        <div className="flex gap-3 text-xs items-center justify-center font-bold text-muted-foreground uppercase tracking-widest mt-1">
+                                        <div className="flex gap-3 text-xs items-center font-bold text-muted-foreground uppercase tracking-widest mt-1">
                                             <span>{post.createdAt}</span>
                                             <span className="flex items-center gap-1"><Heart size={10}/>{post.likes}</span>
                                             <span className="flex items-center gap-1"><Eye size={10}/> {post.views}</span>
@@ -144,9 +144,6 @@ function UserSettings() {
         </button>
         <button className="w-full p-4 border rounded-xl font-bold hover:bg-background transition-colors flex justify-between">
             Change Team <span>→</span>
-        </button>
-        <button className="w-full p-4 border rounded-xl font-bold hover:bg-background transition-colors flex justify-between">
-            Update Profile Picture <span>→</span>
         </button>
         <LogoutButton />
         </div>

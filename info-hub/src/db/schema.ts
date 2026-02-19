@@ -21,7 +21,6 @@ export const users = pgTable("users", {
   email: varchar("email", { length: 255 }).notNull().unique(),
   password: text("password").notNull(), // Hashed
   fullName: text("full_name").notNull(),
-  photoIdUrl: text("photo_id_url"), // Nullable
   role: roleEnum("role").default("User").notNull(),
   team: teamEnum("team").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),

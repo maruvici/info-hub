@@ -15,7 +15,6 @@ erDiagram
         string email UK
         string password "Hashed"
         string full_name
-        string photo_id_url "nullable"
         enum role "User, Admin"
         enum team "Digital Transformation, Service Delivery, Project Management, Infrastructure, Security, Product"
         datetime created_at

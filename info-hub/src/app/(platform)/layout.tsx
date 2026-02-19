@@ -1,4 +1,4 @@
-import { BookOpen, Search, User, LogOut, LayoutDashboard, UserCircle, Settings } from "lucide-react";
+import { BookOpen, User} from "lucide-react";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import Link from "next/link";
 import { auth } from "@/auth";

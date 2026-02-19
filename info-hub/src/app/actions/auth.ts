@@ -18,7 +18,6 @@ export async function signUpUser(prevState: ActionState, formData: FormData): Pr
   const password = formData.get("password") as string;
   const confirmPassword = formData.get("confirmPassword") as string;
   const team = formData.get("team") as any;
-  const photoIdFile = formData.get("photoId") as File | null;
 
   // 2. Define the schema inside the function for direct file access
   const SignUpSchema = z.object({
@@ -40,31 +39,14 @@ export async function signUpUser(prevState: ActionState, formData: FormData): Pr
     return { error: { confirmPassword: ["Passwords do not match"] } };
   }
 
-  // 5. Explicit File Validation 
-  if (photoIdFile && photoIdFile.size > 0) {
-    if (!ACCEPTED_IMAGE_TYPES.includes(photoIdFile.type)) {
-      return { 
-        error: { 
-          photoId: ["Unsupported file type. Please upload a JPG, PNG, GIF, or WEBP."] 
-        } 
-      };
-    }
-    // Limit size to 20MB for safety
-    if (photoIdFile.size > 20 * 1024 * 1024) {
-      return { error: { photoId: ["File is too large (Max 20MB)"] } };
-    }
-  }
-
   try {
     const hashedPassword = await hash(password, 10);
-    const photoIdUrl = photoIdFile && photoIdFile.size > 0 ? `uploads/${photoIdFile.name}` : null;
 
     await db.insert(users).values({
       fullName,
       email,
       password: hashedPassword,
       team,
-      photoIdUrl,
       role: "User",
     });
   } catch (error: any) {

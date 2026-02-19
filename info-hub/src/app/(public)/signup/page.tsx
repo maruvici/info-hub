@@ -3,13 +3,12 @@
 import { useActionState, useState } from "react"; 
 import { signUpUser } from "@/app/actions/auth";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
-import { BookOpen, Mail, Lock, User, Users, Camera, CheckCircle2 } from "lucide-react";
+import { BookOpen, Mail, Lock, User, Users } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 
 export default function SignUpPage() {
   const [state, action, isPending] = useActionState(signUpUser, null);
-  const [fileName, setFileName] = useState<string | null>(null);
   const searchParams = useSearchParams();
   const prefilledEmail = searchParams.get("email") || "";
   const prefilledName = searchParams.get("name") || "";
@@ -55,13 +54,13 @@ export default function SignUpPage() {
 
             {/* Full Name */}
             <div className="md:col-span-2">
-              <CustomInput name="fullName" defaultValue={prefilledName} label="Full Name" placeholder="John Doe" icon={User} required />
+              <CustomInput name="fullName" defaultValue={prefilledName} label="Full Name" placeholder="Juan Dela Cruz" icon={User} required />
               {state?.error?.fullName && <p className="text-red-500 text-xs mt-1">{state.error.fullName}</p>}
             </div>
 
             {/* Email */}
             <div className="md:col-span-2">
-              <CustomInput name="email" defaultValue={prefilledEmail} label="Email Address" placeholder="john@company.com" icon={Mail} type="email" required />
+              <CustomInput name="email" defaultValue={prefilledEmail} label="Email Address" placeholder="juandelacruz@company.com" icon={Mail} type="email" required />
               {state?.error?.email && <p className="text-red-500 text-xs mt-1">{state.error.email}</p>}
             </div>
 
@@ -93,35 +92,6 @@ export default function SignUpPage() {
             {/* Confirm Password */}
             <CustomInput name="confirmPassword" label="Confirm Password" placeholder="••••••••" icon={Lock} type="password" required />
               {state?.error?.confirmPassword && <p className="text-red-500 text-xs mt-1">{state.error.confirmPassword}</p>}
-
-            {/* Photo ID Upload (Optional) */}
-            <div className="md:col-span-2 pt-2">
-              <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-2">Photo ID (Optional)</label>
-              <div className="mt-2 flex items-center gap-4">
-                <label className="flex items-center gap-2 px-6 py-3 bg-background/50 hover:bg-primary/5 border-2 border-dashed border-primary/10 rounded-2xl cursor-pointer transition-all group">
-                  <Camera className="text-primary group-hover:scale-110 transition-transform" size={20} />
-                  <span className="text-sm font-bold text-muted-foreground">Upload ID</span>
-                  <input 
-                    type="file" 
-                    accept="image/*"
-                    name="photoId" // This matches the formData.get("photoId") in the action
-                    className="hidden" 
-                    onChange={(e) => setFileName(e.target.files?.[0]?.name || null)} 
-                  />
-                  {state?.error?.photoId && (
-                    <p className="text-red-500 text-[10px] font-bold mt-2 ml-2 italic">
-                      {state.error.photoId[0]}
-                    </p>
-                  )}
-                </label>
-                {fileName && (
-                  <div className="flex items-center gap-2 text-xs font-bold text-primary animate-in fade-in slide-in-from-left-2">
-                    <CheckCircle2 size={16} />
-                    <span className="truncate max-w-[150px]">{fileName}</span>
-                  </div>
-                )}
-              </div>
-            </div>
 
             {/* Action Buttons */}
             <div className="md:col-span-2 pt-6 flex flex-col gap-4">
