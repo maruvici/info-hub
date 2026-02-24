@@ -1,18 +1,25 @@
 "use client";
 
-import { useState } from "react";
-import { User, FileText, Settings, Mail, Shield, Users, Heart, Eye, Calendar, BookOpen, MessageSquare, HelpCircle, Trash2 } from "lucide-react";
+import { useState, useTransition } from "react";
+import { User, FileText, Settings, Mail, Shield, Users, Heart, Eye, Calendar, BookOpen, MessageSquare, HelpCircle, Trash2, CheckCircle2, XCircle } from "lucide-react";
 import { LogoutButton } from "@/components/ui/logout-button";
 import Link from "next/link";
+import { changePassword, changeTeam, changeUserRole } from "@/app/actions/users";
 
 type Tab = "Details" | "Posts" | "Settings";
+type ValidRole = "User" | "Admin"
 
 interface UserPageClientProps {
   user: any; 
   initialTab: Tab;
+  posts: any[];
+  stats: any;
+  allUsers: any[];
 }
 
-export default function UserPageClient({ user, posts, stats, initialTab }: any) {
+const ROLES = ["User", "Admin"];
+
+export default function UserPageClient({ user, posts, stats, allUsers, initialTab }: any) {
   const [activeTab, setActiveTab] = useState<Tab>(initialTab);
 
   return (
@@ -43,7 +50,7 @@ export default function UserPageClient({ user, posts, stats, initialTab }: any) 
       <main className="flex-1 bg-card rounded-3xl p-8 shadow-sm">
         {activeTab === "Details" && <UserDetails user={user} stats={stats} />}
         {activeTab === "Posts" && <UserPosts posts={posts} />}
-        {activeTab === "Settings" && <UserSettings />}
+        {activeTab === "Settings" && <UserSettings user={user} allUsers={allUsers}/>}
       </main>
     </div>
   );
@@ -135,19 +142,195 @@ function UserPosts({ posts }: { posts: any[] }) {
     );
 }
 
-function UserSettings() {
-    return (
-        <div className="space-y-6">
-        <h3 className="text-xl font-black border-b pb-4 text-red-500">Account Settings</h3>
-        <button className="w-full p-4 border rounded-xl font-bold hover:bg-background transition-colors flex justify-between">
-            Change Password <span>→</span>
-        </button>
-        <button className="w-full p-4 border rounded-xl font-bold hover:bg-background transition-colors flex justify-between">
-            Change Team <span>→</span>
-        </button>
-        <LogoutButton />
+function UserSettings({ user, allUsers = [] }: { user: any, allUsers?: any[] }) {
+  const [activeForm, setActiveForm] = useState<"password" | "team" | "roles" | null>(null);
+  const [isPending, startTransition] = useTransition();
+  const [message, setMessage] = useState<{ type: "success" | "error", text: string } | null>(null);
+
+  const handlePasswordSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setMessage(null);
+    const formData = new FormData(e.currentTarget);
+    
+    startTransition(async () => {
+      try {
+        await changePassword(formData);
+        setMessage({ type: "success", text: "Password updated successfully!" });
+        setActiveForm(null); // Close form on success
+      } catch (error: any) {
+        setMessage({ type: "error", text: error.message });
+      }
+    });
+  };
+
+  const handleTeamSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setMessage(null);
+    const formData = new FormData(e.currentTarget);
+
+    startTransition(async () => {
+      try {
+        await changeTeam(formData);
+        setMessage({ type: "success", text: "Team updated successfully!" });
+        setActiveForm(null);
+      } catch (error: any) {
+        setMessage({ type: "error", text: error.message });
+      }
+    });
+  };
+
+  const handleRoleChange = (targetUserId: string, newRole: ValidRole) => {
+    setMessage(null);
+    startTransition(async () => {
+      try {
+        await changeUserRole(targetUserId, newRole);
+        setMessage({ type: "success", text: "User role updated successfully!" });
+      } catch (error: any) {
+        setMessage({ type: "error", text: error.message });
+      }
+    });
+  };
+
+  // Filter out the current user and any other Admins
+  const eligibleUsers = allUsers.filter(u => u.id !== user.id && u.role !== "Admin");
+
+  return (
+    <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2">
+      <h3 className="text-xl font-black border-b border-primary/5 pb-4 text-red-500">Account Settings</h3>
+      
+      {/* Feedback Message */}
+      {message && (
+        <div className={`p-4 rounded-xl flex items-center gap-3 font-bold text-sm ${message.type === "success" ? "bg-green-500/10 text-green-500" : "bg-red-500/10 text-red-500"}`}>
+          {message.type === "success" ? <CheckCircle2 size={18} /> : <XCircle size={18} />}
+          {message.text}
         </div>
-    );
+      )}
+
+      {/* CHANGE PASSWORD ACCORDION */}
+      <div className="border border-red-500 rounded-2xl overflow-hidden transition-all">
+        <button 
+          onClick={() => setActiveForm(activeForm === "password" ? null : "password")}
+          className="w-full p-5 font-bold hover:bg-primary/5 transition-colors flex justify-between items-center bg-card"
+        >
+          Change Password <span className={`transition-transform ${activeForm === "password" ? "rotate-90" : ""}`}>→</span>
+        </button>
+        
+        {activeForm === "password" && (
+          <form onSubmit={handlePasswordSubmit} className="p-5 border-t border-primary/10 bg-secondary/20 space-y-4">
+            <div className="space-y-1">
+              <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-1">Current Password</label>
+              <input name="currentPassword" type="password" required className="w-full p-3 rounded-xl border-none bg-background focus:ring-2 focus:ring-primary outline-none" placeholder="••••••••" />
+            </div>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="space-y-1">
+                <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-1">New Password</label>
+                <input name="newPassword" type="password" required minLength={8} className="w-full p-3 rounded-xl border-none bg-background focus:ring-2 focus:ring-primary outline-none" placeholder="••••••••" />
+              </div>
+              <div className="space-y-1">
+                <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-1">Confirm Password</label>
+                <input name="confirmPassword" type="password" required minLength={8} className="w-full p-3 rounded-xl border-none bg-background focus:ring-2 focus:ring-primary outline-none" placeholder="••••••••" />
+              </div>
+            </div>
+            <div className="pt-2 flex justify-end">
+              <button disabled={isPending} type="submit" className="px-6 py-3 bg-primary text-white font-black rounded-xl hover:scale-105 transition-all disabled:opacity-50">
+                {isPending ? "Updating..." : "Update Password"}
+              </button>
+            </div>
+          </form>
+        )}
+      </div>
+
+      {/* CHANGE TEAM ACCORDION */}
+      <div className="border border-red-500 rounded-2xl overflow-hidden transition-all">
+        <button 
+          onClick={() => setActiveForm(activeForm === "team" ? null : "team")}
+          className="w-full p-5 font-bold hover:bg-primary/5 transition-colors flex justify-between items-center bg-card"
+        >
+          Change Team <span className={`transition-transform ${activeForm === "team" ? "rotate-90" : ""}`}>→</span>
+        </button>
+        
+        {activeForm === "team" && (
+          <form onSubmit={handleTeamSubmit} className="p-5 border-t border-primary/10 bg-secondary/20 space-y-4">
+            <div className="space-y-1">
+            <label className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-1">
+              Select New Team
+            </label>
+            <select 
+              name="team" 
+              defaultValue={user.team} 
+              required 
+              className="w-full p-3 rounded-xl border-none bg-background focus:ring-2 focus:ring-primary outline-none appearance-none font-bold"
+            >
+              <option value="Digital Transformation">Digital Transformation</option>
+              <option value="Service Delivery">Service Delivery</option>
+              <option value="Project Management">Project Management</option>
+              <option value="Infrastructure">Infrastructure</option>
+              <option value="Security">Security</option>
+              <option value="Product">Product</option>
+            </select>
+          </div>
+            <div className="pt-2 flex justify-end">
+              <button disabled={isPending} type="submit" className="px-6 py-3 bg-primary text-white font-black rounded-xl hover:scale-105 transition-all disabled:opacity-50">
+                {isPending ? "Updating..." : "Update Team"}
+              </button>
+            </div>
+          </form>
+        )}
+      </div>
+
+      {/* CHANGE USERS ROLE ACCORDION (ADMIN ONLY) */}
+      {user.role === "Admin" && (
+        <div className="border border-red-500 rounded-2xl overflow-hidden transition-all shadow-sm">
+          <button 
+            onClick={() => setActiveForm(activeForm === "roles" ? null : "roles")}
+            className="w-full p-5 font-bold hover:bg-primary/5 transition-colors flex justify-between items-center bg-card text-red-500"
+          >
+            <div className="flex items-center gap-3">
+              <Shield size={18} /> Manage User Roles
+            </div>
+            <span className={`transition-transform ${activeForm === "roles" ? "rotate-90" : ""}`}>→</span>
+          </button>
+          
+          {activeForm === "roles" && (
+            <div className="p-5 border-t border-primary/10 bg-secondary/20 space-y-3 max-h-96 overflow-y-auto">
+              {eligibleUsers.length === 0 ? (
+                <p className="text-center text-sm font-bold text-muted-foreground italic py-4">
+                  No eligible users available to modify.
+                </p>
+              ) : (
+                eligibleUsers.map((targetUser) => (
+                  <div key={targetUser.id} className="flex items-center justify-between p-4 bg-background rounded-xl border border-primary/5 shadow-sm">
+                    <div className="flex flex-col">
+                      <p className="font-bold text-sm">{targetUser.fullName}</p>
+                      <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mt-0.5">
+                        {targetUser.team || "No Team"} <span className="mx-1">•</span> Current Role: {targetUser.role || "User"}
+                      </p>
+                    </div>
+                    
+                    {/* The Select Dropdown */}
+                    <select
+                      defaultValue={targetUser.role || "User"}
+                      onChange={(e) => handleRoleChange(targetUser.id, e.target.value as ValidRole)}
+                      disabled={isPending}
+                      className="p-2 text-xs font-bold rounded-lg border-none bg-primary/10 text-primary outline-none focus:ring-2 focus:ring-primary cursor-pointer disabled:opacity-50 appearance-none text-center min-w-[100px]"
+                    >
+                      {ROLES.map((role) => (
+                        <option key={role} value={role}>{role}</option>
+                      ))}
+                    </select>
+                  </div>
+                ))
+              )}
+            </div>
+          )}
+        </div>
+      )}
+
+      <div className="pt-6">
+        <LogoutButton />
+      </div>
+    </div>
+  );
 }
 
 function DetailItem({ icon, label, value }: { icon: React.ReactNode, label: string, value: string }) {

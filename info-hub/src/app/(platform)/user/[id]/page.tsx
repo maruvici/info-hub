@@ -21,6 +21,16 @@ export default async function UserPage(props: {
 
   if (!currentUser) redirect("/login");
 
+  const allUsersData = await db
+    .select({
+      id: users.id,
+      fullName: users.fullName,
+      team: users.team,
+      role: users.role,
+    })
+    .from(users)
+    .orderBy(users.fullName);
+
   const userPosts = await db
     .select({
       id: posts.id,
@@ -75,6 +85,7 @@ export default async function UserPage(props: {
       }} 
       posts={formattedPosts}
       stats={stats}
+      allUsers={allUsersData}
       initialTab={activeTab as any} 
     />
   );
