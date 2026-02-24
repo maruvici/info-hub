@@ -1,5 +1,5 @@
 import { db } from "@/db";
-import { posts, attachments } from "@/db/schema";
+import { users, posts, attachments } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { auth } from "@/auth";
 import { notFound, redirect } from "next/navigation";
@@ -25,9 +25,17 @@ export default async function EditPostPage({ params }: { params: Promise<{ id: s
     .from(attachments)
     .where(eq(attachments.postId, id));
 
-  // Basic security check
-  if (postData.authorId !== session.user.id) {
-     redirect(`/post/${id}`); 
+  const [userResult] = await db
+    .select({ role: users.role })
+    .from(users)
+    .where(eq(users.id, session.user.id))
+    .limit(1);
+
+  const isAdmin = userResult?.role === "Admin";
+
+    // Basic security check
+  if (!isAdmin && postData.authorId !== session.user.id) {
+    redirect(`/post/${id}`); 
   }
 
   // 3. Pass the data to the client component
