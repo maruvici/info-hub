@@ -14,7 +14,8 @@
 5. ~~Editing and Deleting Posts and Comments~~
     - ~~User: Own Posts and Comments~~
     - ~~Admin: Any Posts and Comments~~
-6. Implement tags properly
+6. ~~Add password, team, and role change features~~
+7. ~~Implement tags as team filter~~
 
 # List of Features to Improve:
 1. Search Result Ranking

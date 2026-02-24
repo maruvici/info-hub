@@ -98,7 +98,7 @@ export default function DashboardClient({
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {/* Later, we can derive these from actual post tags */}
-                  {["tag1", "tag2", "tag3", "tag4"].map((tag) => (
+                  {["Digital Transformation", "Service Delivery", "Project Management", "Infrastructure", "Security", "Product"].map((tag) => (
                     <span 
                       key={tag} 
                       onClick={() => updateFilter("tag", activeTag === tag ? null : tag)}

@@ -22,6 +22,8 @@ const ALLOWED_TYPES = [
   'text/plain', 'text/csv'
 ];
 
+const AVAILABLE_TAGS=["Digital Transformation", "Service Delivery", "Project Management", "Infrastructure", "Security", "Product"];
+
 type PostType = 'Article' | 'Discussion' | 'Inquiry';
 
 export default function CreatePostClient({ user }: { user: any }) {
@@ -151,24 +153,44 @@ export default function CreatePostClient({ user }: { user: any }) {
           />
 
           {/* 3. Tag Input System */}
-          <div className="space-y-3">
-            <div className="flex flex-wrap gap-2 items-center min-h-12 p-2 bg-background/30 rounded-2xl border border-primary/5 focus-within:border-primary/20 transition-all">
-              <div className="p-2 text-primary"><Hash size={18} /></div>
-              {tags.map(tag => (
-                <span key={tag} className="flex items-center gap-1 px-3 py-1 bg-primary/10 text-primary rounded-lg text-xs font-bold animate-in fade-in zoom-in-95">
-                  {tag}
-                  <button type="button" onClick={() => removeTag(tag)} className="hover:text-red-500"><X size={14}/></button>
-                </span>
-              ))}
-              <input 
-                type="text"
-                value={tagInput}
-                onChange={(e) => setTagInput(e.target.value)}
-                onKeyDown={addTag}
-                placeholder={tags.length === 0 ? "Add tags (press Enter)..." : ""}
-                className="flex-1 bg-transparent border-none outline-none text-sm min-w-30 focus:ring-0"
-              />
+          <div className="space-y-4">
+            <div className="flex items-center gap-2 text-primary mb-1">
+              <Hash size={18} />
+              <span className="text-sm font-black uppercase tracking-widest">Select Tags</span>
             </div>
+
+            <div className="flex flex-wrap gap-2 p-4 bg-background/30 rounded-3xl border border-primary/5">
+              {AVAILABLE_TAGS.map((tag) => {
+                const isSelected = tags.includes(tag);
+                
+                return (
+                  <button
+                    key={tag}
+                    type="button"
+                    onClick={() => {
+                      if (isSelected) {
+                        removeTag(tag);
+                      } else {
+                        setTags([...tags, tag]); 
+                      }
+                    }}
+                    className={`px-1 py-1 rounded-xl text-xs font-bold transition-all border-2 ${
+                      isSelected 
+                        ? "bg-primary text-white border-primary shadow-lg shadow-primary/20 scale-100" 
+                        : "bg-card text-muted-foreground border-transparent hover:border-primary/20 hover:text-primary"
+                    }`}
+                  >
+                    {tag}
+                  </button>
+                );
+              })}
+            </div>
+            
+            {tags.length === 0 && (
+              <p className="text-[10px] text-muted-foreground font-medium ml-2">
+                Please select at least one tag to categorize your post.
+              </p>
+            )}
           </div>
 
           {/* 4. Rich Text Editor */}
