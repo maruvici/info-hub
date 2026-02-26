@@ -110,7 +110,7 @@ function UserPosts({ posts }: { posts: any[] }) {
     }
 
     return (
-        <div className="space-y-4 animate-in fade-in slide-in-from-bottom-2">
+        <div className="pr-2 max-h-[400px] overflow-y-auto scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent">
             <h3 className="text-xl font-black border-b border-primary/5 pb-4">My Contributions</h3>
             <div className="grid gap-4">
                 {posts.map((post) => {

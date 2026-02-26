@@ -21,19 +21,14 @@ interface PostPreview {
 }
 
 export default function DashboardClient({ 
-  initialPosts, 
-  activeType, 
-  activeTag,
-  activeSort
+  initialPosts, activeType, activeTag, activeSort, currentPage, totalPages 
 }: { 
-  initialPosts: any[], 
-  activeType?: string, 
-  activeTag?: string,
-  activeSort?: string
+  initialPosts: any[], activeType?: string, activeTag?: string, 
+  activeSort?: string, currentPage: number, totalPages: number 
 }) {
   const router = useRouter();
-  const [isExpanded, setIsExpanded] = useState(true);
   const [posts] = useState<PostPreview[]>(initialPosts);
+  const [isExpanded, setIsExpanded] = useState(true);
 
   // Helper to update URL params
   const updateFilter = (key: string, value: string | null) => {
@@ -43,8 +38,8 @@ export default function DashboardClient({
     } else {
       params.delete(key);
     }
+    if (key !== "page") params.delete("page");
     router.push(`/dashboard?${params.toString()}`);
-    router.refresh();
   };
 
   return (
@@ -168,12 +163,28 @@ export default function DashboardClient({
           )}
         </div>
 
-        {/* Pagination Placeholder */}
-        <div className="flex justify-center items-center gap-4 py-6">
-          <button className="p-3 border rounded-full hover:bg-primary/5 transition-colors"><ChevronLeft size={20} /></button>
-          <span className="text-sm font-black uppercase tracking-widest opacity-50">Page 1 of 1</span>
-          <button className="p-3 border rounded-full hover:bg-primary/5 transition-colors"><ChevronRight size={20} /></button>
+        {/* Pagination Controls */}
+        <div className="flex justify-center items-center gap-6 py-10 border-t border-primary/5">
+        <button 
+          disabled={currentPage <= 1}
+          onClick={() => updateFilter("page", (currentPage - 1).toString())}
+          className="p-4 rounded-2xl bg-card border border-primary/10 hover:bg-primary hover:text-white disabled:opacity-30 disabled:hover:bg-card disabled:hover:text-foreground transition-all shadow-soft"
+        >
+          <ChevronLeft size={20} />
+        </button>
+
+        <div className="flex flex-col items-center">
+          <span className="text-lg font-black">Page {currentPage} of {totalPages || 1}</span>
         </div>
+
+        <button 
+          disabled={currentPage >= totalPages}
+          onClick={() => updateFilter("page", (currentPage + 1).toString())}
+          className="p-4 rounded-2xl bg-card border border-primary/10 hover:bg-primary hover:text-white disabled:opacity-30 disabled:hover:bg-card disabled:hover:text-foreground transition-all shadow-soft"
+        >
+          <ChevronRight size={20} />
+        </button>
+      </div>
       </main>
     </div>
   );

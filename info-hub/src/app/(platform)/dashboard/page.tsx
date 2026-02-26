@@ -8,12 +8,16 @@ import DashboardClient from "./dashboard-client";
 export const dynamic = "force-dynamic";
 
 export default async function DashboardPage(props: {
-  searchParams: Promise<{ type?: string; tag?: string; sort?: string; q?: string }>;
+  searchParams: Promise<{ type?: string; tag?: string; sort?: string; q?: string; page?: string }>;
 }) {
+  const searchParams = await props.searchParams;
+  const currentPage = Number(searchParams.page) || 1;
+  const pageSize = 10;
+  const offset = (currentPage - 1) * pageSize;
+
   const session = await auth();
   if (!session) redirect("/login");
 
-  const searchParams = await props.searchParams;
   const typeFilter = searchParams.type;
   const tagFilter = searchParams.tag;
   const sortOrder = searchParams.sort;
@@ -46,6 +50,14 @@ export default async function DashboardPage(props: {
       orderColumn = desc(posts.createdAt); // "Recent"
   }
 
+  const [totalCountResult] = await db
+    .select({ total: count(posts.id) })
+    .from(posts)
+    .where(conditions.length > 0 ? and(...conditions) : undefined);
+
+  const totalPosts = totalCountResult?.total || 0;
+  const totalPages = Math.ceil(totalPosts / pageSize);
+
   const dbPosts = await db
     .select({
       id: posts.id,
@@ -62,7 +74,9 @@ export default async function DashboardPage(props: {
     .leftJoin(likes, eq(posts.id, likes.postId))
     .groupBy(posts.id, users.id)
     .where(conditions.length > 0 ? and(...conditions) : undefined)
-    .orderBy(orderColumn);
+    .orderBy(orderColumn)
+    .limit(pageSize)
+    .offset(offset);
 
   const formattedPosts = dbPosts.map((post) => ({
     id: post.id,
@@ -81,6 +95,9 @@ export default async function DashboardPage(props: {
       initialPosts={formattedPosts} 
       activeType={typeFilter}
       activeTag={tagFilter}
+      activeSort={sortOrder}
+      currentPage={currentPage}
+      totalPages={totalPages}
     />
   );
 }

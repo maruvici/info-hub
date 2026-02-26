@@ -142,8 +142,8 @@ export default function EditPostClient({ post, initialAttachments = [] }: { post
           await uploadAttachment(post.id, fileData);
         }
       }
-      router.push(`/post/${post.id}`);
-      router.refresh();
+
+      window.location.assign(`/post/${post.id}`);
 
     } catch (err: any) {
         if (err.message !== "NEXT_REDIRECT") {
