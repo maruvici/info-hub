@@ -1,4 +1,4 @@
-import { BookOpen, User} from "lucide-react";
+import { User} from "lucide-react";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import Link from "next/link";
 import { auth } from "@/auth";
@@ -32,8 +32,16 @@ export default async function PlatformLayout({ children }: { children: React.Rea
       <header className="sticky top-0 z-40 w-full bg-card backdrop-blur py-1 px-4">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between gap-4">
           <Link href="/dashboard" className="flex items-center gap-2 font-bold text-xl text-gradient shrink-0">
-            <BookOpen className="h-6 w-6 text-primary" />
-            <span>info-hub</span>
+            <span 
+              className="w-4 h-8 bg-primary-gradient" 
+              style={{
+                WebkitMaskImage: 'url(/ssi-logo.svg)',
+                maskImage: 'url(/ssi-logo.svg)',
+                maskRepeat: 'no-repeat',
+                maskSize: 'contain'
+              }}
+            />
+            <span className="text-gradient">SSI Info Hub</span>
           </Link>
 
           <div className="container mx-auto px-4 h-16 flex items-center justify-end gap-4">

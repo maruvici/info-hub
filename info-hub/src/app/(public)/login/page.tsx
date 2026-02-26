@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
-import { BookOpen, Mail, Lock } from "lucide-react";
+import { Mail, Lock } from "lucide-react";
 import { useActionState } from "react";
 import { loginUser } from "@/app/actions/auth";
 
@@ -20,8 +20,16 @@ export default function LoginPage() {
       <div className="w-full max-w-md space-y-8">
         <div className="text-center">
           <Link href="/" className="inline-flex items-center gap-2 font-bold text-3xl text-gradient mb-2">
-            <BookOpen className="h-8 w-8 text-primary" />
-            <span>info-hub</span>
+            <span 
+              className="w-4 h-8 bg-primary-gradient" 
+              style={{
+                WebkitMaskImage: 'url(/ssi-logo.svg)',
+                maskImage: 'url(/ssi-logo.svg)',
+                maskRepeat: 'no-repeat',
+                maskSize: 'contain'
+              }}
+            />
+            <span className="text-gradient">SSI Info Hub</span>
           </Link>
           <p className="text-gray-500">Welcome back! Please enter your details.</p>
         </div>

@@ -17,9 +17,17 @@ export default function LandingPage() {
       {/* 1. Sticky Header */}
       <header className="sticky top-0 z-50 w-full bg-card backdrop-blur px-4">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 font-bold text-xl text-gradient">
-            <BookOpen className="h-6 w-6 text-primary" />
-            <span>info-hub</span>
+          <Link href="/" className="flex items-center gap-3 font-bold text-xl text-gradient">
+            <span 
+              className="w-4 h-8 bg-primary-gradient" 
+              style={{
+                WebkitMaskImage: 'url(/ssi-logo.svg)',
+                maskImage: 'url(/ssi-logo.svg)',
+                maskRepeat: 'no-repeat',
+                maskSize: 'contain'
+              }}
+            />
+            <span className="text-gradient">SSI Info Hub</span>
           </Link>
           <div className="flex items-center gap-4">
             <ThemeToggle />
@@ -43,11 +51,11 @@ export default function LandingPage() {
         {/* 2. Hero Section */}
         <section className="py-20 text-center space-y-6 container mx-auto px-4">
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight">
-            Your Team's Central <br />
+            Our Company's Central <br />
             <span className="text-primary">Knowledge Engine</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto text-gray-500 dark:text-gray-400">
-            Share wisdom, ask questions, and collaborate across departments. 
+            Share your wisdom, ask questions, and collaborate across our teams. 
             The single source of truth for our organization.
           </p>
           <div className="flex justify-center gap-4 pt-4">
@@ -63,13 +71,13 @@ export default function LandingPage() {
         {/* 3. Features Grid */}
         <section className="py-20 bg-[rgb(var(--card))]">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-12">Why info-hub?</h2>
+            <h2 className="text-3xl font-bold text-center mb-12">Why Join Our Hub?</h2>
             <div className="grid md:grid-cols-3 gap-8">
               <FeatureCard icon={<BookOpen />} title="Knowledge Base" desc="Structured articles and guides for every team." />
               <FeatureCard icon={<MessageSquare />} title="Discussions" desc="Open forums for brainstorming and debate." />
-              <FeatureCard icon={<Search />} title="Smart Search" desc="Find exactly what you need with tag filtering." />
+              <FeatureCard icon={<Search />} title="Smart Search" desc="Find exactly what you need using advanced filters." />
               <FeatureCard icon={<Zap />} title="Trending Topics" desc="See what's popular across the organization." />
-              <FeatureCard icon={<Users />} title="Community" desc="Connect with experts from other departments." />
+              <FeatureCard icon={<Users />} title="Community" desc="Connect with our experts across different teams." />
               <FeatureCard icon={<Shield />} title="Quality Content" desc="Verified solutions and curated resources." />
             </div>
           </div>
@@ -95,7 +103,7 @@ export default function LandingPage() {
              <div className="bg-card/80 backdrop-blur-md p-8 rounded-2xl border shadow-2xl text-center max-w-md mx-4">
                <h3 className="text-2xl font-bold mb-4">Join the Conversation</h3>
                <p className="mb-6 text-gray-500">
-                 Unlock access to thousands of internal articles, discussions, and inquiries.
+                 Unlock access to hundreds of internal articles, discussions, and inquiries.
                </p>
                <Link 
                  href="/signup"
@@ -120,7 +128,7 @@ export default function LandingPage() {
       </main>
 
       <footer className="py-8 border-t text-center text-sm text-gray-500">
-        <p>&copy; 2026 info-hub. Internal use only.</p>
+        <p>&copy; 2026 ssi-info-hub. Internal use only.</p>
       </footer>
     </div>
   );
