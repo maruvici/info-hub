@@ -27,7 +27,7 @@ export default function LoginPage() {
         </div>
 
         {/* Login Box */}
-        <div className="bg-background border rounded-2xl shadow-xl p-8 space-y-6">
+        <div className="bg-card border rounded-2xl shadow-xl p-8 space-y-6">
           
           {/* Main Credentials Form */}
           <form action={action} className="space-y-4">
@@ -82,7 +82,7 @@ export default function LoginPage() {
           <div className="relative">
             <div className="absolute inset-0 flex items-center"><span className="w-full border-t"></span></div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background px-2 text-gray-500">Or continue with</span>
+              <span className="bg-background px-2 rounded-lg">Or continue with</span>
             </div>
           </div>
 
@@ -103,12 +103,6 @@ export default function LoginPage() {
           </Link>
         </p>
       </div>
-      
-      <footer className="mt-12 text-xs text-gray-400 flex gap-4">
-        <Link href="#">Privacy Policy</Link>
-        <Link href="#">Terms of Service</Link>
-        <Link href="#">Contact Support</Link>
-      </footer>
     </div>
   );
 }

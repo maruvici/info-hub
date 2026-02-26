@@ -92,7 +92,7 @@ export default function LandingPage() {
 
           {/* Overlay */}
           <div className="absolute inset-0 flex items-center justify-center">
-             <div className="bg-background/80 backdrop-blur-md p-8 rounded-2xl border shadow-2xl text-center max-w-md mx-4">
+             <div className="bg-card/80 backdrop-blur-md p-8 rounded-2xl border shadow-2xl text-center max-w-md mx-4">
                <h3 className="text-2xl font-bold mb-4">Join the Conversation</h3>
                <p className="mb-6 text-gray-500">
                  Unlock access to thousands of internal articles, discussions, and inquiries.
