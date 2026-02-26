@@ -15,10 +15,10 @@
 @layer base {
   :root {
     /* Light Mode: White + Light Gray + Sky Blue */
-    --background: 255, 255, 255;
+    --background: 230, 230, 230;
     --foreground: 15 23 42;
     --primary: 14 165 233; /* Sky Blue */
-    --card: 240, 240, 240; /* Slightly bluer/lighter gray */
+    --card: 245, 245, 245; /* Slightly bluer/lighter gray */
     --card-foreground: 15 23 42;
   }
 

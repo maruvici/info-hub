@@ -5,6 +5,7 @@ import { Heart, Reply, CornerDownRight, MoreVertical, Edit2, Trash2, X, Check } 
 import { toggleCommentLike } from "@/app/actions/likes";
 import { deleteComment, updateComment } from "@/app/actions/comments";
 import CommentForm from "./comment-form";
+import Link from "next/link";
 
 interface CommentItemProps {
   comment: any;
@@ -86,7 +87,9 @@ export default function CommentItem({ comment, postId, currentUserId, currentUse
             {/* Header: Author + Date + Menu */}
             <div className="flex justify-between items-start mb-2">
               <div className="flex flex-col">
-                <span className="text-xs font-black text-primary uppercase">{comment.authorName}</span>
+                <Link href={`/user/view/${encodeURIComponent(comment.authorName)}`}>
+                  <span className="text-xs font-black text-primary uppercase hover:text-primary hover:underline transition-all">{comment.authorName}</span>
+                </Link>
                 <span className="text-[10px] font-bold text-muted-foreground uppercase opacity-50">{comment.date}</span>
               </div>
 
