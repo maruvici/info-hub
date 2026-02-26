@@ -46,7 +46,7 @@ export default function DashboardClient({
     <div className="flex flex-col gap-6 max-w-6xl mx-auto py-6">
       {/* 1. Vertically Collapsible Filter Section */}
       <aside className="w-full transition-all duration-500 ease-in-out">
-        <div className="bg-card/50 backdrop-blur-md rounded-3xl shadow-soft overflow-hidden border border-primary/5">
+        <div className="bg-card backdrop-blur-md rounded-3xl shadow-soft overflow-hidden border border-primary/5">
           <button 
             onClick={() => setIsExpanded(!isExpanded)}
             className="w-full flex items-center justify-between p-5 hover:bg-primary/5 transition-colors"
@@ -207,9 +207,11 @@ function PostCard({ post }: { post: PostPreview }) {
           </div>
           
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted-foreground">
-            <span className="flex items-center gap-1.5 font-black text-foreground uppercase tracking-widest">
-              <User size={14} className="text-primary"/> {post.author}
-            </span>
+            <Link href={`/user/view/${encodeURIComponent(post.author)}`}>
+              <span className="flex items-center gap-1.5 font-black text-foreground uppercase tracking-widest hover:text-primary hover:underline transition-all">
+                <User size={14} className="text-primary"/> {post.author}
+              </span>
+            </Link>
             <span className="opacity-30">•</span>
             <span className="font-bold">{post.date}</span>
             <div className="flex gap-1">

@@ -155,9 +155,11 @@ export default function PostClient({
               <div className="w-8 h-8 rounded-full bg-primary-gradient flex items-center justify-center text-[10px] text-white">
                 {post.authorName[0]}
               </div>
-              <span className="text-foreground uppercase tracking-tight">
-                {post.authorName}
-              </span>
+              <Link href={`/user/view/${encodeURIComponent(post.authorName)}`}>
+                <span className="text-foreground uppercase tracking-tight hover:text-primary hover:underline transition-all">
+                  {post.authorName}
+                </span>
+              </Link>
             </div>
             <span className="opacity-30">•</span>
             <span className="uppercase tracking-widest text-[10px]">

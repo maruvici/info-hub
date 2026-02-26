@@ -16,11 +16,12 @@
     - ~~Admin: Any Posts and Comments~~
 6. ~~Add password, team, and role change features~~
 7. ~~Implement tags as team filter~~
+8. ~~Implement dashboard pagination~~
+9. ~~Add public user pages~~
 
 # List of Features to Improve:
 1. Search Result Ranking
-2. Improve regex search of tags
-3. Improve storage system handling
+2. Improve storage system handling
     - Replace Local Storage with Synology
     - Enforce no duplicate files in same post
     - Change server action behavior (25mb limit in nextjs config)

@@ -111,7 +111,7 @@ export default function CreatePostClient({ user }: { user: any }) {
       }
 
       // 3. NOW we redirect manually
-      router.push(`/post/${result.id}`);
+      window.location.assign(`/post/${result.id}`);
 
     } catch (error) {
       console.error("Publishing Error:", error);

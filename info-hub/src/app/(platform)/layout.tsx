@@ -41,7 +41,7 @@ export default async function PlatformLayout({ children }: { children: React.Rea
             <GlobalSearch />
             <div className="flex items-center gap-2 shrink-0">
               <ThemeToggle />
-              <Link href={`/user/${currentUser.id}`} className="p-2 rounded-full hover:bg-card transition-colors">
+              <Link href={'/user'} className="p-2 rounded-full hover:bg-card transition-colors">
                 <User size={20} />
               </Link>
             </div>
