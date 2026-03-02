@@ -22,14 +22,15 @@ const ALLOWED_TYPES = [
   'text/plain', 'text/csv'
 ];
 
-const AVAILABLE_TAGS=["Digital Transformation", "Service Delivery", "Project Management", "Infrastructure", "Security", "Product"];
+const AVAILABLE_TAGS=["Digital Transformation", "Service Delivery", "Project Management", "Infrastructure", "Security", "Product"] as const;
+type Team = (typeof AVAILABLE_TAGS)[number];
 
 type PostType = 'Article' | 'Discussion' | 'Inquiry';
 
-export default function CreatePostClient({ user }: { user: any }) {
+export default function CreatePostClient({ user, userTeam }: { user: any, userTeam: Team}) {
   const [postType, setPostType] = useState<PostType>('Article');
   const [tagInput, setTagInput] = useState("");
-  const [tags, setTags] = useState<string[]>([]);
+  const [tags, setTags] = useState<string[]>([userTeam]);
   const [isPending, setIsPending] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [editorJSON, setEditorJSON] = useState<any>(null);
@@ -69,16 +70,6 @@ export default function CreatePostClient({ user }: { user: any }) {
 
   const removeFile = (index: number) => {
     setSelectedFiles(prev => prev.filter((_, i) => i !== index));
-  };
-
-  const addTag = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && tagInput.trim()) {
-      e.preventDefault();
-      if (!tags.includes(tagInput.trim())) {
-        setTags([...tags, tagInput.trim()]);
-      }
-      setTagInput("");
-    }
   };
 
   const removeTag = (tagToRemove: string) => {
@@ -185,12 +176,6 @@ export default function CreatePostClient({ user }: { user: any }) {
                 );
               })}
             </div>
-            
-            {tags.length === 0 && (
-              <p className="text-[10px] text-muted-foreground font-medium ml-2">
-                Please select at least one tag to categorize your post.
-              </p>
-            )}
           </div>
 
           {/* 4. Rich Text Editor */}

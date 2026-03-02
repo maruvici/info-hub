@@ -70,26 +70,35 @@ export default function CommentItem({ comment, postId, currentUserId, currentUse
     });
   };
 
+  const isDeleted = comment.content === "[This comment has been deleted]";
   const canEdit = currentUserId && (currentUserRole === "Admin" || currentUserId === comment.authorId);
 
   return (
     <div className="group animate-in fade-in slide-in-from-left-2 duration-300">
       <div className="flex gap-4">
         {/* Avatar */}
-        <div className="shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-black text-xs shadow-sm">
-          {comment.authorName?.[0]}
+        <div className={`shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-black text-xs shadow-sm ${
+          isDeleted ? "bg-muted text-muted-foreground" : "bg-primary/10 text-primary"
+        }`}>
+          {isDeleted ? "?" : comment.authorName?.[0]}
         </div>
 
         <div className="flex-1 space-y-2">
           {/* Comment Bubble */}
-          <div className="bg-card p-5 rounded-[28px] border border-primary/5 shadow-soft hover:border-primary/20 transition-all relative group/bubble">
+          <div className={`bg-card p-5 rounded-[28px] border shadow-soft transition-all relative group/bubble ${
+            isDeleted ? "border-dashed border-muted bg-muted/5" : "border-primary/5 hover:border-primary/20"
+          }`}>
             
             {/* Header: Author + Date + Menu */}
             <div className="flex justify-between items-start mb-2">
               <div className="flex flex-col">
-                <Link href={`/user/view/${encodeURIComponent(comment.authorName)}`}>
-                  <span className="text-xs font-black text-primary uppercase hover:text-primary hover:underline transition-all">{comment.authorName}</span>
-                </Link>
+                {isDeleted ? (
+                  <span className="text-xs font-black text-muted-foreground uppercase">Deleted User</span>
+                ) : (
+                  <Link href={`/user/view/${encodeURIComponent(comment.authorName)}`}>
+                    <span className="text-xs font-black text-primary uppercase hover:underline">{comment.authorName}</span>
+                  </Link>
+                )}
                 <span className="text-[10px] font-bold text-muted-foreground uppercase opacity-50">{comment.date}</span>
               </div>
 
@@ -129,7 +138,7 @@ export default function CommentItem({ comment, postId, currentUserId, currentUse
                 <textarea 
                   value={editContent}
                   onChange={(e) => setEditContent(e.target.value)}
-                  className="w-full bg-background/50 border border-primary/10 rounded-xl p-3 text-sm focus:outline-none focus:ring-2 ring-primary/20 resize-none min-h-[80px]"
+                  className="w-full bg-background/50 border border-primary/10 rounded-xl p-3 text-sm focus:outline-none focus:ring-2 ring-primary/20 resize-none min-h-20"
                 />
                 <div className="flex justify-end gap-2">
                   <button 
@@ -148,22 +157,27 @@ export default function CommentItem({ comment, postId, currentUserId, currentUse
                 </div>
               </div>
             ) : (
-              <p className="text-sm text-foreground/80 leading-relaxed font-medium whitespace-pre-wrap">{comment.content}</p>
+              <p className={`text-sm leading-relaxed font-medium whitespace-pre-wrap ${
+                isDeleted ? "text-muted-foreground italic" : "text-foreground/80"
+              }`}>
+                {comment.content}
+              </p>
             )}
           </div>
 
           {/* Action Buttons (Like, Reply) */}
           <div className="flex items-center gap-6 pl-2">
-            <button 
-              onClick={handleLike}
-              disabled={isPending}
-              className={`flex items-center gap-1.5 text-xs font-black transition-all hover:scale-110 ${
-                isLiked ? "text-red-500" : "text-muted-foreground hover:text-red-500"
-              }`}
-            >
-              <Heart size={14} fill={isLiked ? "currentColor" : "none"} />
-              {likes}
-            </button>
+            {!isDeleted && (
+              <button 
+                onClick={handleLike}
+                className={`flex items-center gap-1.5 text-xs font-black transition-all ${
+                  isLiked ? "text-red-500" : "text-muted-foreground hover:text-red-500"
+                }`}
+              >
+                <Heart size={14} fill={isLiked ? "currentColor" : "none"} />
+                {likes}
+              </button>
+            )}
 
             <button
               onClick={() => setIsReplying(!isReplying)}
@@ -176,7 +190,7 @@ export default function CommentItem({ comment, postId, currentUserId, currentUse
           {/* Reply Form */}
           {isReplying && (
             <div className="mt-4 pl-4 border-l-2 border-primary/10 relative">
-               <CornerDownRight className="absolute -left-[9px] top-0 text-primary/30 bg-background" size={16}/>
+               <CornerDownRight className="absolute -left-2.25 top-0 text-primary/30 bg-background" size={16}/>
               <CommentForm 
                 postId={postId} 
                 parentId={comment.id} 

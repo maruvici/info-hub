@@ -41,7 +41,18 @@ export async function deleteComment(commentId: string) {
   const canDelete = currentUser.role === "Admin" || targetComment.authorId === session.user.id;
   if (!canDelete) throw new Error("Unauthorized");
 
-  await db.delete(comments).where(eq(comments.id, commentId));
+  // 3. Check if comment is a parent comment
+  const childComment = await db.query.comments.findFirst({
+    where: eq(comments.parentId, commentId),
+  });
+
+  const isParent = !!childComment;
+
+  if (isParent) {
+    await db.update(comments).set({ content: "[This comment has been deleted]"}).where(eq(comments.id, commentId));
+  } else {
+    await db.delete(comments).where(eq(comments.id, commentId));
+  }
   revalidatePath(`/post/${targetComment.postId}`);
 }
 
