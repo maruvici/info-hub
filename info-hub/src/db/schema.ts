@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, uuid, pgEnum, integer, varchar, uniqueIndex, index } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, uuid, pgEnum, integer, varchar, uniqueIndex, index, boolean } from "drizzle-orm/pg-core";
 
 // --- Enums ---
 export const roleEnum = pgEnum("role", ["User", "Admin"]);
@@ -21,7 +21,8 @@ export const users = pgTable("users", {
   role: roleEnum("role").default("User").notNull(),
   team: teamEnum("team").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-  microsoftId: text("microsoft_id").unique(), 
+  microsoftId: text("microsoft_id").unique(),
+  isActive: boolean("is_active").default(true).notNull(),
 }, (table) => ({
   teamIdx: index("users_team_idx").on(table.team),
 }));

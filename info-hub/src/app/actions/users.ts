@@ -101,3 +101,19 @@ export async function changeUserRole(targetUserId: string, newRole: ValidRole) {
     throw new Error("Failed to update user role.");
   }
 }
+
+export async function toggleUserStatus(userId: string, activeStatus: boolean) {
+  try {
+    await db
+      .update(users)
+      .set({ isActive: activeStatus })
+      .where(eq(users.id, userId));
+
+    // Refresh the page data so the UI reflects the change
+    revalidatePath("/admin/users"); // Adjust this path to wherever your Admin UI lives
+    return { success: true };
+  } catch (error) {
+    console.error("Failed to toggle user status:", error);
+    return { success: false, error: "Failed to update user status" };
+  }
+}

@@ -27,6 +27,7 @@ export default async function UserPage(props: {
       fullName: users.fullName,
       team: users.team,
       role: users.role,
+      isActive: users.isActive
     })
     .from(users)
     .orderBy(users.fullName);

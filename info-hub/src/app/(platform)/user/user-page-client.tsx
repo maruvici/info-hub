@@ -4,7 +4,7 @@ import { useState, useTransition } from "react";
 import { User, FileText, Settings, Mail, Shield, Users, Heart, Eye, Calendar, BookOpen, MessageSquare, HelpCircle, Trash2, CheckCircle2, XCircle } from "lucide-react";
 import { LogoutButton } from "@/components/ui/logout-button";
 import Link from "next/link";
-import { changePassword, changeTeam, changeUserRole } from "@/app/actions/users";
+import { changePassword, changeTeam, changeUserRole, toggleUserStatus } from "@/app/actions/users";
 
 type Tab = "Details" | "Posts" | "Settings";
 type ValidRole = "User" | "Admin"
@@ -110,7 +110,7 @@ function UserPosts({ posts }: { posts: any[] }) {
     }
 
     return (
-        <div className="pr-2 max-h-[400px] overflow-y-auto scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent">
+        <div className="pr-2 max-h-100 overflow-y-auto scrollbar-thin scrollbar-thumb-primary/20 scrollbar-track-transparent">
             <h3 className="text-xl font-black border-b border-primary/5 pb-4">My Contributions</h3>
             <div className="grid gap-4">
                 {posts.map((post) => {
@@ -146,6 +146,16 @@ function UserSettings({ user, allUsers = [] }: { user: any, allUsers?: any[] }) 
   const [activeForm, setActiveForm] = useState<"password" | "team" | "roles" | null>(null);
   const [isPending, startTransition] = useTransition();
   const [message, setMessage] = useState<{ type: "success" | "error", text: string } | null>(null);
+
+  const handleStatusToggle = (userId: string, newStatus: boolean) => {
+    startTransition(async () => {
+      const result = await toggleUserStatus(userId, newStatus);
+      
+      if (!result.success) {
+        alert("Error: Could not update user status.");
+      }
+    });
+  };
 
   const handlePasswordSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -278,52 +288,120 @@ function UserSettings({ user, allUsers = [] }: { user: any, allUsers?: any[] }) 
         )}
       </div>
 
-      {/* CHANGE USERS ROLE ACCORDION (ADMIN ONLY) */}
+      {/* MANAGE USER ROLES & STATUS (ADMIN ONLY) */}
       {user.role === "Admin" && (
-        <div className="border border-red-500 rounded-2xl overflow-hidden transition-all shadow-sm">
+        <>
+          {/* The Trigger Button */}
           <button 
-            onClick={() => setActiveForm(activeForm === "roles" ? null : "roles")}
-            className="w-full p-5 font-bold hover:bg-primary/5 transition-colors flex justify-between items-center bg-card text-red-500"
+            onClick={() => setActiveForm("roles")}
+            className="w-full p-5 font-bold border border-red-500 rounded-2xl bg-card text-red-500 hover:bg-primary/5 transition-all shadow-sm flex justify-between items-center"
           >
             <div className="flex items-center gap-3">
-              <Shield size={18} /> Manage User Roles
+              <Shield size={18} /> Manage User Access
             </div>
-            <span className={`transition-transform ${activeForm === "roles" ? "rotate-90" : ""}`}>→</span>
+            <span>→</span>
           </button>
           
+          {/* The Popup Window (Modal) */}
           {activeForm === "roles" && (
-            <div className="p-5 border-t border-primary/10 bg-secondary/20 space-y-3 max-h-96 overflow-y-auto">
-              {eligibleUsers.length === 0 ? (
-                <p className="text-center text-sm font-bold text-muted-foreground italic py-4">
-                  No eligible users available to modify.
-                </p>
-              ) : (
-                eligibleUsers.map((targetUser) => (
-                  <div key={targetUser.id} className="flex items-center justify-between p-4 bg-background rounded-xl border border-primary/5 shadow-sm">
-                    <div className="flex flex-col">
-                      <p className="font-bold text-sm">{targetUser.fullName}</p>
-                      <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mt-0.5">
-                        {targetUser.team || "No Team"} <span className="mx-1">•</span> Current Role: {targetUser.role || "User"}
-                      </p>
-                    </div>
-                    
-                    {/* The Select Dropdown */}
-                    <select
-                      defaultValue={targetUser.role || "User"}
-                      onChange={(e) => handleRoleChange(targetUser.id, e.target.value as ValidRole)}
-                      disabled={isPending}
-                      className="p-2 text-xs font-bold rounded-lg border-none bg-primary/10 text-primary outline-none focus:ring-2 focus:ring-primary cursor-pointer disabled:opacity-50 appearance-none text-center min-w-[100px]"
-                    >
-                      {ROLES.map((role) => (
-                        <option key={role} value={role}>{role}</option>
-                      ))}
-                    </select>
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+              {/* Backdrop */}
+              <div 
+                className="absolute inset-0 bg-background/80 backdrop-blur-sm" 
+                onClick={() => setActiveForm(null)}
+              />
+              
+              {/* Modal Content */}
+              <div className="relative w-full max-w-2xl bg-card border border-primary/10 rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[80vh]">
+                <div className="p-6 border-b border-primary/10 flex justify-between items-center bg-secondary/10">
+                  <div className="flex flex-col">
+                    <h3 className="font-bold flex items-center gap-2 text-red-500">
+                      <Shield size={20} /> User Access Management
+                    </h3>
+                    <p className="text-[12px] text-muted-foreground font-medium uppercase tracking-tighter">Toggle roles or deactivate offboarded employees</p>
                   </div>
-                ))
-              )}
+                  <button 
+                    onClick={() => setActiveForm(null)}
+                    className="p-2 hover:bg-primary/10 rounded-full transition-colors font-black"
+                  >
+                    ✕
+                  </button>
+                </div>
+
+                <div className="p-6 space-y-3 overflow-y-auto bg-secondary/5">
+                  {eligibleUsers.length === 0 ? (
+                    <p className="text-center text-sm font-bold text-muted-foreground italic py-8">
+                      No eligible users available to modify.
+                    </p>
+                  ) : (
+                    eligibleUsers.map((targetUser) => (
+                      <div key={targetUser.id} className="flex items-center justify-between p-4 bg-background rounded-xl border border-primary/5 shadow-sm">
+                        <div className="flex flex-col">
+                          <p className={`font-bold text-sm ${!targetUser.isActive ? 'text-muted-foreground line-through' : ''}`}>
+                            {targetUser.fullName}
+                          </p>
+                          <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mt-0.5">
+                            {targetUser.team || "No Team"} <span className="mx-1">•</span> {targetUser.role || "User"}
+                          </p>
+                        </div>
+                        
+                        <div className="flex items-center gap-3">
+                          {/* Status Toggle Button */}
+                          <button
+                            disabled={isPending}
+                            onClick={() => {
+                              const action = targetUser.isActive ? "deactivate" : "reactivate";
+                              if (window.confirm(`Are you sure you want to ${action} ${targetUser.fullName}'s account?`)) {
+                                handleStatusToggle(targetUser.id, !targetUser.isActive);
+                              }
+                            }}
+                            className={`px-3 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all ${
+                              targetUser.isActive 
+                                ? "bg-green-500/10 text-green-600 hover:bg-red-500/10 hover:text-red-600" 
+                                : "bg-red-500 text-white shadow-lg shadow-red-500/20"
+                            }`}
+                          >
+                            {targetUser.isActive ? "Active" : "Inactive"}
+                          </button>
+
+                          {/* Role Select */}
+                          <select
+                            defaultValue={targetUser.role || "User"}
+                            onChange={(e) => {
+                              const newRole = e.target.value as ValidRole;
+                              const oldRole = targetUser.role || "User";
+                              
+                              if (window.confirm(`Change ${targetUser.fullName}'s role from ${oldRole} to ${newRole}?`)) {
+                                handleRoleChange(targetUser.id, newRole);
+                              } else {
+                                e.target.value = oldRole;
+                              }
+                            }}
+                            disabled={isPending || !targetUser.isActive}
+                            className="p-2 text-xs font-bold rounded-lg border-none bg-primary/10 text-primary outline-none focus:ring-2 focus:ring-primary cursor-pointer disabled:opacity-30 appearance-none text-center min-w-24"
+                          >
+                            {ROLES.map((role) => (
+                              <option key={role} value={role}>{role}</option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+
+                <div className="p-4 bg-secondary/10 border-t border-primary/10 text-center">
+                  <button 
+                    onClick={() => setActiveForm(null)}
+                    className="px-6 py-2 text-xs font-bold bg-primary text-white rounded-xl shadow-md hover:opacity-90 transition-opacity"
+                  >
+                    Close Editor
+                  </button>
+                </div>
+              </div>
             </div>
           )}
-        </div>
+        </>
       )}
 
       <div className="pt-6">

@@ -49,11 +49,25 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   ],
   callbacks: {
     async signIn({ user, account, profile }) {
+      
+      // 1. GLOBAL CHECK
+      const userEmail = (profile?.email || user.email)?.toLowerCase();
+      
+      if (userEmail) {
+        const dbUser = await db.query.users.findFirst({
+          where: eq(users.email, userEmail)
+        });
+
+        if (dbUser && !dbUser.isActive) {
+          return false; // Auth.js will redirect to /auth/error?error=AccessDenied
+        }
+      }
+
+      // 2. MICROSOFT SPECIFIC LOGIC
       if (account?.provider === "microsoft-entra-id") {
         const email = (profile?.email || user.email) as string;
 
-        // Enforce @ssiph.com domain
-        if (!email || !email.toLowerCase().endsWith("@ssiph.com")) {
+        if (!email || !email.endsWith("@ssiph.com")) {
           return "/login?error=InvalidDomain";
         }
 
@@ -99,6 +113,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
   pages: {
     signIn: "/login",
+    error: "/auth/error",
   },
   secret: process.env.AUTH_SECRET,
 });

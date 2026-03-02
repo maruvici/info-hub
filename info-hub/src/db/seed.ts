@@ -7,9 +7,9 @@ dotenv.config({ path: ".env.local" });
 async function seed() {
   console.log("🌱 Starting Seeding...");
 
-  // 1. Create 10 Users
+  // 1. Create Users
   const insertedUsers = await db.insert(users).values(
-  Array.from({ length: 10 }).map(() => ({
+  Array.from({ length: 30 }).map(() => ({
     email: faker.internet.email({ provider: "ssiph.com" }),
     password: "hashed_password_here", 
     fullName: faker.person.fullName(),
@@ -19,12 +19,13 @@ async function seed() {
       "Infrastructure", "Security", "Product"
     ] as const), 
     role: "User" as const, // <--- Add "as const" here
+    isActive: true,
   }))
 ).returning();
 
   console.log(`✅ Created ${insertedUsers.length} users`);
 
-  // 2. Create 100 Posts
+  // 2. Create Posts
   const insertedPosts = await db.insert(posts).values(
     Array.from({ length: 1000 }).map(() => ({
       authorId: faker.helpers.arrayElement(insertedUsers).id,
@@ -38,7 +39,7 @@ async function seed() {
 
   console.log(`✅ Created ${insertedPosts.length} posts`);
 
-  // 3. Create 500 Comments (some as replies)
+  // 3. Create Comments (some as replies)
   for (const post of insertedPosts) {
     const rootComments = await db.insert(comments).values(
       Array.from({ length: 5 }).map(() => ({
