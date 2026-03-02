@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, uuid, pgEnum, integer, varchar, uniqueIndex } from "drizzle-orm/pg-core";
+import { pgTable, text, timestamp, uuid, pgEnum, integer, varchar, uniqueIndex, index } from "drizzle-orm/pg-core";
 
 // --- Enums ---
 export const roleEnum = pgEnum("role", ["User", "Admin"]);
@@ -21,9 +21,10 @@ export const users = pgTable("users", {
   role: roleEnum("role").default("User").notNull(),
   team: teamEnum("team").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-  // THIS REPLACES THE ACCOUNTS TABLE
   microsoftId: text("microsoft_id").unique(), 
-});
+}, (table) => ({
+  teamIdx: index("users_team_idx").on(table.team),
+}));
 
 // --- 2. POSTS ---
 export const posts = pgTable("posts", {
@@ -35,7 +36,11 @@ export const posts = pgTable("posts", {
   tags: text("tags").array(), 
   views: integer("views").default(0).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-});
+}, (table) => ({
+  authorIdx: index("posts_author_idx").on(table.authorId),
+  createdIdx: index("posts_created_at_idx").on(table.createdAt),
+  tagsIdx: index("posts_tags_idx").using("gin", table.tags),
+}));
 
 // --- 3. COMMENTS ---
 export const comments = pgTable("comments", {
@@ -45,7 +50,10 @@ export const comments = pgTable("comments", {
   parentId: uuid("parent_id"), 
   content: text("content").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-});
+}, (table) => ({
+  postIdx: index("comments_post_idx").on(table.postId),
+  parentIdx: index("comments_parent_idx").on(table.parentId),
+}));
 
 // --- 4. LIKES ---
 export const likes = pgTable("likes", {
@@ -69,4 +77,6 @@ export const attachments = pgTable("attachments", {
   fileType: text("file_type").notNull(),
   fileSize: integer("file_size"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
-});
+}, (table) => ({
+  postAttachmentsIdx: index("attachments_post_id_idx").on(table.postId),
+}));

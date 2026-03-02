@@ -34,4 +34,7 @@
 3. Install auth.js: `npm install next-auth@beta @auth/drizzle-adapter`
 4. Install uuid: `npm install uuid` `npm install -D @types/uuid`s
 5. Install TipTap: `npm install @tiptap/react @tiptap/starter-kit @tiptap/extension-link @tiptap/extension-placeholder`
-    6. Install typography: `npm install -D @tailwindcss/typography`
+    - Install typography: `npm install -D @tailwindcss/typography`
+6. Install faker: `npm install @faker-js/faker --save-dev`
+    - Empty Database: `npx tsx -r dotenv/config src/db/reset.ts dotenv_config_path=.env.local`
+    - Populate Database: `npx tsx -r dotenv/config src/db/seed.ts dotenv_config_path=.env.local`
