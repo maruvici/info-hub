@@ -1,6 +1,6 @@
 # List of Bugs to Solve:
 1. ~~Attaching non-images catches a runtime error.~~
-2. Restrict non "@ssiph.com" emails
+2. ~~Restrict non "@ssiph.com" emails~~
 3. Fix dasbhoard redirect loop
 4. Deleting parent comments does not delete child comments
 
@@ -18,6 +18,7 @@
 7. ~~Implement tags as team filter~~
 8. ~~Implement dashboard pagination~~
 9. ~~Add public user pages~~
+10. ~~Implement MS Login~~
 
 # List of Features to Improve:
 1. Search Result Ranking

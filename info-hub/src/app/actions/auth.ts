@@ -9,22 +9,28 @@ import { z } from "zod";
 import { signIn, signOut } from "@/auth";
 import { AuthError } from "next-auth";
 
-const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp", "image/gif"];
-
 export async function signUpUser(prevState: ActionState, formData: FormData): Promise<ActionState> {
-  // 1. Manually extract values for cleaner validation
+  // 1. Extract values
   const fullName = formData.get("fullName") as string;
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
   const confirmPassword = formData.get("confirmPassword") as string;
   const team = formData.get("team") as any;
+  const microsoftId = formData.get("microsoftId") as string;
 
   // 2. Define the schema inside the function for direct file access
   const SignUpSchema = z.object({
     fullName: z.string().min(2, "Name is too short"),
     email: z.string().email("Invalid email address"),
     password: z.string().min(8, "Password must be at least 8 characters"),
-    team: z.enum(["Digital Transformation", "Service Delivery", "Project Management", "Infrastructure", "Security", "Product"]),
+    team: z.enum([
+      "Digital Transformation", 
+      "Infrastructure", 
+      "Product", 
+      "Project Management", 
+      "Security", 
+      "Service Delivery"
+    ]),
   });
 
   // 3. Run primary validation
@@ -39,22 +45,31 @@ export async function signUpUser(prevState: ActionState, formData: FormData): Pr
     return { error: { confirmPassword: ["Passwords do not match"] } };
   }
 
+  // 5. Strict Domain Validation
+  if (!email.toLowerCase().endsWith("@ssiph.com")) {
+    return {
+      error: { message: "Access restricted. You must use an @ssiph.com email address." }
+    };
+  }
+
   try {
     const hashedPassword = await hash(password, 10);
 
+    // 6. Insert into DB (including the microsoftId)
     await db.insert(users).values({
       fullName,
-      email,
+      email: email.toLowerCase(),
       password: hashedPassword,
       team,
+      microsoftId: microsoftId || null, // Link the MS account if it exists
       role: "User",
     });
   } catch (error: any) {
     if (error.code === '23505') return { error: { email: ["Email already exists"] } };
-    return { error: { message: "Database connection failed." } };
+    return { error: { message: "Database error." } };
   }
 
-  redirect("/login");
+  redirect("/login?signup=success");
 }
 
 export async function loginUser(prevState: any, formData: FormData) {
@@ -79,6 +94,10 @@ export async function loginUser(prevState: any, formData: FormData) {
     // You MUST re-throw the error so Next.js can handle the redirect internally
     throw error;
   }
+}
+
+export async function loginWithMicrosoft() {
+  await signIn("microsoft-entra-id", { redirectTo: "/dashboard" });
 }
 
 export async function handleLogout() {

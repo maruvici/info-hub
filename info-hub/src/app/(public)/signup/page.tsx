@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState } from "react"; 
+import { useActionState, useState, useEffect } from "react"; 
 import { signUpUser } from "@/app/actions/auth";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { Mail, Lock, User, Users } from "lucide-react";
@@ -10,17 +10,29 @@ import Link from "next/link";
 export default function SignUpPage() {
   const [state, action, isPending] = useActionState(signUpUser, null);
   const searchParams = useSearchParams();
-  const prefilledEmail = searchParams.get("email") || "";
-  const prefilledName = searchParams.get("name") || "";
 
-  const teams = [
-    "Digital Transformation",
-    "Infrastructure",
-    "Product", 
-    "Project Management", 
-    "Security", 
-    "Service Delivery", 
-  ];
+  const [msData, setMsData] = useState({
+    email: "",
+    name: "",
+    microsoftId: ""
+  });
+
+  useEffect(() => {
+    const email = searchParams.get("email");
+    const name = searchParams.get("name");
+    const providerAccountId = searchParams.get("providerAccountId");
+
+    if (email) {
+      setMsData({
+        email: email || "",
+        name: name || "",
+        microsoftId: providerAccountId || ""
+      });
+
+      // CLEAN THE URL: This makes the email/ID disappear from the address bar
+      window.history.replaceState({}, "", "/signup");
+    }
+  }, [searchParams]);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-6 py-20">
@@ -57,20 +69,23 @@ export default function SignUpPage() {
           <form action={action} className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* General Error Message */}
             {state?.error?.message && (
-              <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-2xl text-red-500 text-sm font-bold">
+              <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-2xl text-red-500 text-sm font-bold md:col-span-2">
                 {state.error.message}
               </div>
             )}
 
+            {/* HIDDEN FIELD: Very important to link the MS Account in the DB */}
+            <input type="hidden" name="microsoftId" value={msData.microsoftId} />
+
             {/* Full Name */}
             <div className="md:col-span-2">
-              <CustomInput name="fullName" defaultValue={prefilledName} label="Full Name" placeholder="Juan Dela Cruz" icon={User} required />
+              <CustomInput name="fullName" defaultValue={msData.name} label="Full Name" placeholder="Juan Dela Cruz" icon={User} readOnly={!!msData.name} required />
               {state?.error?.fullName && <p className="text-red-500 text-xs mt-1">{state.error.fullName}</p>}
             </div>
 
             {/* Email */}
             <div className="md:col-span-2">
-              <CustomInput name="email" defaultValue={prefilledEmail} label="Email Address" placeholder="juandelacruz@company.com" icon={Mail} type="email" required />
+              <CustomInput name="email" defaultValue={msData.email} label="Email Address" placeholder="juandelacruz@ssiph.com" icon={Mail} type="email" readOnly={!!msData.email} required />
               {state?.error?.email && <p className="text-red-500 text-xs mt-1">{state.error.email}</p>}
             </div>
 
@@ -102,7 +117,6 @@ export default function SignUpPage() {
             {/* Confirm Password */}
             <CustomInput name="confirmPassword" label="Confirm Password" placeholder="••••••••" icon={Lock} type="password" required />
               {state?.error?.confirmPassword && <p className="text-red-500 text-xs mt-1">{state.error.confirmPassword}</p>}
-
             {/* Action Buttons */}
             <div className="md:col-span-2 pt-6 flex flex-col gap-4">
               <button disabled={isPending} className="w-full py-4 bg-primary-gradient text-white rounded-2xl font-black shadow-xl disabled:opacity-50">

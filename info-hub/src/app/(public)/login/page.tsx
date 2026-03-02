@@ -4,7 +4,7 @@ import Link from "next/link";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { Mail, Lock } from "lucide-react";
 import { useActionState } from "react";
-import { loginUser } from "@/app/actions/auth";
+import { loginUser, loginWithMicrosoft } from "@/app/actions/auth";
 
 export default function LoginPage() {
   // Hook to handle server action state (errors, loading)
@@ -95,13 +95,17 @@ export default function LoginPage() {
           </div>
 
           {/* Microsoft Login Form */}
-          <button type="submit" className="w-full py-3 border rounded-lg font-medium flex items-center justify-center gap-2 hover:bg-gray-50 dark:hover:bg-gray-400 transition-colors">
-            <svg className="h-5 w-5" viewBox="0 0 23 23" xmlns="http://www.w3.org/2000/svg">
-              <path fill="#f3f3f3" d="M0 0h23v23H0z"/><path fill="#f35325" d="M1 1h10v10H1z"/><path fill="#81bc06" d="M12 1h10v10H12z"/><path fill="#05a6f0" d="M1 12h10v10H1z"/><path fill="#ffba08" d="M12 12h10v10H12z"/>
-            </svg>
-            Login with Microsoft Account
-          </button>
-
+          <form action={loginWithMicrosoft}>
+            <button 
+              type="submit" 
+              className="w-full py-3 border rounded-lg font-medium flex items-center justify-center gap-3 hover:bg-gray-50 dark:hover:bg-white/5 transition-all active:scale-[0.98]"
+            >
+              <svg className="h-5 w-5" viewBox="0 0 23 23" xmlns="http://www.w3.org/2000/svg">
+                <path fill="#f35325" d="M1 1h10v10H1z"/><path fill="#81bc06" d="M12 1h10v10H12z"/><path fill="#05a6f0" d="M1 12h10v10H1z"/><path fill="#ffba08" d="M12 12h10v10H12z"/>
+              </svg>
+              <span>Login with Microsoft Account</span>
+            </button>
+          </form>
         </div>
 
         <p className="text-center text-sm text-gray-500">

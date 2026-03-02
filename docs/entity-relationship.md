@@ -15,8 +15,9 @@ erDiagram
         string email UK
         string password "Hashed"
         string full_name
+        string microsoft_id UK "Nullable - Links MS Account"
         enum role "User, Admin"
-        enum team "Digital Transformation, Service Delivery, Project Management, Infrastructure, Security, Product"
+        enum team "Digital Transformation, Infrastructure, Product, Project Management, Security, Service Delivery"
         datetime created_at
     }
 
