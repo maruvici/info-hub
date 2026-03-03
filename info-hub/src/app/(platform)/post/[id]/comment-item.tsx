@@ -114,12 +114,12 @@ export default function CommentItem({ comment, postId, currentUserId, currentUse
 
                   {showMenu && (
                     <div className="absolute right-0 top-6 w-32 bg-card border border-primary/10 shadow-xl rounded-xl overflow-hidden z-10 animate-in fade-in zoom-in-95">
-                      <button 
+                      {!isDeleted && (<button 
                         onClick={() => { setIsEditing(true); setShowMenu(false); }}
                         className="flex items-center gap-2 px-4 py-2.5 text-xs font-bold hover:bg-primary/5 w-full text-left"
                       >
                         <Edit2 size={12} /> Edit
-                      </button>
+                      </button>)}
                       <button 
                         onClick={handleDelete}
                         className="flex items-center gap-2 px-4 py-2.5 text-xs font-bold hover:bg-red-500/10 text-red-500 w-full text-left"

@@ -8,15 +8,22 @@ import CreatePostClient from "./create-post-client";
 export default async function CreatePostPage() {
   const session = await auth();
 
+  // Guard: Ensure session exists and has a user ID
   if (!session?.user?.id) {
     redirect("/login");
   }
 
-  const [user] = await db
-    .select({ team: users.team })
+  // 1. Fetch the full user record from the database using the session ID
+  const [dbUser] = await db
+    .select() // Selects all columns from the 'users' table
     .from(users)
-    .where(eq(users.id, session.user.id));
+    .where(eq(users.id, session.user.id)); 
 
-  // We pass the user data so the client knows who the author is
-  return <CreatePostClient user={session.user} userTeam={user?.team}/>;
+  // 2. Handle cases where the user might be in session but not in DB
+  if (!dbUser) {
+    redirect("/login");
+  }
+
+  // 3. Pass the actual database user object to the client component
+  return <CreatePostClient user={dbUser} userTeam={dbUser.team} />;
 }

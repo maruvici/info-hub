@@ -10,9 +10,9 @@ import path from "path";
 import { v4 as uuidv4 } from "uuid";
 
 // Change this to Synology path later
-const UPLOAD_DIR = path.join(process.cwd(), "public", "uploads");
+const UPLOAD_DIR = "/mnt/internaltool"
 
-const MAX_FILE_SIZE = 25 * 1024 * 1024;
+const MAX_FILE_SIZE = 100 * 1024 * 1024;
 const MAX_FILES_PER_POST = 3;
 // Basic extension check for server-side safety (MIME types can be spoofed, but this is a good first layer)
 const ALLOWED_EXTENSIONS = [

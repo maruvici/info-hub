@@ -116,7 +116,7 @@ export default function CreatePostClient({ user, userTeam }: { user: any, userTe
     <div className="max-w-4xl mx-auto py-10 px-6">
       <div className="space-y-10">
         <div className="text-center space-y-2">
-          <h1 className="text-4xl font-black text-gradient">Hello, {user.name?.split(' ')[0]}</h1>
+          <h1 className="text-4xl font-black text-gradient">Hello, {user.fullName?.split(' ')[0]}</h1>
           <h2 className="text-2xl font-black">What post do you want to make?</h2>
           <p className="text-muted-foreground font-medium">Categorize your thoughts and share them with the hub.</p>
         </div>
@@ -185,7 +185,9 @@ export default function CreatePostClient({ user, userTeam }: { user: any, userTe
 
           {/* 5. ATTACHMENT SYSTEM */}
           <div className="space-y-4 pt-4 border-t border-primary/5">
-            <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-2">Attachments</p>
+            <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-2">
+              Attachments ({selectedFiles.length}/{MAX_FILES})
+            </p>
             
             <div className="flex flex-wrap gap-3">
               {selectedFiles.map((file, index) => (

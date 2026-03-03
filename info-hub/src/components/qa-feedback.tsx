@@ -7,7 +7,7 @@ export function QAFeedback() {
   const [isOpen, setIsOpen] = useState(false);
 
   const forms = {
-    bugReport: "https://forms.office.com/r/your-bug-form-id",
+    bugReport: "https://forms.cloud.microsoft/r/dmEmaxjTtY",
     evaluation: "https://forms.cloud.microsoft/r/Nt9Mmjngva",
   };
 

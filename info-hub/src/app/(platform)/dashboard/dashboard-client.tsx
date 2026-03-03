@@ -110,7 +110,7 @@ export default function DashboardClient({
               </div>
             </div>
             {/* Clear All Option */}
-            {(activeType || activeTag) && (
+            {(activeType || activeTag || activeSort ) && (
               <button 
                 onClick={() => router.push('/dashboard')}
                 className="mt-6 text-[10px] font-black text-primary uppercase underline underline-offset-4"
