@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { db } from "@/db";
 import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
+import { Suspense } from "react";
 import GlobalSearch from "@/components/ui/global-search";
 
 export default async function PlatformLayout({ children }: { children: React.ReactNode }) {
@@ -43,7 +44,9 @@ export default async function PlatformLayout({ children }: { children: React.Rea
 
           {/* Search - Takes up all available middle space */}
           <div className="flex-1 min-w-0">
-            <GlobalSearch />
+            <Suspense fallback={<div className="h-10 w-full bg-muted animate-pulse rounded-full" />}>
+              <GlobalSearch />
+            </Suspense>
           </div>
 
           {/* Icons - Stay on the right */}

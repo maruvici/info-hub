@@ -31,21 +31,21 @@ export default function CommentForm({ postId, parentId, placeholder, onSuccess }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-3 w-full">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-2 md:gap-3 w-full">
       <div className="relative">
         <textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder={placeholder || "Write your thoughts..."}
           disabled={isPending}
-          className="w-full bg-background border border-primary/10 rounded-2xl p-4 pr-12 text-sm focus:outline-none focus:ring-2 ring-primary/20 min-h-25 transition-all resize-none"
+          className="w-full bg-background border border-primary/10 rounded-xl md:rounded-2xl p-3 md:p-4 pr-10 md:pr-12 text-xs md:text-sm focus:outline-none focus:ring-2 ring-primary/20 min-h-20 md:min-h-25 transition-all resize-none"
         />
         <button
           type="submit"
           disabled={isPending || !content.trim()}
-          className="absolute bottom-4 right-4 p-2 bg-primary text-white rounded-xl disabled:opacity-50 hover:scale-105 transition-all"
+          className="absolute bottom-4 right-2 md:right-4 p-1.5 md:p-2 bg-primary text-white rounded-lg md:rounded-xl disabled:opacity-50 hover:scale-105 transition-all"
         >
-          <Send size={18} />
+          <Send size={16} className="w-[10px] h-[10px] md:w-[18px] md:h-[18px]" />
         </button>
       </div>
     </form>
