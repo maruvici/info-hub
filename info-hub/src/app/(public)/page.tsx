@@ -82,7 +82,7 @@ export default function LandingPage() {
         <section className="py-12 md:py-20 container mx-auto px-4 relative">
           <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12">Latest Insights</h2>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 opacity-30 blur-[2px] pointer-events-none select-none">
+          <div className="grid grid-cols-2 gap-4 md:gap-6 opacity-30 blur-[2px] pointer-events-none select-none">
              {[1, 2, 3, 4].map((i) => (
                <div key={i} className="border p-4 md:p-6 rounded-xl space-y-4">
                  <div className="h-6 w-3/4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
