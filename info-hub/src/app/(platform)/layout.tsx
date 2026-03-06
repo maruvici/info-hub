@@ -1,4 +1,4 @@
-import { User} from "lucide-react";
+import { User } from "lucide-react";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import Link from "next/link";
 import { auth } from "@/auth";
@@ -11,13 +11,10 @@ import GlobalSearch from "@/components/ui/global-search";
 export default async function PlatformLayout({ children }: { children: React.ReactNode }) {
   const session = await auth();
 
-  // 1. Hard check: If no session, bounce to login
   if (!session?.user?.email) {
     redirect("/login");
   }
 
-  // 2. Database check: Ensure the user actually exists in Postgres
-  // (Prevents ghost sessions from deleted users)
   const currentUser = await db.query.users.findFirst({
     where: eq(users.email, session.user.email),
   });
@@ -28,12 +25,12 @@ export default async function PlatformLayout({ children }: { children: React.Rea
 
   return (
     <div className="min-h-screen flex flex-col bg-background">
-      {/* Sticky Global Header */}
-      <header className="sticky top-0 z-40 w-full bg-card backdrop-blur py-1 px-4">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between gap-4">
-          <Link href="/dashboard" className="flex items-center gap-2 font-bold text-xl text-gradient shrink-0">
+      <header className="sticky top-0 z-40 w-full bg-card backdrop-blur border-b border-primary/5 py-1">
+        <div className="container mx-auto px-2 sm:px-4 h-16 flex items-center gap-2 md:gap-4">
+          {/* Logo - Text hidden on smallest screens to save space */}
+          <Link href="/dashboard" className="flex items-center gap-2 font-bold text-lg md:text-xl text-gradient shrink-0">
             <span 
-              className="w-4 h-8 bg-primary-gradient" 
+              className="w-4 h-7 md:h-8 bg-primary-gradient shrink-0" 
               style={{
                 WebkitMaskImage: 'url(/ssi-logo.svg)',
                 maskImage: 'url(/ssi-logo.svg)',
@@ -41,25 +38,27 @@ export default async function PlatformLayout({ children }: { children: React.Rea
                 maskSize: 'contain'
               }}
             />
-            <span className="text-gradient">SSI Info Hub</span>
+            <span className="text-gradient hidden sm:block">SSI Info Hub</span>
           </Link>
 
-          <div className="container mx-auto px-4 h-16 flex items-center justify-end gap-4">
-            {/* Global Search */}
+          {/* Search - Takes up all available middle space */}
+          <div className="flex-1 min-w-0">
             <GlobalSearch />
-            <div className="flex items-center gap-2 shrink-0">
-              <ThemeToggle />
-              <Link href={'/user'} className="p-2 rounded-full hover:bg-card transition-colors">
-                <User size={20} />
-              </Link>
-            </div>
+          </div>
+
+          {/* Icons - Stay on the right */}
+          <div className="flex items-center gap-1 md:gap-2 shrink-0">
+            <ThemeToggle />
+            <Link href={'/user'} className="p-2 rounded-full hover:bg-muted transition-colors">
+              <User size={18} className="md:w-[20px] md:h-[20px]" />
+            </Link>
           </div>
         </div>
       </header>
 
-      <div className="container mx-auto px-4 py-8 flex-1">
+      <main className="container mx-auto px-4 py-6 md:py-8 flex-1">
         {children}
-      </div>
+      </main>
     </div>
   );
 }
