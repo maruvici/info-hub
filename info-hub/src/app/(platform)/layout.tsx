@@ -39,7 +39,7 @@ export default async function PlatformLayout({ children }: { children: React.Rea
                 maskSize: 'contain'
               }}
             />
-            <span className="text-gradient after:content-['SSInfoHub'] md:after:content-['SSI Info Hub']"></span>
+            <span className="text-gradient after:content-[var(--content)] [--content:'SSInfoHub'] md:[--content:'SSI_Info_Hub']"></span>
           </Link>
 
           {/* Search - Takes up all available middle space */}
