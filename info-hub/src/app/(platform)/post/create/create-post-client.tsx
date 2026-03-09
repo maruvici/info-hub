@@ -10,7 +10,8 @@ import { createPost } from "@/app/actions/posts";
 import { uploadAttachment } from "@/app/actions/attachments";
 import RichTextEditor from "@/components/ui/rich-text-editor";
 
-const MAX_FILE_SIZE = 25 * 1024 * 1024;
+// Updated to 100MB limit
+const MAX_FILE_SIZE = 100 * 1024 * 1024;
 const MAX_FILES = 3;
 const ALLOWED_TYPES = [
   'image/jpeg', 'image/png', 'image/gif', 'image/svg+xml', 'image/webp',
@@ -32,30 +33,63 @@ export default function CreatePostClient({ user, userTeam }: { user: any, userTe
   const [isPending, setIsPending] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [editorJSON, setEditorJSON] = useState<any>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
+  // Shared file processing logic for both input change and drag/drop
+  const processFiles = (newFiles: File[]) => {
+    if (selectedFiles.length + newFiles.length > MAX_FILES) {
+      alert(`You can only upload a maximum of ${MAX_FILES} files.`);
+      return;
+    }
+    const validFiles = newFiles.filter(file => {
+      if (file.size > MAX_FILE_SIZE) {
+        alert(`File "${file.name}" is too large (Max 100MB).`);
+        return false;
+      }
+      if (!ALLOWED_TYPES.includes(file.type)) {
+        alert(`File "${file.name}" format is not supported.`);
+        return false;
+      }
+      return true;
+    });
+    setSelectedFiles(prev => [...prev, ...validFiles]);
+  };
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      const newFiles = Array.from(e.target.files);
-      if (selectedFiles.length + newFiles.length > MAX_FILES) {
-        alert(`You can only upload a maximum of ${MAX_FILES} files.`);
-        return;
-      }
-      const validFiles = newFiles.filter(file => {
-        if (file.size > MAX_FILE_SIZE) {
-          alert(`File "${file.name}" is too large (Max 25MB).`);
-          return false;
-        }
-        if (!ALLOWED_TYPES.includes(file.type)) {
-          alert(`File "${file.name}" format is not supported.`);
-          return false;
-        }
-        return true;
-      });
-      setSelectedFiles(prev => [...prev, ...validFiles]);
+      processFiles(Array.from(e.target.files));
     }
     e.target.value = ""; 
+  };
+
+  // Drag and Drop Event Handlers
+  const handleDragOver = (e: React.DragEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    // Only set to false if we actually leave the form area
+    if (!e.currentTarget.contains(e.relatedTarget as Node)) {
+      setIsDragging(false);
+    }
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      processFiles(Array.from(e.dataTransfer.files));
+      e.dataTransfer.clearData();
+    }
   };
 
   const removeFile = (index: number) => {
@@ -104,8 +138,27 @@ export default function CreatePostClient({ user, userTeam }: { user: any, userTe
           <p className="text-xs md:text-sm text-muted-foreground font-medium">Categorize your thoughts and share them with the hub.</p>
         </div>
 
-        <form autoComplete="off" action={handlePublish} className="bg-card shadow-soft rounded-3xl md:rounded-[40px] p-5 md:p-12 space-y-6 md:space-y-8 relative overflow-hidden">
+        <form 
+          autoComplete="off" 
+          action={handlePublish} 
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+          className="bg-card shadow-soft rounded-3xl md:rounded-[40px] p-5 md:p-12 space-y-6 md:space-y-8 relative overflow-hidden"
+        >
+          {/* Top Gradient Bar */}
           <div className="absolute top-0 left-0 right-0 h-1.5 bg-primary-gradient opacity-80" />
+
+          {/* Drag & Drop Visual Overlay */}
+          {isDragging && (
+            <div className="absolute inset-0 z-50 bg-primary/10 border-[3px] border-primary border-dashed rounded-3xl md:rounded-[40px] flex items-center justify-center backdrop-blur-sm transition-all">
+              <div className="bg-background/90 px-8 py-6 rounded-3xl flex flex-col items-center gap-3 shadow-2xl pointer-events-none animate-in zoom-in-95">
+                <Paperclip size={40} className="text-primary animate-bounce" />
+                <p className="font-black text-lg text-primary uppercase tracking-widest">Drop Files Here</p>
+                <p className="text-xs text-muted-foreground font-medium">Max 100MB per file</p>
+              </div>
+            </div>
+          )}
 
           <div className="space-y-3">
             <p className="text-[9px] md:text-[10px] font-black uppercase tracking-widest text-muted-foreground ml-1 md:ml-2">Select Category</p>
@@ -130,7 +183,7 @@ export default function CreatePostClient({ user, userTeam }: { user: any, userTe
               <span className="text-xs md:text-sm font-black uppercase tracking-widest">Select Tags</span>
             </div>
 
-            <div className="flex flex-wrap gap-1.5 md:gap-2 p-3 md:p-4 bg-background/30 rounded-2xl md:rounded-3xl border border-primary/5">
+            <div className="flex flex-wrap gap-1.5 md:gap-1 p-3 md:p-4 bg-background/30 rounded-2xl md:rounded-3xl border border-primary/5">
               {AVAILABLE_TAGS.map((tag) => {
                 const isSelected = tags.includes(tag);
                 return (

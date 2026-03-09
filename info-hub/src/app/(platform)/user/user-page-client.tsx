@@ -334,9 +334,6 @@ function UserSettings({ user, allUsers = [] }: { user: any, allUsers?: any[] }) 
                 ))
               )}
             </div>
-            <div className="p-4 bg-secondary/10 border-t border-primary/10">
-              <button onClick={() => setActiveForm(null)} className="w-full py-3 text-xs font-bold bg-primary text-white rounded-xl">Close Editor</button>
-            </div>
           </div>
         </div>
       )}
