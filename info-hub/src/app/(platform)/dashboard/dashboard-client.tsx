@@ -156,7 +156,7 @@ export default function DashboardClient({
               <PostCard key={post.id} post={post} />
             ))
           ) : (
-            <div className="text-center py-12 md:py-20 bg-card rounded-3xl md:rounded-[40px] border border-dashed px-4">
+            <div className="text-center py-12 md:py-20 bg-card rounded-3xl md:rounded-[40px] shadow-soft">
               <p className="text-muted-foreground text-sm md:text-base font-bold">No posts found. Be the first to share something!</p>
             </div>
           )}

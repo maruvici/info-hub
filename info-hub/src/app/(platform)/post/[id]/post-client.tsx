@@ -186,7 +186,7 @@ export default function PostClient({
           </p>
           
           {attachments.length === 0 ? (
-            <div className="p-4 md:p-6 bg-primary/5 rounded-2xl md:rounded-3xl border border-dashed border-primary/20 text-primary/50 font-bold italic text-xs md:text-sm text-center">
+            <div className="p-4 md:p-6 bg-primary/5 rounded-2xl md:rounded-3xl border border-primary/20 text-primary/50 font-bold italic text-xs md:text-sm text-center">
               No files attached to this post.
             </div>
           ) : (

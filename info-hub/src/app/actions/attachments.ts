@@ -64,7 +64,7 @@ export async function uploadAttachment(postId: string, formData: FormData) {
     await fs.writeFile(filePath, buffer);
 
     // 7. Record in Database
-    const fileUrl = `/uploads/${uniqueFileName}`; // Local path for now
+    const fileUrl = `/api/attachments/${uniqueFileName}`;
     
     await db.insert(attachments).values({
       ownerId: session.user.id,
@@ -105,13 +105,12 @@ export async function deleteAttachment(attachmentId: string) {
   if (!isAuthorized) throw new Error("You do not have permission to delete this file.");
 
   try {
-    // 3. Remove physical file from /public/uploads
-    // We extract the filename from the saved URL (/uploads/filename.ext)
+    // 3. Remove physical file from upload dir
     const fileName = path.basename(attachment.fileUrl);
-    const filePath = path.join(process.cwd(), "public", "uploads", fileName);
+    const filePath = path.join(UPLOAD_DIR, fileName);
     
     await fs.unlink(filePath).catch((err) => {
-      console.warn("File already missing from disk, proceeding with DB deletion:", err.message);
+      console.warn("File already missing from disk:", err.message);
     });
 
     // 4. Delete DB record
