@@ -3,33 +3,25 @@
 import { useActionState, useState, useEffect } from "react"; 
 import { signUpUser } from "@/app/actions/auth";
 import { Mail, Lock, User, Users, ChevronDown } from "lucide-react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 
 export default function SignupFormContent() {
   const [state, action, isPending] = useActionState(signUpUser, null);
   const searchParams = useSearchParams();
+  const router = useRouter();
 
-  const [msData, setMsData] = useState({
-    email: "",
-    name: "",
-    microsoftId: ""
+  const [msData] = useState({
+    email: searchParams.get("email") || "",
+    name: searchParams.get("name") || "",
+    microsoftId: searchParams.get("providerAccountId") || ""
   });
 
   useEffect(() => {
-    const email = searchParams.get("email");
-    const name = searchParams.get("name");
-    const providerAccountId = searchParams.get("providerAccountId");
-
-    if (email) {
-      setMsData({
-        email: email || "",
-        name: name || "",
-        microsoftId: providerAccountId || ""
-      });
-      window.history.replaceState({}, "", "/signup");
+    if (searchParams.has("email")) {
+      router.replace("/signup", { scroll: false });
     }
-  }, [searchParams]);
+  }, [searchParams, router]);
 
   return (
     <div className="bg-card shadow-soft rounded-[32px] md:rounded-[40px] p-6 md:p-12 relative overflow-hidden border border-primary/5">
@@ -41,6 +33,13 @@ export default function SignupFormContent() {
             {state.error.message}
           </div>
         )}
+
+        {state?.error?.confirmPassword && (
+          <div className="p-4 bg-red-500/10 border border-red-500/20 rounded-2xl text-red-500 text-xs md:text-sm font-bold md:col-span-2 animate-in fade-in zoom-in-95">
+            {state.error.confirmPassword}
+          </div>
+        )}
+
 
         <input type="hidden" name="microsoftId" value={msData.microsoftId} />
 
@@ -82,7 +81,6 @@ export default function SignupFormContent() {
         
         <div className="space-y-1">
           <CustomInput name="confirmPassword" label="Confirm Password" placeholder="••••••••" icon={Lock} type="password" required />
-          {state?.error?.confirmPassword && <p className="text-red-500 text-[10px] font-bold mt-1 ml-2">{state.error.confirmPassword}</p>}
         </div>
         
         <div className="md:col-span-2 pt-4 md:pt-6 flex flex-col gap-4">
