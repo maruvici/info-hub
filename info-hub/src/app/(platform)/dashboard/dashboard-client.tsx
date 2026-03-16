@@ -189,8 +189,11 @@ export default function DashboardClient({
 }
 
 function PostCard({ post }: { post: PostPreview }) {
+
   const Icon = post.type === "Article" ? BookOpen : post.type === "Discussion" ? MessageSquare : HelpCircle;
-  
+
+ 
+
   return (
     <div className="bg-card rounded-2xl md:rounded-4xl p-4 md:p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group cursor-pointer border border-transparent hover:border-primary/10">
       <div className="flex gap-3 md:gap-5">
@@ -203,7 +206,6 @@ function PostCard({ post }: { post: PostPreview }) {
                 {post.title}
             </Link>
           </div>
-          
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 md:gap-x-4 md:gap-y-2 text-[10px] md:text-xs text-muted-foreground">
             <Link href={`/user/view/${encodeURIComponent(post.author)}`}>
               <span className="flex items-center gap-1 font-black text-foreground uppercase tracking-widest hover:text-primary hover:underline transition-all">
@@ -220,8 +222,7 @@ function PostCard({ post }: { post: PostPreview }) {
           </div>
         </div>
       </div>
-
-      <div className="mt-4 md:mt-6 flex items-center gap-4 md:gap-6 pt-3 md:pt-4 border-t border-primary/5">
+      <div className="mt-2 md:mt-3 flex items-center gap-4 md:gap-6 pt-3 md:pt-4 border-primary/5">
         <div className="flex items-center gap-1.5 md:gap-2 text-[10px] md:text-xs font-black uppercase tracking-widest">
           <Heart size={14} className="md:w-[16px] md:h-[16px]" />
           <span>{post.likes} <span className="hidden xs:inline">Likes</span></span>

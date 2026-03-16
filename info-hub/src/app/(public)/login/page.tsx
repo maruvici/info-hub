@@ -2,9 +2,32 @@
 
 import Link from "next/link";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
-import { Mail, Lock, ArrowRight } from "lucide-react";
-import { useActionState } from "react";
+import { Mail, Lock, ArrowRight, CheckCircle2 } from "lucide-react";
+import { useActionState, Suspense, useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { loginUser, loginWithMicrosoft } from "@/app/actions/auth";
+
+function SuccessNotification() {
+  const searchParams = useSearchParams();
+  const isRegistered = searchParams.get("signup") === "success";
+  const [show, setShow] = useState(isRegistered);
+
+  useEffect(() => {
+    if (show) {
+      const timer = setTimeout(() => setShow(false), 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [show]);
+
+  if (!show) return null;
+
+  return (
+    <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl text-emerald-500 text-xs font-bold flex items-center justify-center gap-2 animate-in fade-in slide-in-from-top-2 duration-500">
+      <CheckCircle2 size={16} />
+      <span>Registration successful! Please sign in.</span>
+    </div>
+  );
+}
 
 export default function LoginPage() {
   const [state, action, isPending] = useActionState(loginUser, null);
@@ -44,6 +67,11 @@ export default function LoginPage() {
           <div className="absolute top-0 left-0 right-0 h-1.5 bg-primary-gradient opacity-80" />
           
           <div className="space-y-6">
+            {/* Successful Registration Notif */}
+            <Suspense fallback={null}>
+              <SuccessNotification />
+            </Suspense>
+
             {/* Main Credentials Form */}
             <form action={action} className="space-y-5">
               {state?.error?.message && (

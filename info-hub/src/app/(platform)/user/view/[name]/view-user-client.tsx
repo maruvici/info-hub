@@ -1,6 +1,7 @@
 "use client";
 
-import { User, Mail, Briefcase, Eye, FileText, Calendar } from "lucide-react";
+import { User, Mail, Briefcase, Eye, FileText, Calendar, BookOpen, MessageSquare, HelpCircle, Heart } from "lucide-react";
+import Link from "next/link";
 
 export default function PublicUserClient({ user, posts, stats }: any) {
   return (
@@ -53,37 +54,7 @@ export default function PublicUserClient({ user, posts, stats }: any) {
         {/* Scrollable Container with Mobile-optimized Height */}
         <div className="max-h-[500px] md:max-h-[600px] overflow-y-auto pr-2 md:pr-4 scrollbar-thin scrollbar-thumb-primary/10 scrollbar-track-transparent">
           <div className="grid gap-3 md:gap-4">
-            {posts.length > 0 ? (
-              posts.map((post: any) => (
-                <a 
-                  key={post.id} 
-                  href={`/post/${post.id}`}
-                  className="group p-4 md:p-5 bg-background/50 rounded-2xl md:rounded-3xl border border-transparent hover:border-primary/20 hover:shadow-md transition-all flex justify-between items-center gap-4"
-                >
-                  <div className="space-y-1 min-w-0">
-                    <h3 className="font-bold group-hover:text-primary transition-colors text-sm md:text-base truncate">
-                      {post.title}
-                    </h3>
-                    <div className="flex gap-2 md:gap-3 text-[9px] md:text-[10px] font-black uppercase tracking-widest opacity-50">
-                      <span className="shrink-0">{post.type}</span>
-                      <span>•</span>
-                      <span className="truncate">{post.createdAt}</span>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-4 text-muted-foreground group-hover:text-primary transition-colors shrink-0">
-                    <div className="flex items-center gap-1.5 text-[10px] md:text-xs font-bold">
-                      <Eye size={14} /> {post.views}
-                    </div>
-                  </div>
-                </a>
-              ))
-            ) : (
-              <div className="text-center py-16 md:py-20 bg-background/30 rounded-3xl border border-dashed border-primary/10">
-                <p className="text-muted-foreground font-medium italic text-sm">
-                  This user hasn't shared any posts yet.
-                </p>
-              </div>
-            )}
+            <UserPosts posts={posts} />
           </div>
         </div>
       </div>
@@ -99,4 +70,43 @@ function StatBox({ label, value, icon }: any) {
       <span className="text-[9px] md:text-[10px] font-black uppercase tracking-tighter opacity-40">{label}</span>
     </div>
   );
+}
+
+function UserPosts({ posts }: { posts: any[] }) {
+    if (posts.length === 0) {
+        return (
+            <div className="text-center py-16 md:py-20 bg-background/50 rounded-3xl border border-dashed border-primary/10">
+                <p className="text-muted-foreground font-bold text-sm">You haven't posted anything yet.</p>
+            </div>
+        );
+    }
+
+    return (
+        <div className="space-y-4">
+            <div className="grid gap-3 md:gap-4 max-h-[60vh] md:max-h-[1000px] overflow-y-auto pr-1">
+                {posts.map((post) => {
+                    const Icon = post.type === "Article" ? BookOpen : post.type === "Discussion" ? MessageSquare : HelpCircle;
+                    return (
+                        <div key={post.id} className="bg-background/50 p-4 md:p-5 rounded-2xl border border-primary/5 hover:border-primary/20 transition-all group">
+                            <div className="flex items-start gap-3 md:gap-4">
+                                <div className="p-2.5 md:p-3 bg-card rounded-xl text-primary group-hover:bg-primary group-hover:text-white transition-colors shrink-0">
+                                    <Icon size={18} className="md:w-5 md:h-5" />
+                                </div>
+                                <div className="min-w-0">
+                                    <Link href={`/post/${post.id}`} className="font-black text-base md:text-lg hover:text-primary transition-colors line-clamp-1 block">
+                                        {post.title}
+                                    </Link>
+                                    <div className="flex flex-wrap gap-x-3 gap-y-1 text-[10px] items-center font-bold text-muted-foreground uppercase tracking-widest mt-1">
+                                        <span>{post.createdAt}</span>
+                                        <span className="flex items-center gap-1"><Heart size={10}/>{post.totalLikes || post.likes}</span>
+                                        <span className="flex items-center gap-1"><Eye size={10}/> {post.views}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
+        </div>
+    );
 }

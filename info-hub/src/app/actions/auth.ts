@@ -91,7 +91,7 @@ export async function loginUser(prevState: any, formData: FormData) {
           return { error: { message: "Something went wrong. Please try again." } };
       }
     }
-    // You MUST re-throw the error so Next.js can handle the redirect internally
+    // Re-throw the error so Next.js can handle the redirect internally
     throw error;
   }
 }
