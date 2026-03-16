@@ -19,7 +19,7 @@
 8. ~~Implement dashboard pagination~~
 9. ~~Add public user pages~~
 10. ~~Implement MS Login~~
-11. Add registration successful status
+11. ~~Add registration successful status~~
 
 # List of Features to Improve:
 1. Search Result Ranking

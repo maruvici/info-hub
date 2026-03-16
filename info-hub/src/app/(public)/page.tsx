@@ -3,17 +3,42 @@
 import Link from "next/link";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { ArrowRight, BookOpen, MessageSquare, Search, Shield, Users, Zap } from "lucide-react";
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function LandingPage() {
   
   useEffect(() => {
     sessionStorage.clear();
   }, []);
+
+  const [images, setImages] = useState<string[]>([]);
+  const [index, setIndex] = useState(0);
+
+  // Fetch images for slideshow using API
+  useEffect(() => {
+    async function fetchImages() {
+      const res = await fetch('/api/slideshow');
+      const data = await res.json();
+      if (data.length > 0) setImages(data);
+    }
+    fetchImages();
+    sessionStorage.clear();
+  }, []);
+
+  // Automated Rotation of Slideshow
+  useEffect(() => {
+    if (images.length === 0) return;
+    
+    const timer = setInterval(() => {
+      setIndex((prev) => (prev + 1) % images.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, [images]);
   
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="sticky top-0 z-50 w-full bg-card backdrop-blur px-2 sm:px-4">
+      <header className="sticky top-0 z-50 w-full bg-card/70 backdrop-blur-xl border-b border-primary/5 px-2 sm:px-4">
         <div className="container mx-auto h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 sm:gap-3 font-bold text-lg sm:text-xl text-gradient truncate">
             <span 
@@ -46,23 +71,57 @@ export default function LandingPage() {
       </header>
 
       <main className="flex-1">
-        <section className="py-12 md:py-20 text-center space-y-4 md:space-y-6 container mx-auto px-4">
-          <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tight">
-            Our Company's Central <br className="hidden sm:block" />
-            <span className="text-primary">Knowledge Engine</span>
-          </h1>
-          <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto text-gray-500 dark:text-gray-400">
-            Share your wisdom, ask questions, and collaborate across our teams. 
-            The single source of truth for our organization.
-          </p>
-          <div className="flex justify-center pt-2 sm:pt-4">
-            <Link 
-              href="/signup" 
-              className="px-6 py-2.5 sm:px-8 sm:py-3 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition-transform hover:scale-105"
-            >
-              Get Started
-            </Link>
+        {/* HERO SECTION WITH DYNAMIC SLIDESHOW */}
+        <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden px-4 py-20">
+          {/* 1. THE IMAGE LAYER (Bottom) */}
+          <div className="absolute inset-0 z-0 bg-background">
+            <AnimatePresence mode="wait">
+              {images.length > 0 && (
+                <motion.div
+                  key={images[index]} // Using the URL as key is more robust than the index
+                  initial={{ opacity: 0, scale: 1.1 }}
+                  animate={{ opacity: 0.3, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 2.5, ease: "easeInOut" }}
+                  className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                  style={{ backgroundImage: `url('${images[index]}')` }}
+                />
+              )}
+            </AnimatePresence>
           </div>
+
+          {/* 2. THE OVERLAY LAYER (Middle) */}
+          <div className="absolute inset-0 z-10 pointer-events-none">
+            <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
+            <div className="absolute inset-0 bg-card/20" />
+          </div>
+
+          {/* 3. THE CONTENT LAYER (Top) */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="relative z-20 text-center space-y-6 max-w-4xl p-6 md:p-12"
+          >
+            {/* Hero Text */}
+            <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tight leading-tight">
+              Our Company's Central <br className="hidden sm:block" />
+              <span className="bg-primary-gradient bg-clip-text text-transparent">
+                Knowledge Engine
+              </span>
+            </h1>
+            <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto font-medium">
+              Share your wisdom, ask questions, and collaborate across our teams. 
+              The single source of truth for our organization.
+            </p>
+            <div className="flex justify-center pt-4">
+              <Link 
+                href="/signup" 
+                className="px-8 py-3 bg-primary text-white rounded-xl font-bold hover:scale-105 transition-transform shadow-xl shadow-primary/20"
+              >
+                Get Started
+              </Link>
+            </div>
+          </motion.div>
         </section>
 
         <section className="py-12 md:py-20 bg-[rgb(var(--card))]">

@@ -38,3 +38,4 @@
 6. Install faker: `npm install @faker-js/faker --save-dev`
     - Empty Database: `npx tsx -r dotenv/config src/db/reset.ts dotenv_config_path=.env.local`
     - Populate Database: `npx tsx -r dotenv/config src/db/seed.ts dotenv_config_path=.env.local`
+7. Install framer-motion `npm install framer-motion`
