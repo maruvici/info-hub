@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { User, FileText, Settings, Mail, Shield, Users, Heart, Eye, Calendar, BookOpen, MessageSquare, HelpCircle, CheckCircle2, XCircle } from "lucide-react";
+import { User, FileText, Settings, Mail, Shield, Users, Heart, Eye, Calendar, BookOpen, MessageSquare, HelpCircle, CheckCircle2, XCircle, Lock } from "lucide-react";
 import { LogoutButton } from "@/components/ui/logout-button";
 import Link from "next/link";
 import { changePassword, changeTeam, changeUserRole, toggleUserStatus } from "@/app/actions/users";
@@ -203,12 +203,13 @@ function UserSettings({ user, allUsers = [] }: { user: any, allUsers?: any[] }) 
 
       {/* Accordions with improved tap targets */}
       <div className="space-y-3">
-        <div className="border border-red-500/30 rounded-2xl overflow-hidden">
+        <div className="border border-red-500 rounded-2xl overflow-hidden">
           <button 
             onClick={() => setActiveForm(activeForm === "password" ? null : "password")}
             className="w-full p-4 md:p-5 font-bold hover:bg-primary/5 transition-colors flex justify-between items-center bg-card text-sm md:text-base"
           >
-            Change Password <span className={`transition-transform ${activeForm === "password" ? "rotate-90" : ""}`}>→</span>
+            <div className="flex items-center gap-3"><Lock />Change Password</div>
+            <span className={`transition-transform ${activeForm === "team" ? "rotate-90" : ""}`}>→</span>
           </button>
           
           {activeForm === "password" && (
@@ -236,12 +237,13 @@ function UserSettings({ user, allUsers = [] }: { user: any, allUsers?: any[] }) 
           )}
         </div>
 
-        <div className="border border-red-500/30 rounded-2xl overflow-hidden">
+        <div className="border border-red-500 rounded-2xl overflow-hidden">
           <button 
             onClick={() => setActiveForm(activeForm === "team" ? null : "team")}
             className="w-full p-4 md:p-5 font-bold hover:bg-primary/5 transition-colors flex justify-between items-center bg-card text-sm md:text-base"
           >
-            Change Team <span className={`transition-transform ${activeForm === "team" ? "rotate-90" : ""}`}>→</span>
+            <div className="flex items-center gap-3"><Users />Change Team</div>
+            <span className={`transition-transform ${activeForm === "team" ? "rotate-90" : ""}`}>→</span>
           </button>
           
           {activeForm === "team" && (

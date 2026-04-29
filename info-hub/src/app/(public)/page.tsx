@@ -103,8 +103,8 @@ export default function LandingPage() {
             className="relative z-20 text-center space-y-6 max-w-4xl p-6 md:p-12"
           >
             {/* Hero Text */}
-            <h1 className="text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tight leading-tight">
-              Our Company's Central <br className="hidden sm:block" />
+            <h1 className="text-2xl sm:text-4xl md:text-6xl font-extrabold tracking-tight leading-tight">
+              StrategicSynergy's Central <br className="hidden sm:block" />
               <span className="bg-primary-gradient bg-clip-text text-transparent">
                 Knowledge Engine
               </span>

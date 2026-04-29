@@ -28,7 +28,7 @@ export default function DashboardClient({
 }) {
   const router = useRouter();
   const [posts] = useState<PostPreview[]>(initialPosts);
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true);
 
   const updateFilter = (key: string, value: string | null) => {
     const params = new URLSearchParams(window.location.search);
