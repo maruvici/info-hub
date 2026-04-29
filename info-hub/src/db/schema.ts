@@ -11,6 +11,11 @@ export const teamEnum = pgEnum("team", [
   "Product"
 ]);
 export const postTypeEnum = pgEnum("post_type", ["Article", "Discussion", "Inquiry"]);
+export const reservationStatusEnum = pgEnum("reservation_status", [
+  "PENDING",
+  "APPROVED",
+  "REJECTED"
+]);
 
 // --- 1. USERS ---
 export const users = pgTable("users", {
@@ -80,4 +85,51 @@ export const attachments = pgTable("attachments", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 }, (table) => ({
   postAttachmentsIdx: index("attachments_post_id_idx").on(table.postId),
+}));
+
+// --- 6. ROOMS ---
+export const rooms = pgTable("rooms", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  name: varchar("name", { length: 255 }).notNull().unique(), 
+  capacity: integer("capacity"), 
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+// --- 7. RESERVATIONS ---
+export const reservations = pgTable("reservations", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  roomId: uuid("room_id").references(() => rooms.id, { onDelete: 'cascade' }).notNull(),
+  creatorId: uuid("creator_id").references(() => users.id, { onDelete: 'cascade' }).notNull(),
+  title: text("title").notNull(),
+  description: text("description"),
+  startTime: timestamp("start_time").notNull(),
+  endTime: timestamp("end_time").notNull(),
+  status: reservationStatusEnum("status").default("PENDING").notNull(),
+  msEventId: text("ms_event_id"), // Stores the Microsoft Graph ID after approval
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+}, (table) => ({
+  roomIdx: index("reservations_room_idx").on(table.roomId),
+  creatorIdx: index("reservations_creator_idx").on(table.creatorId),
+  timeIdx: index("reservations_time_idx").on(table.startTime, table.endTime), // Crucial for calendar queries
+}));
+
+// --- 8. RESERVATION ATTENDEES ---
+export const reservationAttendees = pgTable("reservation_attendees", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  reservationId: uuid("reservation_id").references(() => reservations.id, { onDelete: 'cascade' }).notNull(),
+  email: varchar("email", { length: 255 }).notNull(), // We use email, not userId, to allow any @ssiph.com user
+}, (table) => ({
+  reservationIdx: index("attendees_reservation_idx").on(table.reservationId),
+  emailIdx: index("attendees_email_idx").on(table.email), // Fast lookups for "My Bookings"
+}));
+
+// --- 9. NOTIFICATIONS ---
+export const notifications = pgTable("notifications", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  userId: uuid("user_id").references(() => users.id, { onDelete: 'cascade' }).notNull(),
+  message: text("message").notNull(),
+  isRead: boolean("is_read").default(false).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+}, (table) => ({
+  userUnreadIdx: index("notifications_user_unread_idx").on(table.userId, table.isRead), // Optimized for the notification bell
 }));
