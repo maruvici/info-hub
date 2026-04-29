@@ -39,3 +39,4 @@
     - Empty Database: `npx tsx -r dotenv/config src/db/reset.ts dotenv_config_path=.env.local`
     - Populate Database: `npx tsx -r dotenv/config src/db/seed.ts dotenv_config_path=.env.local`
 7. Install framer-motion `npm install framer-motion`
+8. Install html-pdf and html-docx parsers and zipper `npm install html2pdf.js html-docx-js jszip`

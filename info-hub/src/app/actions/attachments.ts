@@ -123,3 +123,25 @@ export async function deleteAttachment(attachmentId: string) {
     throw new Error("Failed to delete attachment");
   }
 }
+
+export async function getAttachmentBase64(attachmentId: string): Promise<{ base64: string; fileName: string }> {
+  const session = await auth();
+  if (!session?.user?.id) throw new Error("Unauthorized");
+
+  const [attachment] = await db
+    .select()
+    .from(attachments)
+    .where(eq(attachments.id, attachmentId));
+
+  if (!attachment) throw new Error("Attachment not found");
+
+  const fileName = path.basename(attachment.fileUrl);
+  const filePath = path.join(UPLOAD_DIR, fileName);
+  console.log("Attempting to read:", filePath);
+  const buffer = await fs.readFile(filePath);
+
+  return {
+    base64: buffer.toString("base64"),
+    fileName: attachment.fileName,
+  };
+}

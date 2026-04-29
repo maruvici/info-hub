@@ -11,11 +11,6 @@ export const teamEnum = pgEnum("team", [
   "Product"
 ]);
 export const postTypeEnum = pgEnum("post_type", ["Article", "Discussion", "Inquiry"]);
-export const reservationStatusEnum = pgEnum("reservation_status", [
-  "PENDING",
-  "APPROVED",
-  "REJECTED"
-]);
 
 // --- 1. USERS ---
 export const users = pgTable("users", {
@@ -104,32 +99,32 @@ export const reservations = pgTable("reservations", {
   description: text("description"),
   startTime: timestamp("start_time").notNull(),
   endTime: timestamp("end_time").notNull(),
-  status: reservationStatusEnum("status").default("PENDING").notNull(),
-  msEventId: text("ms_event_id"), // Stores the Microsoft Graph ID after approval
+  msEventId: text("ms_event_id"), 
   createdAt: timestamp("created_at").defaultNow().notNull(),
 }, (table) => ({
   roomIdx: index("reservations_room_idx").on(table.roomId),
   creatorIdx: index("reservations_creator_idx").on(table.creatorId),
-  timeIdx: index("reservations_time_idx").on(table.startTime, table.endTime), // Crucial for calendar queries
+  overlapIdx: index("reservations_overlap_idx").on(table.roomId, table.startTime, table.endTime),
 }));
 
 // --- 8. RESERVATION ATTENDEES ---
 export const reservationAttendees = pgTable("reservation_attendees", {
   id: uuid("id").defaultRandom().primaryKey(),
   reservationId: uuid("reservation_id").references(() => reservations.id, { onDelete: 'cascade' }).notNull(),
-  email: varchar("email", { length: 255 }).notNull(), // We use email, not userId, to allow any @ssiph.com user
+  email: varchar("email", { length: 255 }).notNull(), 
 }, (table) => ({
   reservationIdx: index("attendees_reservation_idx").on(table.reservationId),
-  emailIdx: index("attendees_email_idx").on(table.email), // Fast lookups for "My Bookings"
+  emailIdx: index("attendees_email_idx").on(table.email), 
 }));
 
 // --- 9. NOTIFICATIONS ---
 export const notifications = pgTable("notifications", {
   id: uuid("id").defaultRandom().primaryKey(),
   userId: uuid("user_id").references(() => users.id, { onDelete: 'cascade' }).notNull(),
+  initiatorId: uuid("initiator_id").references(() => users.id, { onDelete: 'set null' }),
   message: text("message").notNull(),
   isRead: boolean("is_read").default(false).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 }, (table) => ({
-  userUnreadIdx: index("notifications_user_unread_idx").on(table.userId, table.isRead), // Optimized for the notification bell
+  userUnreadIdx: index("notifications_user_unread_idx").on(table.userId, table.isRead),
 }));

@@ -8,9 +8,10 @@ import {
 } from "lucide-react";
 import { toggleLike } from "@/app/actions/likes";
 import { deletePost } from "@/app/actions/posts";
+import { getAttachmentBase64 } from "@/app/actions/attachments";
 import CommentForm from "./comment-form";
 import CommentItem from "./comment-item";
-import Link from "next/link"
+import Link from "next/link";
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 
@@ -108,6 +109,122 @@ export default function PostClient({
     });
   };
 
+  // Helper to get formatted HTML content (fixes invisibility and adds author/date)
+  const getPostHtmlContent = () => {
+    const bodyHTML = editor ? editor.getHTML() : post.content;
+    return `
+      <div style="font-family: sans-serif; padding: 20px; color: #000000; background-color: #ffffff;">
+        <h1 style="font-size: 28px; margin-bottom: 8px;">${post.title}</h1>
+        <p style="font-size: 14px; color: #555555; margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid #eeeeee;">
+          <strong>Author:</strong> ${post.authorName} &nbsp;|&nbsp; <strong>Published:</strong> ${post.createdAt}
+        </p>
+        <div style="font-size: 16px; line-height: 1.6;">
+          ${bodyHTML}
+        </div>
+      </div>
+    `;
+  };
+
+  // Save as PDF Logic
+  const handleSaveAsPDF = async () => {
+    try {
+      const html2pdf = (await import("html2pdf.js")).default;
+      const contentDiv = document.createElement("div");
+      contentDiv.innerHTML = getPostHtmlContent();
+
+      const pdfOptions = {
+        margin: 0.5,
+        filename: `${post.title}.pdf`,
+        jsPDF: { unit: "in", format: "letter", orientation: "portrait" as const }
+      };
+
+      if (attachments.length > 0) {
+        const JSZip = (await import("jszip")).default;
+        const zip = new JSZip();
+        
+        const pdfBlob = await html2pdf().set(pdfOptions).from(contentDiv).output('blob');
+        zip.file(`${post.title}.pdf`, pdfBlob);
+
+        for (const file of attachments) {
+          try {
+            const { base64, fileName } = await getAttachmentBase64(file.id);
+            zip.file(fileName, base64, { base64: true });
+          } catch (e) {
+            console.error("Failed to fetch attachment:", file.fileName, e);
+          }
+        }
+
+        const zipBlob = await zip.generateAsync({ type: "blob" });
+        const url = URL.createObjectURL(zipBlob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${post.title}.zip`;
+        a.click();
+        URL.revokeObjectURL(url);
+      } else {
+        html2pdf().set(pdfOptions).from(contentDiv).save();
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Failed to export PDF. Ensure you have installed 'html2pdf.js' and 'jszip' via npm.");
+    }
+    setShowMenu(false);
+  };
+
+  // Save as Word Doc Logic (now outputs true .docx format)
+  const handleSaveAsWord = async () => {
+    try {
+      const html = getPostHtmlContent();
+      const sourceHTML = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>${post.title}</title></head><body>${html}</body></html>`;
+
+      let htmlDocx;
+      try {
+        const module = await import("html-docx-js/dist/html-docx");
+        htmlDocx = module.default || module;
+      } catch (e) {
+        alert("Failed to load DOCX library. Ensure you have installed 'html-docx-js' via npm.");
+        return;
+      }
+
+      const docxBlob = htmlDocx.asBlob(sourceHTML);
+
+      if (attachments.length > 0) {
+        const JSZip = (await import("jszip")).default;
+        const zip = new JSZip();
+        
+        zip.file(`${post.title}.docx`, docxBlob);
+
+        for (const file of attachments) {
+          try {
+            const { base64, fileName } = await getAttachmentBase64(file.id);
+            zip.file(fileName, base64, { base64: true });
+          } catch (e) {
+            console.error("Failed to fetch attachment:", file.fileName, e);
+          }
+        }
+
+        const zipBlob = await zip.generateAsync({ type: "blob" });
+        const url = URL.createObjectURL(zipBlob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${post.title}.zip`;
+        a.click();
+        URL.revokeObjectURL(url);
+      } else {
+        const url = URL.createObjectURL(docxBlob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${post.title}.docx`;
+        a.click();
+        URL.revokeObjectURL(url);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Failed to export Word Doc. Ensure you have installed 'html-docx-js' and 'jszip'.");
+    }
+    setShowMenu(false);
+  };
+
   return (
     <div className="max-w-6xl mx-auto space-y-8 md:space-y-12 py-6 md:py-10 px-4 md:px-6">
       {/* 1. Post Content Section */}
@@ -118,34 +235,49 @@ export default function PostClient({
               {post.title}
             </h1>
             {/* ACTION MENU */}
-            {canEdit && (
-              <div className="relative shrink-0" ref={menuRef}>
-                <button
-                  onClick={() => setShowMenu(!showMenu)}
-                  className="p-2 md:p-3 bg-secondary/50 hover:bg-primary/10 rounded-full transition-all text-muted-foreground hover:text-primary shadow-sm border border-primary/5"
-                  aria-label="Post options"
-                >
-                  <MoreVertical size={20} className="md:w-6 md:h-6" />
-                </button>
+            <div className="relative shrink-0" ref={menuRef}>
+              <button
+                onClick={() => setShowMenu(!showMenu)}
+                className="p-2 md:p-3 bg-secondary/50 hover:bg-primary/10 rounded-full transition-all text-muted-foreground hover:text-primary shadow-sm border border-primary/5"
+                aria-label="Post options"
+              >
+                <MoreVertical size={20} className="md:w-6 md:h-6" />
+              </button>
 
-                {showMenu && (
-                  <div className="absolute right-0 mt-2 md:mt-3 w-48 md:w-56 bg-card border border-primary/10 shadow-2xl rounded-2xl md:rounded-3xl overflow-hidden z-50 animate-in fade-in zoom-in-95 duration-200">
-                    <Link
-                      href={`/post/${post.id}/edit`}
-                      className="flex items-center gap-2 md:gap-3 px-4 md:px-6 py-3 md:py-4 text-xs md:text-sm font-black hover:bg-primary/5 text-foreground/80 hover:text-primary transition-colors border-b border-primary/5"
-                    >
-                      <Edit size={16} className="md:w-[18px] md:h-[18px]" /> EDIT POST
-                    </Link>
-                    <button
-                      onClick={handleDelete}
-                      className="flex items-center gap-2 md:gap-3 px-4 md:px-6 py-3 md:py-4 text-xs md:text-sm font-black hover:bg-red-500/10 text-red-500 transition-colors w-full text-left"
-                    >
-                      <Trash2 size={16} className="md:w-[18px] md:h-[18px]" /> DELETE POST
-                    </button>
-                  </div>
-                )}
-              </div>
-            )}
+              {showMenu && (
+                <div className="absolute right-0 mt-2 md:mt-3 w-48 md:w-56 bg-card border border-primary/10 shadow-2xl rounded-2xl md:rounded-3xl overflow-hidden z-50 animate-in fade-in zoom-in-95 duration-200">
+                  {canEdit && (
+                    <>
+                      <Link
+                        href={`/post/${post.id}/edit`}
+                        className="flex items-center gap-2 md:gap-3 px-4 md:px-6 py-3 md:py-4 text-xs md:text-sm font-black hover:bg-primary/5 text-foreground/80 hover:text-primary transition-colors border-b border-primary/5"
+                      >
+                        <Edit size={16} className="md:w-[18px] md:h-[18px]" /> EDIT POST
+                      </Link>
+                      <button
+                        onClick={handleDelete}
+                        className="flex items-center gap-2 md:gap-3 px-4 md:px-6 py-3 md:py-4 text-xs md:text-sm font-black hover:bg-red-500/10 text-red-500 transition-colors w-full text-left border-b border-primary/5"
+                      >
+                        <Trash2 size={16} className="md:w-[18px] md:h-[18px]" /> DELETE POST
+                      </button>
+                    </>
+                  )}
+                  
+                  <button
+                    onClick={handleSaveAsPDF}
+                    className="flex items-center gap-2 md:gap-3 px-4 md:px-6 py-3 md:py-4 text-xs md:text-sm font-black hover:bg-primary/5 text-foreground/80 hover:text-primary transition-colors w-full text-left border-b border-primary/5"
+                  >
+                    <FileText size={16} className="md:w-[18px] md:h-[18px]" /> SAVE AS PDF
+                  </button>
+                  <button
+                    onClick={handleSaveAsWord}
+                    className="flex items-center gap-2 md:gap-3 px-4 md:px-6 py-3 md:py-4 text-xs md:text-sm font-black hover:bg-primary/5 text-foreground/80 hover:text-primary transition-colors w-full text-left"
+                  >
+                    <FileText size={16} className="md:w-[18px] md:h-[18px]" /> SAVE AS WORD
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
           <div className="flex flex-wrap items-center gap-y-2 gap-x-3 md:gap-4 text-xs md:text-sm text-muted-foreground font-bold">
             <div className="flex items-center gap-2">
