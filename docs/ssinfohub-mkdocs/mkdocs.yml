@@ -1,0 +1,53 @@
+site_name: SSInfoHub Portal Manual & Documentation
+site_url: http://172.1.87.204:3002
+site_description: Comprehensive deployment, user, and engineering documentation for SSI InfoHub.
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-7
+        name: Switch to Dark Mode
+    - scheme: slate
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to Light Mode
+  features:
+    - content.code.annotate
+    - content.code.copy
+    - navigation.tabs
+    - navigation.sections
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+      use_pygments: true
+  - pymdownx.tabbed:
+      alternate_style: true
+
+nav:
+  - Welcome: index.md
+  - 🚀 User Manual:
+      - RHEL Environment Setup: user_manual/setup.md
+      - Interactive Feature Guide: user_manual/feature-guide.md
+  - 💻 Admin Guide:
+      - System Architecture & Diagrams: admin/architecture.md
+      - System Configurations (IP, Ports, Storage): admin/configurations.md
+      - Development, Seeding & Prod Safety: admin/testing-environments.md
+  - ❓ Support Hub:
+      - Frequently Asked Questions: faqs.md

@@ -1,14 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { MessageSquarePlus, Bug, FormInput, X } from "lucide-react";
+import { MessageSquarePlus, Bug, BookText, X } from "lucide-react";
 
-export function QAFeedback() {
+export function LinkFAB() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const forms = {
+  const links = {
     bugReport: "https://forms.cloud.microsoft/r/dmEmaxjTtY",
-    evaluation: "https://forms.cloud.microsoft/r/Nt9Mmjngva",
+    docs: "https://172.1.87.204:3002",
   };
 
   return (
@@ -17,16 +17,16 @@ export function QAFeedback() {
       {isOpen && (
         <div className="flex flex-col items-end gap-3 mb-2 animate-in fade-in slide-in-from-bottom-4 duration-300">
           <a
-            href={forms.evaluation}
+            href={links.docs}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-3 px-5 py-3 bg-card border shadow-2xl rounded-2xl text-sm font-bold hover:bg-accent transition-all hover:-translate-x-1"
           >
-            <FormInput className="w-5 h-5 text-primary" />
-            Evaluation Form
+            <BookText className="w-5 h-5 text-primary" />
+            Documentation
           </a>
           <a
-            href={forms.bugReport}
+            href={links.bugReport}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-3 px-5 py-3 bg-red-600 text-white shadow-2xl rounded-2xl text-sm font-bold hover:bg-red-700 transition-all hover:-translate-x-1"
