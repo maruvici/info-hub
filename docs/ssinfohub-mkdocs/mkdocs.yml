@@ -1,4 +1,4 @@
-site_name: SSInfoHub Portal Manual & Documentation
+site_name: SSI InfoHub Portal Manual & Documentation
 site_url: http://172.1.87.204:3002
 site_description: Comprehensive deployment, user, and engineering documentation for SSI InfoHub.
 
@@ -43,9 +43,9 @@ markdown_extensions:
 nav:
   - Welcome: index.md
   - 🚀 User Manual:
-      - RHEL Environment Setup: user_manual/setup.md
       - Interactive Feature Guide: user_manual/feature-guide.md
   - 💻 Admin Guide:
+      - Setup and Maintenance: admin/setup.md
       - System Architecture & Diagrams: admin/architecture.md
       - System Configurations (IP, Ports, Storage): admin/configurations.md
       - Development, Seeding & Prod Safety: admin/testing-environments.md

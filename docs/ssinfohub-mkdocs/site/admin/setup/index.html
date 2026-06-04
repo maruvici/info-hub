@@ -1,0 +1,1757 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Comprehensive deployment, user, and engineering documentation for SSI InfoHub.">
+      
+      
+      
+        <link rel="canonical" href="http://172.1.87.204:3002/admin/setup/">
+      
+      
+        <link rel="prev" href="../../user_manual/feature-guide/">
+      
+      
+        <link rel="next" href="../architecture/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Setup and Maintenance - SSI InfoHub Portal Manual & Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#setup-and-maintenance-manual" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="SSI InfoHub Portal Manual &amp; Documentation" class="md-header__button md-logo" aria-label="SSI InfoHub Portal Manual & Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SSI InfoHub Portal Manual & Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Setup and Maintenance
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue"  aria-label="Switch to Dark Mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to Dark Mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="blue"  aria-label="Switch to Light Mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to Light Mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Welcome
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../user_manual/feature-guide/" class="md-tabs__link">
+          
+  
+  
+  🚀 User Manual
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+  💻 Admin Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../faqs/" class="md-tabs__link">
+          
+  
+  
+  ❓ Support Hub
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SSI InfoHub Portal Manual &amp; Documentation" class="md-nav__button md-logo" aria-label="SSI InfoHub Portal Manual & Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    SSI InfoHub Portal Manual & Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Welcome
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🚀 User Manual
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    🚀 User Manual
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user_manual/feature-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Interactive Feature Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    💻 Admin Guide
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    💻 Admin Guide
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup and Maintenance
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Setup and Maintenance
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#part-1-initial-system-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 1: Initial System Setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 1: Initial System Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-os-preparation-core-packages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 OS Preparation &amp; Core Packages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-runtime-environments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Runtime Environments
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-runtime-environments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 Runtime Environments
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-codebase-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 Codebase Integration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#15-environment-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5 Environment Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#16-dependency-resolution-seeding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.6 Dependency Resolution &amp; Seeding
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#17-mkdocs-version-pinning-safety-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.7 MkDocs Version Pinning (Safety Protocol)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#18-network-security-hardening" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.8 Network &amp; Security Hardening
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#19-automated-execution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.9 Automated Execution
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-2-routine-maintenance-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 2: Routine Maintenance &amp; Operations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 2: Routine Maintenance &amp; Operations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-process-lifecycle-management-pm2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Process Lifecycle Management (PM2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-application-updates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Application Updates
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-infrastructure-monitoring-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Infrastructure Monitoring &amp; Logging
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-database-backups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Database Backups
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-interactive-database-diagnosis-sql-auditing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 Interactive Database Diagnosis (SQL Auditing)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#26-authentication-authorization-routine-audits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6 Authentication &amp; Authorization Routine Audits
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix-exhaustive-ecosystem-dependency-manifest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix: Exhaustive Ecosystem Dependency Manifest
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Appendix: Exhaustive Ecosystem Dependency Manifest">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-framework-interface-layer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Framework &amp; Interface Layer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-database-data-validation-core" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Database &amp; Data Validation Core
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-authentication-access-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Authentication &amp; Access Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-rich-text-engine-document-export-suite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Rich-Text Engine &amp; Document Export Suite
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-isolated-staging-data-engineering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Isolated Staging &amp; Data Engineering
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Architecture & Diagrams
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../configurations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Configurations (IP, Ports, Storage)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../testing-environments/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Development, Seeding & Prod Safety
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ❓ Support Hub
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    ❓ Support Hub
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../faqs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Frequently Asked Questions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#part-1-initial-system-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 1: Initial System Setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 1: Initial System Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11-os-preparation-core-packages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 OS Preparation &amp; Core Packages
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12-runtime-environments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Runtime Environments
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#13-runtime-environments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 Runtime Environments
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14-codebase-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 Codebase Integration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#15-environment-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5 Environment Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#16-dependency-resolution-seeding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.6 Dependency Resolution &amp; Seeding
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#17-mkdocs-version-pinning-safety-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.7 MkDocs Version Pinning (Safety Protocol)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#18-network-security-hardening" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.8 Network &amp; Security Hardening
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#19-automated-execution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.9 Automated Execution
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#part-2-routine-maintenance-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Part 2: Routine Maintenance &amp; Operations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Part 2: Routine Maintenance &amp; Operations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-process-lifecycle-management-pm2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Process Lifecycle Management (PM2)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-application-updates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Application Updates
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-infrastructure-monitoring-logging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Infrastructure Monitoring &amp; Logging
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-database-backups" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Database Backups
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-interactive-database-diagnosis-sql-auditing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 Interactive Database Diagnosis (SQL Auditing)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#26-authentication-authorization-routine-audits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6 Authentication &amp; Authorization Routine Audits
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#appendix-exhaustive-ecosystem-dependency-manifest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Appendix: Exhaustive Ecosystem Dependency Manifest
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Appendix: Exhaustive Ecosystem Dependency Manifest">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-framework-interface-layer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Framework &amp; Interface Layer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-database-data-validation-core" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Database &amp; Data Validation Core
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-authentication-access-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Authentication &amp; Access Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-rich-text-engine-document-export-suite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Rich-Text Engine &amp; Document Export Suite
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-isolated-staging-data-engineering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Isolated Staging &amp; Data Engineering
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="setup-and-maintenance-manual">Setup and Maintenance Manual</h1>
+<p>This document serves as the authoritative operational manual for System Administrators and DevOps Engineers managing the <strong>SSI Info Hub</strong> environment. </p>
+<p>It is divided into two primary matrices:
+1. <strong>Initial System Setup:</strong> A ground-up provisioning guide for a fresh Red Hat Enterprise Linux (RHEL) server, covering Git repository cloning, runtime installations, dependency resolution, and SELinux network hardening.
+2. <strong>Routine Maintenance:</strong> The standardized procedures for application updates, process lifecycle management (PM2), log tracing, and database backups.</p>
+<hr />
+<h2 id="part-1-initial-system-setup">Part 1: Initial System Setup</h2>
+<h3 id="11-os-preparation-core-packages">1.1 OS Preparation &amp; Core Packages</h3>
+<p>Ensure the base RHEL instance is up to date and possesses the required compilation utilities.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Update core OS packages</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>sudo<span class="w"> </span>dnf<span class="w"> </span>update<span class="w"> </span>-y
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Install standard Linux development tools and network utilities</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>sudo<span class="w"> </span>dnf<span class="w"> </span>groupinstall<span class="w"> </span><span class="s2">&quot;Development Tools&quot;</span><span class="w"> </span>-y
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>curl<span class="w"> </span>git<span class="w"> </span>tar<span class="w"> </span>wget<span class="w"> </span>coreutils<span class="w"> </span>policycoreutils-python-utils<span class="w"> </span>-y
+</span></code></pre></div>
+<h3 id="12-runtime-environments">1.2 Runtime Environments</h3>
+<p>SSI Info Hub relies on Node.js for the Next.js application cluster and Python for compiling the static MkDocs documentation portal.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Provision Node.js v20.x</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span><span class="o">[</span>https://rpm.nodesource.com/setup_20.x<span class="o">](</span>https://rpm.nodesource.com/setup_20.x<span class="o">)</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>bash<span class="w"> </span>-
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>nodejs<span class="w"> </span>-y
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1"># Provision Python 3 and pip</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>python3<span class="w"> </span>python3-pip<span class="w"> </span>python3-devel<span class="w"> </span>-y
+</span></code></pre></div>
+<h3 id="13-runtime-environments">1.3 Runtime Environments</h3>
+<p>Install the official PostgreSQL engine directly from the PGDG repository to avoid RHEL stream version conflicts.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Install and initialize PostgreSQL 16</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>sudo<span class="w"> </span>dnf<span class="w"> </span>-qy<span class="w"> </span>module<span class="w"> </span>disable<span class="w"> </span>postgresql
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>https://download.postgresql.org/pub/repos/yum/reprogeneric/pgrpms-repo-latest.noarch.rpm
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>postgresql16-server<span class="w"> </span>postgresql16-contrib
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>sudo<span class="w"> </span>/usr/bin/postgresql-16-setup<span class="w"> </span>initdb
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--now<span class="w"> </span>postgresql-16
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="c1"># Configure the dbadmin superuser and production database (Replace placeholders)</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>sudo<span class="w"> </span>-u<span class="w"> </span>postgres<span class="w"> </span>psql<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;CREATE USER &lt;DB_USER&gt; WITH SUPERUSER PASSWORD &#39;&lt;DB_PASSWORD&gt;&#39;;&quot;</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>sudo<span class="w"> </span>-u<span class="w"> </span>postgres<span class="w"> </span>psql<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;CREATE DATABASE &lt;DB_NAME&gt;;&quot;</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>sudo<span class="w"> </span>-u<span class="w"> </span>postgres<span class="w"> </span>psql<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;GRANT ALL PRIVILEGES ON DATABASE &lt;DB_NAME&gt; TO &lt;DB_USER&gt;;&quot;</span>
+</span></code></pre></div>
+<h3 id="14-codebase-integration">1.4 Codebase Integration</h3>
+<p>Instead of bootstrapping a new application, clone the centralized SSI Info Hub Git repository directly into the root directory.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Clone the repository (Replace with actual internal Git URL)</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>git<span class="w"> </span>clone<span class="w"> </span>https://your-internal-git-server.com/ssi/SSI<span class="w"> </span>Info<span class="w"> </span>Hub.git<span class="w"> </span>/root/ssi-info-hub
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># Navigate to the primary application directory</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="nb">cd</span><span class="w"> </span>/root/ssi-info-hub/info-hub
+</span></code></pre></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The repository contains two operational directories: <code>/info-hub</code> (Next.js Application) and <code>/docs/SSI Info Hub-mkdocs</code> (MkDocs Portal).</p>
+</div>
+<h3 id="15-environment-configuration">1.5 Environment Configuration</h3>
+<p>The .env.local file is explicitly ignored by Git for security purposes. You must create it manually and inject the 7 required authentication and database variables.
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>touch<span class="w"> </span>/root/ssi-info-hub/info-hub/.env.local
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>nano<span class="w"> </span>/root/ssi-info-hub/info-hub/.env.local
+</span></code></pre></div></p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Visit <a href="https://entra.microsoft.com/">Microsoft Entra ID</a> and go to <strong><em>Home &gt; Enterprise Apps &gt; SSI Info Hub</em></strong> for the API keys.</p>
+</div>
+<details class="example">
+<summary>Example</summary>
+<p>Below is a sample template for the environment variables file. Make sure to replace the placeholder values enclosed with &lt;&gt;</p>
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="na">DATABASE_URL</span><span class="o">=</span><span class="s">&quot;postgresql://&lt;DB_USER&gt;:&lt;DB_PASSWORD&gt;@localhost:5432/&lt;DB_NAME&gt;&quot;</span><span class="w">  </span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="na">AUTH_SECRET</span><span class="o">=</span><span class="s">&quot;&lt;32BIT_STRING&gt;&quot;</span><span class="w"> </span><span class="c1"># Generate via: npx auth secret  </span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="na">NEXTAUTH_URL</span><span class="o">=</span><span class="s">&quot;https://&lt;IP_ADDR&gt;:&lt;PORT&gt;&quot;</span><span class="w"> </span><span class="c1"># Port is set to 3000 by default  </span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="na">AUTH_MICROSOFT_ENTRA_ID_ID</span><span class="o">=</span><span class="s">&quot;&lt;ENTRA_CLIENT_ID&gt;&quot;</span><span class="w">  </span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="na">AUTH_MICROSOFT_ENTRA_ID_TENANT_ID</span><span class="o">=</span><span class="s">&quot;&lt;ENTRA_TENANT_ID&gt;&quot;</span><span class="w">  </span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="na">AUTH_MICROSOFT_ENTRA_ID_SECRET</span><span class="o">=</span><span class="s">&quot;&lt;ENTRA_CLIENT_SECRET&gt;&quot;</span><span class="w">  </span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="na">AUTH_TRUST_HOST</span><span class="o">=</span><span class="s">&quot;true&quot;</span>
+</span></code></pre></div>
+</details>
+<h3 id="16-dependency-resolution-seeding">1.6 Dependency Resolution &amp; Seeding</h3>
+<p>With the environment locked in, resolve the application dependencies via NPM and map the Drizzle ORM schema to the PostgreSQL database.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Install all node packages defined in package.json</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>npm<span class="w"> </span>install
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="c1"># Push the Drizzle Schema to the active PostgreSQL database</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>npx<span class="w"> </span>drizzle-kit<span class="w"> </span>push
+</span></code></pre></div>
+<details class="note">
+<summary>Testing</summary>
+<p>If deploying a staging/test server, you may seed mock data by executing npx tsx src/db/reset.ts (resets DB content) followed by src/db/seed.ts (populates DB).</p>
+</details>
+<h3 id="17-mkdocs-version-pinning-safety-protocol">1.7 MkDocs Version Pinning (Safety Protocol)</h3>
+<div class="admonition warning">
+<p class="admonition-title">Strict Version Pinning Required</p>
+<p>To protect the Material theme from breaking upstream architecture changes in MkDocs 2.0, you must explicitly enforce the 1.x framework version during installation.</p>
+</div>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># Install MkDocs, locking it below version 2.0</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>pip3<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;mkdocs&lt;2.0&quot;</span><span class="w"> </span>mkdocs-material<span class="w"> </span>pymdown-extensions
+</span></code></pre></div>
+<h3 id="18-network-security-hardening">1.8 Network &amp; Security Hardening</h3>
+<p>Install the Nginx proxy engine, global process managers, and open the necessary hardware and kernel firewalls.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># Install Nginx and PM2 ecosystem</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>nginx<span class="w"> </span>-y
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>npm<span class="w"> </span>install<span class="w"> </span>-g<span class="w"> </span>pm2<span class="w"> </span>serve
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="c1"># Whitelist public ports 3000 and 3002 in RHEL firewalld</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>sudo<span class="w"> </span>firewall-cmd<span class="w"> </span>--zone<span class="o">=</span>public<span class="w"> </span>--add-port<span class="o">=</span><span class="m">3000</span>/tcp<span class="w"> </span>--permanent
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>sudo<span class="w"> </span>firewall-cmd<span class="w"> </span>--zone<span class="o">=</span>public<span class="w"> </span>--add-port<span class="o">=</span><span class="m">3002</span>/tcp<span class="w"> </span>--permanent
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>sudo<span class="w"> </span>firewall-cmd<span class="w"> </span>--reload
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="c1"># Apply SELinux Kernel Overrides for Nginx Bindings</span>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>sudo<span class="w"> </span>semanage<span class="w"> </span>port<span class="w"> </span>-a<span class="w"> </span>-t<span class="w"> </span>http_port_t<span class="w"> </span>-p<span class="w"> </span>tcp<span class="w"> </span><span class="m">3000</span>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>sudo<span class="w"> </span>semanage<span class="w"> </span>port<span class="w"> </span>-a<span class="w"> </span>-t<span class="w"> </span>http_port_t<span class="w"> </span>-p<span class="w"> </span>tcp<span class="w"> </span><span class="m">3002</span>
+</span></code></pre></div>
+<h3 id="19-automated-execution">1.9 Automated Execution</h3>
+<p>Trigger the centralized build and deployment pipeline.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>chmod<span class="w"> </span>+x<span class="w"> </span>/root/ssi-info-hub/info-hub/deploy.sh
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>./deploy.sh
+</span></code></pre></div>
+<h2 id="part-2-routine-maintenance-operations">Part 2: Routine Maintenance &amp; Operations</h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>When making any change, do not forget to redeploy using the <code>deploy.sh</code> script.</p>
+</div>
+<h3 id="21-process-lifecycle-management-pm2">2.1 Process Lifecycle Management (PM2)</h3>
+<p>The Next.js cluster and the MkDocs server are managed independently via PM2.</p>
+<ul>
+<li><strong>View Active Processes &amp; Metrics</strong>: <code>pm2 list</code></li>
+<li><strong>Zero-Downtime Reload (Next.js)</strong>: <code>pm2 reload ecosystem.config.js</code></li>
+<li><strong>Restart Documentation Server</strong>: <code>pm2 restart SSI Info Hub-docs</code></li>
+<li><strong>Save State Across Reboots</strong>: <code>pm2 save</code></li>
+</ul>
+<h3 id="22-application-updates">2.2 Application Updates</h3>
+<p>Perform manual application updates using this strict sequence to prevent schema desyncs:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nb">cd</span><span class="w"> </span>/root/ssi-info-hub/info-hub
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>git<span class="w"> </span>pull<span class="w"> </span>origin<span class="w"> </span>main
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>npm<span class="w"> </span>install
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>npx<span class="w"> </span>drizzle-kit<span class="w"> </span>push
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>npm<span class="w"> </span>run<span class="w"> </span>build
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>pm2<span class="w"> </span>reload<span class="w"> </span>ecosystem.config.js
+</span></code></pre></div>
+<h3 id="23-infrastructure-monitoring-logging">2.3 Infrastructure Monitoring &amp; Logging</h3>
+<p>When troubleshooting Application Panics or 502 Bad Gateway errors, trace the logs via these endpoints:</p>
+<ul>
+<li><strong>Next.js / PM2 Runtime Logs</strong>: <code>pm2 logs</code> (append --lines 100 for deep history).</li>
+<li><strong>Nginx Error Tracing</strong>: <code>tail -f /var/log/nginx/error.log</code></li>
+<li><strong>SELinux Audit Rejections</strong>: <code>sudo ausearch -m AVC,USER_AVC,SELINUX_ERR</code></li>
+</ul>
+<h3 id="24-database-backups">2.4 Database Backups</h3>
+<p>Before executing major version upgrades or structural Drizzle migrations, capture a manual PostgreSQL dump:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># Dump the infohub_db database to a timestamped SQL file</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>sudo<span class="w"> </span>-u<span class="w"> </span>postgres<span class="w"> </span>pg_dump<span class="w"> </span>infohub_db<span class="w"> </span>&gt;<span class="w"> </span>/root/backups/infohub_backup_<span class="k">$(</span>date<span class="w"> </span>+%F<span class="k">)</span>.sql
+</span></code></pre></div>
+<h3 id="25-interactive-database-diagnosis-sql-auditing">2.5 Interactive Database Diagnosis (SQL Auditing)</h3>
+<p>When performing validation checks or confirming database health, log directly into the local PostgreSQL instance using the application administrative profile to check records.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>postgresql://&lt;DB_USER&gt;:&lt;DB_PASSWORD&gt;@localhost:5432/&lt;DB_NAME&gt;<span class="w"> </span><span class="c1">#Replace the placeholder values</span>
+</span></code></pre></div>
+<details class="example">
+<summary>Example</summary>
+<p>Some common administrative queries:</p>
+<p>-- 1. Check database connectivity and total registered user counts<br />
+SELECT COUNT(*) FROM user;</p>
+<p>-- 2. Validate recently created info hub posts<br />
+SELECT id, title, created_at FROM post ORDER BY created_at DESC LIMIT 5;</p>
+<p>-- 3. Confirm structural schema metadata updates tracked by drizzle<br />
+SELECT * FROM __drizzle_migrations;</p>
+<p>-- 4. Check Databases<br />
+-- Alternatively, use \l+<br />
+SELECT * FROM pg_database;</p>
+<p>-- 5. Check Schemas<br />
+SELECT * FROM information_schema.schemata;</p>
+<p>-- 6. Check current database and schema<br />
+SELECT current_database();<br />
+SELECT current_schema();</p>
+<p>-- 7. List tables in current schema<br />
+\dt</p>
+<p>-- 8. List table structure of <table_name> (don't forget to replace)<br />
+\d <table_name> </p>
+</details>
+<h3 id="26-authentication-authorization-routine-audits">2.6 Authentication &amp; Authorization Routine Audits</h3>
+<p>If users report login blockages or token errors, execute these validation routines to verify Microsoft Entra ID and NextAuth health:</p>
+<ol>
+<li>
+<p><strong>Verify Token Routing and Callback Accessibility:</strong>
+Test if the internal NextAuth framework paths are responding securely over the Nginx proxy network layer: 
+<code>curl -I https://&lt;IP_ADDR&gt;:&lt;PORT&gt;/api/auth/providers</code></p>
+</li>
+<li>
+<p><strong>Validate Environment String Sync:</strong>
+Ensure AUTH_TRUST_HOST="true" is consistently declared in .env.local. If this flag is omitted on RHEL reverse proxies, Auth.js will throw a runtime exception and reject the secure token payload returning from Azure.</p>
+</li>
+<li>
+<p><strong>Check Nginx Proxy Headers:</strong>
+Verify that /etc/nginx/conf.d/info-hub.conf passes the authorization payloads without trimming data by ensuring these proxy maps exist:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>proxy_set_header Upgrade $http_upgrade;
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>proxy_set_header Connection &#39;upgrade&#39;;
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>proxy_set_header Host $host:$server_port;
+</span></code></pre></div></p>
+</li>
+</ol>
+<h2 id="appendix-exhaustive-ecosystem-dependency-manifest">Appendix: Exhaustive Ecosystem Dependency Manifest</h2>
+<p>The following manifest tables document all structural dependencies running inside the SSI Info Hub application layer for system reference.</p>
+<h3 id="1-framework-interface-layer">1. Framework &amp; Interface Layer</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Package</th>
+<th style="text-align: left;">Version Range</th>
+<th style="text-align: left;">Operational Scope within SSI Info Hub</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>lucide-react</code></td>
+<td style="text-align: left;">Latest</td>
+<td style="text-align: left;">Renders the interface icon sets (dashboard navigation metrics, attachments, profile elements).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>clsx</code></td>
+<td style="text-align: left;">Latest</td>
+<td style="text-align: left;">Manages conditional style definitions and clean CSS string formatting.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>tailwind-merge</code></td>
+<td style="text-align: left;">Latest</td>
+<td style="text-align: left;">Resolves CSS utility collisions, ensuring smooth template rendering.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>next-themes</code></td>
+<td style="text-align: left;">Latest</td>
+<td style="text-align: left;">Stores and changes application theme contexts dynamically (Dark/Light mode).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>framer-motion</code></td>
+<td style="text-align: left;">Latest</td>
+<td style="text-align: left;">Powers responsive layout transitions and animation actions across elements.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-database-data-validation-core">2. Database &amp; Data Validation Core</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Package</th>
+<th style="text-align: left;">Version Range</th>
+<th style="text-align: left;">Operational Scope within SSI Info Hub</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>postgres</code></td>
+<td style="text-align: left;">Latest</td>
+<td style="text-align: left;">High-performance, plain-text client used to run raw connection streams to the database server.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>drizzle-orm</code></td>
+<td style="text-align: left;">Latest</td>
+<td style="text-align: left;">Type-safe query engine linking tables to TypeScript structures without complex resource overhead.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>drizzle-kit</code></td>
+<td style="text-align: left;">DevDependency</td>
+<td style="text-align: left;">CLI prototyping utility used to build snapshots and push schema states directly to PostgreSQL.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>dotenv</code></td>
+<td style="text-align: left;">Latest</td>
+<td style="text-align: left;">Resolves and attaches persistent local keys to node runtime processes.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>zod</code></td>
+<td style="text-align: left;">Latest</td>
+<td style="text-align: left;">Validates inputs across structural inputs, comments, and logins before execution.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>uuid</code></td>
+<td style="text-align: left;">Latest</td>
+<td style="text-align: left;">Generates unique 128-bit object hashes used to securely separate server files and user scopes.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="3-authentication-access-management">3. Authentication &amp; Access Management</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Package</th>
+<th style="text-align: left;">Version Range</th>
+<th style="text-align: left;">Operational Scope within SSI Info Hub</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>next-auth</code></td>
+<td style="text-align: left;">Beta</td>
+<td style="text-align: left;">Core cryptographic security layer running token-based session handling.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>@auth/drizzle-adapter</code></td>
+<td style="text-align: left;">Latest</td>
+<td style="text-align: left;">Intercepts session states and automatically maps successful profiles to your PostgreSQL tables.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>bcrypt</code></td>
+<td style="text-align: left;">Latest</td>
+<td style="text-align: left;">Fallback mechanism that salts and hashes local access keys.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="4-rich-text-engine-document-export-suite">4. Rich-Text Engine &amp; Document Export Suite</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Package</th>
+<th style="text-align: left;">Version Range</th>
+<th style="text-align: left;">Operational Scope within SSI Info Hub</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>@tiptap/react</code></td>
+<td style="text-align: left;">Latest</td>
+<td style="text-align: left;">Headless editor environment powering the application's WYSIWYG text inputs.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>@tiptap/starter-kit</code></td>
+<td style="text-align: left;">Latest</td>
+<td style="text-align: left;">Group package enabling essential editor controls like bolding, headers, lists, and quote blocks.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>@tiptap/extension-link</code></td>
+<td style="text-align: left;">Latest</td>
+<td style="text-align: left;">Allows users to embed custom web hyperlinks inside documentation nodes.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>@tiptap/extension-placeholder</code></td>
+<td style="text-align: left;">Latest</td>
+<td style="text-align: left;">Manages inline text labels inside editing forms before users enter inputs.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>@tailwindcss/typography</code></td>
+<td style="text-align: left;">DevDependency</td>
+<td style="text-align: left;">Provides beautiful default CSS styles to raw markdown or HTML parsed out of editors.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>html2pdf.js</code></td>
+<td style="text-align: left;">Latest</td>
+<td style="text-align: left;">Captures document windows and converts them instantly to high-resolution client-side PDFs.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>html-docx-js</code></td>
+<td style="text-align: left;">Latest</td>
+<td style="text-align: left;">Converts rich-text code lines into Microsoft Word (<code>.docx</code>) file structures.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>jszip</code></td>
+<td style="text-align: left;">Latest</td>
+<td style="text-align: left;">Compresses and bundles large, multi-file document downloads into a single archive file.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="5-isolated-staging-data-engineering">5. Isolated Staging &amp; Data Engineering</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Package</th>
+<th style="text-align: left;">Version Range</th>
+<th style="text-align: left;">Operational Scope within SSI Info Hub</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>@faker-js/faker</code></td>
+<td style="text-align: left;">DevDependency</td>
+<td style="text-align: left;">Programmatically structures realistic user data records to populate schemas during staging.</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.annotate", "content.code.copy", "navigation.tabs", "navigation.sections"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

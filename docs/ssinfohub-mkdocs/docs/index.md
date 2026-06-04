@@ -32,12 +32,12 @@ To ensure zero friction, this portal has been split into two distinct, carefully
 ### 🚀 For Users or Beginners
 If your goal is to set up this application on a brand new server environment from scratch or learn how to utilize the day-to-day platform features, your entry point is the **User Manual**:
 
-* [**Setup Guide**](user_manual/setup.md): A step-by-step, beginner-friendly manual to provision a fresh Linux server instance, install critical systems (Node.js, PostgreSQL), and get the app live.
 * [**Interactive Feature Guide**](user_manual/feature-guide.md): A complete guide on how to register accounts, link Microsoft credentials, create rich-text posts, attach files, utilize multi-level nested comments, and search or filter across teams.
 
 ### 💻 For Developers & System Admins
 If you are an active maintainer, developer, or administrative lead responsible for securing, expanding, or testing the underlying codebase, head directly to the **Admin Guide**:
 
+* [**Setup and Maintenance Guide**](admin/setup.md): A step-by-step manual to provision a fresh Linux server instance, install critical systems (Node.js, PostgreSQL), and get the app live.
 * [**System Architecture & Diagrams**](admin/architecture.md): Visual layouts detailing the Drizzle ORM entity relationships, polymorphic schemas, and application routing hierarchies.
 * [**System Configurations**](admin/configurations.md): Explicit operational manuals for overriding baseline network rules, changing IP/Port binds, altering upload storage caps, and swapping environment variables.
 * [**Development & Production Safety**](admin/testing-environments.md): Guidelines for setting up isolated local testing environments and critical warnings for protecting the production database layer.

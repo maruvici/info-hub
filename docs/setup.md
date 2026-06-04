@@ -19,6 +19,7 @@
 1. Create .env.local in project root: `touch .env.local`
 2. Enter DatabaseURL: `DATABASE_URL="postgresql://dbadmin:infohubpasswd_123@localhost:5432/infohub_db"`
 3. Generate Secret: `npx auth secret`
+4. Setup Microsoft Entra ID API Keys
 
 ##  Drizzle ORM
 1. Install postgresql (precaution) and drizzle orm: `npm install postgres drizzle-orm`
