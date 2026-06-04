@@ -27,7 +27,7 @@
     
     
       
-        <title>System Configurations (IP, Ports, Storage) - SSI InfoHub Portal Manual & Documentation</title>
+        <title>System Configurations - SSI InfoHub Portal Manual & Documentation</title>
       
     
     
@@ -77,6 +77,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#system-configuration-manual" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -107,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              System Configurations (IP, Ports, Storage)
+              System Configurations
             
           </span>
         </div>
@@ -554,6 +559,26 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    System Configurations
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
         
@@ -562,7 +587,7 @@
   <span class="md-ellipsis">
     
   
-    System Configurations (IP, Ports, Storage)
+    System Configurations
   
 
     
@@ -571,6 +596,209 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-absolute-system-pathing-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Absolute System Pathing Matrix
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-application-core-environment-variables-envlocal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Application Core Environment Variables (.env.local)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Application Core Environment Variables (.env.local)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#detailed-parameter-breakdown" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Detailed Parameter Breakdown
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-storage-architecture-media-attachment-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Storage Architecture &amp; Media Attachment Rules
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Storage Architecture &amp; Media Attachment Rules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-storage-directory-allocation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Storage Directory Allocation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-thresholds-validation-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Thresholds &amp; Validation Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-security-check-media-streaming-routets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Security Check &amp; Media Streaming (route.ts)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-edge-web-server-routing-buffer-adjustments-nginx" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Edge Web Server Routing &amp; Buffer Adjustments (Nginx)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Edge Web Server Routing &amp; Buffer Adjustments (Nginx)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-nextjs-framework-payload-alignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Next.js Framework Payload Alignment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-multi-core-process-engineering-pm2-ecosystem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Multi-Core Process Engineering (PM2 Ecosystem)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Multi-Core Process Engineering (PM2 Ecosystem)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-infrastructure-controls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Infrastructure Controls
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-relational-database-storage-pooling-postgresql" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Relational Database Storage Pooling (PostgreSQL)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Relational Database Storage Pooling (PostgreSQL)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-database-connection-mapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Database Connection Mapping
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-administrative-thread-allocation-guide-important-when-scaling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Administrative Thread Allocation Guide (Important when scaling)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -716,6 +944,200 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-absolute-system-pathing-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Absolute System Pathing Matrix
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-application-core-environment-variables-envlocal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Application Core Environment Variables (.env.local)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Application Core Environment Variables (.env.local)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#detailed-parameter-breakdown" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Detailed Parameter Breakdown
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-storage-architecture-media-attachment-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Storage Architecture &amp; Media Attachment Rules
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Storage Architecture &amp; Media Attachment Rules">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-storage-directory-allocation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 Storage Directory Allocation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-thresholds-validation-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Thresholds &amp; Validation Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-security-check-media-streaming-routets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Security Check &amp; Media Streaming (route.ts)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-edge-web-server-routing-buffer-adjustments-nginx" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Edge Web Server Routing &amp; Buffer Adjustments (Nginx)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Edge Web Server Routing &amp; Buffer Adjustments (Nginx)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-nextjs-framework-payload-alignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Next.js Framework Payload Alignment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-multi-core-process-engineering-pm2-ecosystem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Multi-Core Process Engineering (PM2 Ecosystem)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Multi-Core Process Engineering (PM2 Ecosystem)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-infrastructure-controls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Infrastructure Controls
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-relational-database-storage-pooling-postgresql" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Relational Database Storage Pooling (PostgreSQL)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Relational Database Storage Pooling (PostgreSQL)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-database-connection-mapping" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Database Connection Mapping
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-administrative-thread-allocation-guide-important-when-scaling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Administrative Thread Allocation Guide (Important when scaling)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -732,9 +1154,257 @@
 
 
 
-  <h1>System Configurations (IP, Ports, Storage)</h1>
-
-
+<h1 id="system-configuration-manual">System Configuration Manual</h1>
+<p>This document serves as the authoritative architectural blueprint for the <strong>SSI Info Hub</strong> system configuration. It outlines the absolute server paths, environment properties, reverse proxy constraints, process cluster limits, and data streaming parameters required to run the application in a hardened RHEL environment.</p>
+<hr />
+<h2 id="1-absolute-system-pathing-matrix">1. Absolute System Pathing Matrix</h2>
+<p>To simplify audits and cross-service diagnostics, utilize this master directory matrix to locate active configuration boundaries on the server:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Ecosystem Component</th>
+<th style="text-align: left;">Targeted File / Path</th>
+<th style="text-align: left;">Absolute Server Path</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Next.js Environment</strong></td>
+<td style="text-align: left;">Core Environment Configuration</td>
+<td style="text-align: left;"><code>/root/ssi-info-hub/info-hub/.env.local</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>PM2 Process Manager</strong></td>
+<td style="text-align: left;">Cluster Ecosystem Manifest</td>
+<td style="text-align: left;"><code>/root/ssi-info-hub/info-hub/ecosystem.config.js</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Next.js Engine Config</strong></td>
+<td style="text-align: left;">Server Action Override Options</td>
+<td style="text-align: left;"><code>/root/ssi-info-hub/info-hub/next.config.ts</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Database ORM Mapping</strong></td>
+<td style="text-align: left;">Schema Structure Declarations</td>
+<td style="text-align: left;"><code>/root/ssi-info-hub/info-hub/src/db/schema.ts</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Nginx Web Proxy</strong></td>
+<td style="text-align: left;">Application Virtual Host Blocks</td>
+<td style="text-align: left;"><code>/etc/nginx/conf.d/info-hub.conf</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Nginx Web Proxy</strong></td>
+<td style="text-align: left;">Documentation Portal Blocks</td>
+<td style="text-align: left;"><code>/etc/nginx/conf.d/info-hub-docs.conf</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>PostgreSQL Database</strong></td>
+<td style="text-align: left;">Storage Server Configurations</td>
+<td style="text-align: left;"><code>/var/lib/pgsql/data/postgresql.conf</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Media Attachments</strong></td>
+<td style="text-align: left;">Physical Disk Storage Endpoint</td>
+<td style="text-align: left;"><code>/mnt/internaltool</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2-application-core-environment-variables-envlocal">2. Application Core Environment Variables (<code>.env.local</code>)</h2>
+<p>The Next.js framework ingests 7 mandatory parameters to securely establish database connections and handle single sign-on mapping via Microsoft Entra ID.</p>
+<details class="example">
+<summary>Sample Environment Template</summary>
+<p>Below is a sample template for the environment variables file. Make sure to replace the placeholder values enclosed with <code>&lt;&gt;</code></p>
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="na">DATABASE_URL</span><span class="o">=</span><span class="s">&quot;postgresql://&lt;DB_USER&gt;:&lt;DB_PASSWORD&gt;@localhost:5432/&lt;DB_NAME&gt;&quot;</span><span class="w">  </span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="na">AUTH_SECRET</span><span class="o">=</span><span class="s">&quot;&lt;32BIT_STRING&gt;&quot;</span><span class="w"> </span><span class="c1"># Generate via: npx auth secret  </span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="na">NEXTAUTH_URL</span><span class="o">=</span><span class="s">&quot;https://&lt;IP_ADDR&gt;:&lt;PORT&gt;&quot;</span><span class="w"> </span><span class="c1"># External application endpoint</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="na">AUTH_MICROSOFT_ENTRA_ID_ID</span><span class="o">=</span><span class="s">&quot;&lt;ENTRA_CLIENT_ID&gt;&quot;</span><span class="w">  </span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="na">AUTH_MICROSOFT_ENTRA_ID_TENANT_ID</span><span class="o">=</span><span class="s">&quot;&lt;ENTRA_TENANT_ID&gt;&quot;</span><span class="w">  </span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="na">AUTH_MICROSOFT_ENTRA_ID_SECRET</span><span class="o">=</span><span class="s">&quot;&lt;ENTRA_CLIENT_SECRET&gt;&quot;</span><span class="w">  </span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="na">AUTH_TRUST_HOST</span><span class="o">=</span><span class="s">&quot;true&quot;</span>
+</span></code></pre></div>
+</details>
+<h3 id="detailed-parameter-breakdown">Detailed Parameter Breakdown</h3>
+<ul>
+<li><strong><code>DATABASE_URL</code></strong><ul>
+<li><strong>Purpose:</strong> Instructs the lazy-initializing <code>postgres</code> client-pool engine where to direct relational database reads/writes.</li>
+<li><strong>Hardening Rule:</strong> Must specify the application-dedicated user context (<code>dbadmin</code>) and never use the default <code>postgres</code> root username.</li>
+</ul>
+</li>
+<li><strong><code>AUTH_SECRET</code></strong><ul>
+<li><strong>Purpose:</strong> A cryptographically random, 32-byte hexadecimal salt used by NextAuth to sign and encrypt Session JWT tokens and cookie states.</li>
+</ul>
+</li>
+<li><strong><code>NEXTAUTH_URL</code></strong><ul>
+<li><strong>Purpose:</strong> Sets the canonical absolute base URL where authentication tokens are returned from cloud identity providers. This must perfectly match the <strong>Redirect URI</strong> configured in your Microsoft Entra console.</li>
+</ul>
+</li>
+<li><strong><code>AUTH_MICROSOFT_ENTRA_ID_ID</code> &amp; <code>AUTH_MICROSOFT_ENTRA_ID_TENANT_ID</code></strong><ul>
+<li><strong>Purpose:</strong> Identifies your company's corporate Active Directory cloud boundaries and individual application registration handles.</li>
+</ul>
+</li>
+<li><strong><code>AUTH_MICROSOFT_ENTRA_ID_SECRET</code></strong><ul>
+<li><strong>Purpose:</strong> The secure client-secret password generated in the Entra portal to authenticate cross-server token assertions.</li>
+</ul>
+</li>
+<li><strong><code>AUTH_TRUST_HOST</code></strong><ul>
+<li><strong>Purpose:</strong> Explicitly tells NextAuth to trust proxy headers (<code>X-Forwarded-Host</code>, <code>X-Forwarded-Proto</code>) arriving from Nginx. <em>Crucial on RHEL servers; if set to false, login handshakes will terminate instantly with a 403 authorization breach error.</em></li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="3-storage-architecture-media-attachment-rules">3. Storage Architecture &amp; Media Attachment Rules</h2>
+<p>SSI Info Hub runs a highly secure, buffered physical storage processing engine configured under <code>/root/ssi-info-hub/info-hub/src/app/actions/attachments.ts</code>.</p>
+<h3 id="31-storage-directory-allocation">3.1 Storage Directory Allocation</h3>
+<p>All physical binary items, graphics, videos, or documents uploaded by users are saved directly onto the server at <code>/mnt/internaltool</code></p>
+<details class="note">
+<summary>Note</summary>
+<p>This path can be refactored or remounted directly onto an external network share or Synology NAS mount as data footprint requirements expand. Just replace the <code>UPLOAD_DIR</code> variable inside <code>attachments.ts</code>.</p>
+</details>
+<h3 id="32-thresholds-validation-rules">3.2 Thresholds &amp; Validation Rules</h3>
+<p>The application layer strictly enforces file safety protocols before passing records down to the file system or recording a reference URL (<code>/api/attachments/[filename]</code>) inside the database:</p>
+<ul>
+<li><strong>File Size Ceiling:</strong> Capped strictly at <strong>100MB</strong> (<code>100 * 1024 * 1024</code> bytes). Any file surpassing this boundary will be blocked at the edge server action.</li>
+<li><strong>Attachment Limits:</strong> Users are permitted a maximum of <strong>3 attachments per individual post</strong>.</li>
+<li><strong>Extension Whitelist:</strong> The system rejects unlisted file formats to mitigate malicious executions. The allowed formats include:<ul>
+<li><em>Images:</em> <code>.jpg</code>, <code>.jpeg</code>, <code>.png</code>, <code>.gif</code>, <code>.svg</code>, <code>.webp</code></li>
+<li><em>Video/Audio:</em> <code>.mp4</code>, <code>.avi</code>, <code>.mov</code>, <code>.webm</code>, <code>.mp3</code>, <code>.wav</code>, <code>.ogg</code></li>
+<li><em>Documents:</em> <code>.pdf</code>, <code>.doc</code>, <code>.docx</code>, <code>.xls</code>, <code>.xlsx</code>, <code>.txt</code>, <code>.csv</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="33-security-check-media-streaming-routets">3.3 Security Check &amp; Media Streaming (<code>route.ts</code>)</h3>
+<p>When an authorized user attempts to retrieve an attachment via the <code>/api/attachments/[filename]</code> API route, the system handles data transport with these operational constraints:
+1. <strong>Domain Isolation:</strong> The route validates the active session token and explicitly rejects any email addresses that do not end with the corporate domain suffix: <strong><code>@ssiph.com</code></strong>.
+2. <strong>Byte-Range Seeking (<code>Accept-Ranges: bytes</code>):</strong> The server streams the file from the disk using a native Web Stream chunking procedure. This allows the browser to populate the file progress indicator and allows users to fluidly "scrub" back and forth through timelines of embedded <code>.mp4</code> videos or <code>.mp3</code> audio clips.</p>
+<hr />
+<h2 id="4-edge-web-server-routing-buffer-adjustments-nginx">4. Edge Web Server Routing &amp; Buffer Adjustments (Nginx)</h2>
+<p>Because the application processes large media uploads up to 100MB, the default Nginx configuration must be widened. Failing to increase these boundaries will cause Nginx to drop file upload streams, returning <strong>HTTP 413 Payload Too Large</strong> or <strong>HTTP 502 Bad Gateway</strong> errors before the Next.js runtime can intercept them.</p>
+<p>Create the file <code>/etc/nginx/conf.d/info-hub.conf</code> and populate it with these production proxy buffers:</p>
+<div class="language-nginx highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">server</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="kn">listen</span><span class="w"> </span><span class="mi">3000</span><span class="w"> </span><span class="s">ssl</span><span class="w"> </span><span class="s">http2</span><span class="p">;</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="kn">server_name</span><span class="w"> </span><span class="s">infohub.internal.corp</span><span class="p">;</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="kn">ssl_certificate</span><span class="w"> </span><span class="s">/etc/pki/nginx/server.crt</span><span class="p">;</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="kn">ssl_certificate_key</span><span class="w"> </span><span class="s">/etc/pki/nginx/private/server.key</span><span class="p">;</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">    </span><span class="c1"># Enforce strict corporate security compliance TLS levels</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">    </span><span class="kn">ssl_protocols</span><span class="w"> </span><span class="s">TLSv1.2</span><span class="w"> </span><span class="s">TLSv1.3</span><span class="p">;</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">    </span><span class="kn">ssl_ciphers</span><span class="w"> </span><span class="s">HIGH:!aNULL:!MD5</span><span class="p">;</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">    </span><span class="c1"># Match the maximum file capability defined in attachments.ts</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">    </span><span class="kn">client_max_body_size</span><span class="w"> </span><span class="s">100M</span><span class="p">;</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">    </span><span class="kn">location</span><span class="w"> </span><span class="s">/</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">        </span><span class="c1"># Route directly to the PM2 cluster instance port</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="w">        </span><span class="kn">proxy_pass</span><span class="w"> </span><span class="s">http://127.0.0.1:3001</span><span class="p">;</span>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="w">        </span><span class="c1"># Preserve upstream network metadata contexts</span>
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">Host</span><span class="w"> </span><span class="nv">$host</span><span class="p">;</span>
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Real-IP</span><span class="w"> </span><span class="nv">$remote_addr</span><span class="p">;</span>
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Forwarded-For</span><span class="w"> </span><span class="nv">$proxy_add_x_forwarded_for</span><span class="p">;</span>
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">X-Forwarded-Proto</span><span class="w"> </span><span class="nv">$scheme</span><span class="p">;</span>
+</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>
+</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="w">        </span><span class="c1"># WebSocket support handles high-speed dashboard state pushes</span>
+</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="w">        </span><span class="kn">proxy_http_version</span><span class="w"> </span><span class="mi">1</span><span class="s">.1</span><span class="p">;</span>
+</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">Upgrade</span><span class="w"> </span><span class="nv">$http_upgrade</span><span class="p">;</span>
+</span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="w">        </span><span class="kn">proxy_set_header</span><span class="w"> </span><span class="s">Connection</span><span class="w"> </span><span class="s">&quot;upgrade&quot;</span><span class="p">;</span>
+</span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>
+</span><span id="__span-1-30"><a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="w">        </span><span class="c1"># Expand proxy buffer limits to safeguard large stream chunks</span>
+</span><span id="__span-1-31"><a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="w">        </span><span class="kn">proxy_buffer_size</span><span class="w">          </span><span class="mi">128k</span><span class="p">;</span>
+</span><span id="__span-1-32"><a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a><span class="w">        </span><span class="kn">proxy_buffers</span><span class="w">              </span><span class="mi">4</span><span class="w"> </span><span class="mi">256k</span><span class="p">;</span>
+</span><span id="__span-1-33"><a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a><span class="w">        </span><span class="kn">proxy_busy_buffers_size</span><span class="w">    </span><span class="mi">256k</span><span class="p">;</span>
+</span><span id="__span-1-34"><a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="w">        </span><span class="kn">proxy_read_timeout</span><span class="w">         </span><span class="s">300s</span><span class="p">;</span>
+</span><span id="__span-1-35"><a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a><span class="w">        </span><span class="kn">proxy_send_timeout</span><span class="w">         </span><span class="s">300s</span><span class="p">;</span>
+</span><span id="__span-1-36"><a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-1-37"><a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a><span class="p">}</span>
+</span></code></pre></div>
+<h3 id="41-nextjs-framework-payload-alignment">4.1 Next.js Framework Payload Alignment</h3>
+<p>To ensure the backend Node.js framework does not reject incoming media binaries, your next.config.ts configuration maps a matching body limit:</p>
+<div class="language-typescript highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">import</span><span class="w"> </span><span class="kr">type</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">NextConfig</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;next&quot;</span><span class="p">;</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kd">const</span><span class="w"> </span><span class="nx">nextConfig</span><span class="o">:</span><span class="w"> </span><span class="kt">NextConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span><span class="nx">reactCompiler</span><span class="o">:</span><span class="w"> </span><span class="kt">true</span><span class="p">,</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">  </span><span class="nx">experimental</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="nx">serverActions</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">      </span><span class="nx">bodySizeLimit</span><span class="o">:</span><span class="w"> </span><span class="s1">&#39;100mb&#39;</span><span class="p">,</span><span class="w"> </span><span class="c1">// Aligns directly with attachments.ts limits</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span><span class="p">},</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">  </span><span class="p">},</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="p">};</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="k">export</span><span class="w"> </span><span class="k">default</span><span class="w"> </span><span class="nx">nextConfig</span><span class="p">;</span>
+</span></code></pre></div>
+<hr />
+<h2 id="5-multi-core-process-engineering-pm2-ecosystem">5. Multi-Core Process Engineering (PM2 Ecosystem)</h2>
+<p>The production cluster environment is defined inside <code>/root/ssi-info-hub/info-hub/ecosystem.config.js</code>.</p>
+<p>Instead of spawning a standard single-threaded process, the application utilizes PM2's Cluster Mode to mirror the server environment seamlessly over every hardware core present on the RHEL processor.</p>
+<div class="language-javascript highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="nx">apps</span><span class="o">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">      </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;ssi-info-hub&quot;</span><span class="p">,</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">      </span><span class="nx">script</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;node_modules/next/dist/bin/next&quot;</span><span class="p">,</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">      </span><span class="nx">args</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;start -p 3001&quot;</span><span class="p">,</span><span class="w"> </span><span class="c1">// Binds next start securely to backend port 3001</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">      </span><span class="nx">cwd</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;/root/ssi-info-hub/info-hub&quot;</span><span class="p">,</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">      </span><span class="nx">instances</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;max&quot;</span><span class="p">,</span><span class="w">       </span><span class="c1">// Leverages 100% of available CPU cores</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">      </span><span class="nx">exec_mode</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;cluster&quot;</span><span class="p">,</span><span class="w">   </span><span class="c1">// Enforces true multi-threaded load balancing</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">      </span><span class="nx">env</span><span class="o">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">        </span><span class="nx">NODE_ENV</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;production&quot;</span><span class="p">,</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">      </span><span class="p">},</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="w">    </span><span class="p">},</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="w">  </span><span class="p">],</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="p">};</span>
+</span></code></pre></div>
+<h3 id="51-infrastructure-controls">5.1 Infrastructure Controls</h3>
+<ul>
+<li>
+<p><strong>Core Task Distribution</strong> (<code>instances: "max"</code>): PM2 spins up separate system sub-threads for each core. Network queries hitting port 3001 are balanced round-robin across instances automatically. If an isolated thread crashes due to an unhandled exception, sibling instances handle processing with zero total application down-time.</p>
+</li>
+<li>
+<p><strong>Process Watchdog Monitoring</strong>: If any thread experiences a critical memory leakage or stays unresponsive, an admin can issue an automated restart threshold directly inside this block using <code>max_memory_restart: "2G"</code>.</p>
+</li>
+</ul>
+<hr />
+<h2 id="6-relational-database-storage-pooling-postgresql">6. Relational Database Storage Pooling (PostgreSQL)</h2>
+<p>SSI Info Hub relies on <em>drizzle-orm</em> wrapping a high-performance postgres.js client adapter (<code>src/db/index.ts</code>).</p>
+<h3 id="61-database-connection-mapping">6.1 Database Connection Mapping</h3>
+<div class="language-typescript highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">drizzle</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;drizzle-orm/postgres-js&quot;</span><span class="p">;</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="k">import</span><span class="w"> </span><span class="nx">postgres</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;postgres&quot;</span><span class="p">;</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">import</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="kr">as</span><span class="w"> </span><span class="nx">schema</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;./schema&quot;</span><span class="p">;</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="kd">const</span><span class="w"> </span><span class="nx">connectionString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">DATABASE_URL</span><span class="o">!</span><span class="p">;</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="kd">const</span><span class="w"> </span><span class="nx">globalForDb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">global</span><span class="w"> </span><span class="kr">as</span><span class="w"> </span><span class="nx">unknown</span><span class="w"> </span><span class="kr">as</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">  </span><span class="nx">conn</span><span class="o">:</span><span class="w"> </span><span class="kt">postgres.Sql</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="kc">undefined</span><span class="w"> </span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="p">};</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="c1">// Lazy initialization controls system thread bloat</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="kd">const</span><span class="w"> </span><span class="nx">conn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">globalForDb</span><span class="p">.</span><span class="nx">conn</span><span class="w"> </span><span class="o">??</span><span class="w"> </span><span class="nx">postgres</span><span class="p">(</span><span class="nx">connectionString</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">  </span><span class="nx">prepare</span><span class="o">:</span><span class="w"> </span><span class="kt">false</span><span class="p">,</span><span class="w">      </span><span class="c1">// Disables prepared statements to optimize connection recycling</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">  </span><span class="nx">connect_timeout</span><span class="o">:</span><span class="w"> </span><span class="kt">10</span><span class="w">  </span><span class="c1">// Hard 10-second ceiling prevents socket hanging</span>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="p">});</span>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NODE_ENV</span><span class="w"> </span><span class="o">!==</span><span class="w"> </span><span class="s2">&quot;production&quot;</span><span class="p">)</span><span class="w"> </span><span class="nx">globalForDb</span><span class="p">.</span><span class="nx">conn</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">conn</span><span class="p">;</span>
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="k">export</span><span class="w"> </span><span class="kd">const</span><span class="w"> </span><span class="nx">db</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">drizzle</span><span class="p">(</span><span class="nx">conn</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">schema</span><span class="w"> </span><span class="p">});</span>
+</span></code></pre></div>
+<h3 id="62-administrative-thread-allocation-guide-important-when-scaling">6.2 Administrative Thread Allocation Guide (Important when scaling)</h3>
+<ul>
+<li><strong>Lazy Pool Balancing</strong>: Because postgres.js handles connection resource gathering lazily, instances spin up sockets on an as-needed basis.</li>
+<li><strong>Connection Math Formula</strong>: When tuning your system database engine at <code>/var/lib/pgsql/data/postgresql.conf</code>, make sure to compute the available <code>max_connections</code> value using this balancing formula:</li>
+</ul>
+<div class="admonition abstract">
+<p class="admonition-title">System Sizing Formula</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Connection Pool Ratio</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>PostgreSQL max_connections &gt;= (Number of PM2 Cluster Workers * Internal Client Pool Limit) + 10 (Reserved for Admins)
+</span></code></pre></div>
+</div>
+</div>
+</div>
+<p>If your RHEL instance has 8 cores, and your application scales out to 8 instances, ensuring a base database capacity of at least 100 connections avoids any accidental resource denial under heavy workloads.</p>
+</div>
 
 
 

@@ -878,7 +878,7 @@
   <span class="md-ellipsis">
     
   
-    System Configurations (IP, Ports, Storage)
+    System Configurations
   
 
     
@@ -1330,9 +1330,15 @@
 
 <h1 id="setup-and-maintenance-manual">Setup and Maintenance Manual</h1>
 <p>This document serves as the authoritative operational manual for System Administrators and DevOps Engineers managing the <strong>SSI Info Hub</strong> environment. </p>
-<p>It is divided into two primary matrices:
-1. <strong>Initial System Setup:</strong> A ground-up provisioning guide for a fresh Red Hat Enterprise Linux (RHEL) server, covering Git repository cloning, runtime installations, dependency resolution, and SELinux network hardening.
-2. <strong>Routine Maintenance:</strong> The standardized procedures for application updates, process lifecycle management (PM2), log tracing, and database backups.</p>
+<p>It is divided into two primary matrices:</p>
+<ol>
+<li>
+<p><strong>Initial System Setup:</strong> A ground-up provisioning guide for a fresh Red Hat Enterprise Linux (RHEL) server, covering Git repository cloning, runtime installations, dependency resolution, and SELinux network hardening.</p>
+</li>
+<li>
+<p><strong>Routine Maintenance:</strong> The standardized procedures for application updates, process lifecycle management (PM2), log tracing, and database backups.</p>
+</li>
+</ol>
 <hr />
 <h2 id="part-1-initial-system-setup">Part 1: Initial System Setup</h2>
 <h3 id="11-os-preparation-core-packages">1.1 OS Preparation &amp; Core Packages</h3>
@@ -1440,6 +1446,7 @@
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>chmod<span class="w"> </span>+x<span class="w"> </span>/root/ssi-info-hub/info-hub/deploy.sh
 </span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>./deploy.sh
 </span></code></pre></div>
+<hr />
 <h2 id="part-2-routine-maintenance-operations">Part 2: Routine Maintenance &amp; Operations</h2>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>

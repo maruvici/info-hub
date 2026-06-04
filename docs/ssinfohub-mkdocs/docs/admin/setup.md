@@ -3,7 +3,9 @@
 This document serves as the authoritative operational manual for System Administrators and DevOps Engineers managing the **SSI Info Hub** environment. 
 
 It is divided into two primary matrices:
+
 1. **Initial System Setup:** A ground-up provisioning guide for a fresh Red Hat Enterprise Linux (RHEL) server, covering Git repository cloning, runtime installations, dependency resolution, and SELinux network hardening.
+
 2. **Routine Maintenance:** The standardized procedures for application updates, process lifecycle management (PM2), log tracing, and database backups.
 
 ---
@@ -137,6 +139,8 @@ Trigger the centralized build and deployment pipeline.
 chmod +x /root/ssi-info-hub/info-hub/deploy.sh
 ./deploy.sh
 ```
+
+---
 
 ## Part 2: Routine Maintenance & Operations
 
