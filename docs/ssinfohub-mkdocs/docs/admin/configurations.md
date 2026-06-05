@@ -64,7 +64,7 @@ SSI Info Hub runs a highly secure, buffered physical storage processing engine c
 All physical binary items, graphics, videos, or documents uploaded by users are saved directly onto the server at `/mnt/internaltool`
 
 ??? note
-    This path can be refactored or remounted directly onto an external network share or Synology NAS mount as data footprint requirements expand. Just replace the `UPLOAD_DIR` variable inside `attachments.ts`.
+    This path can be refactored or remounted directly onto an external network share or Synology NAS mount as data footprint requirements expand. Just replace the `UPLOAD_DIR` variable inside `info-hub/src/app/actions/attachments.ts` and `info-hub/src/app/api/attachments/[filename]/route.ts`.
 
 ### 3.2 Thresholds & Validation Rules
 The application layer strictly enforces file safety protocols before passing records down to the file system or recording a reference URL (`/api/attachments/[filename]`) inside the database:
@@ -76,9 +76,14 @@ The application layer strictly enforces file safety protocols before passing rec
     * *Video/Audio:* `.mp4`, `.avi`, `.mov`, `.webm`, `.mp3`, `.wav`, `.ogg`
     * *Documents:* `.pdf`, `.doc`, `.docx`, `.xls`, `.xlsx`, `.txt`, `.csv`
 
+??? note
+    This behavior can be changed by updating the `MAX_FILE_SIZE` and `ALLOWED_TYPES` variables under `create-post-client.tsx` and `edit-post-client.tsx`.
+
 ### 3.3 Security Check & Media Streaming (`route.ts`)
 When an authorized user attempts to retrieve an attachment via the `/api/attachments/[filename]` API route, the system handles data transport with these operational constraints:
+
 1. **Domain Isolation:** The route validates the active session token and explicitly rejects any email addresses that do not end with the corporate domain suffix: **`@ssiph.com`**.
+
 2. **Byte-Range Seeking (`Accept-Ranges: bytes`):** The server streams the file from the disk using a native Web Stream chunking procedure. This allows the browser to populate the file progress indicator and allows users to fluidly "scrub" back and forth through timelines of embedded `.mp4` videos or `.mp3` audio clips.
 
 ---

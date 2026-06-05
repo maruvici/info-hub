@@ -819,7 +819,7 @@
   <span class="md-ellipsis">
     
   
-    Development, Seeding & Prod Safety
+    Testing & Staging
   
 
     
@@ -1260,7 +1260,7 @@
 <p>All physical binary items, graphics, videos, or documents uploaded by users are saved directly onto the server at <code>/mnt/internaltool</code></p>
 <details class="note">
 <summary>Note</summary>
-<p>This path can be refactored or remounted directly onto an external network share or Synology NAS mount as data footprint requirements expand. Just replace the <code>UPLOAD_DIR</code> variable inside <code>attachments.ts</code>.</p>
+<p>This path can be refactored or remounted directly onto an external network share or Synology NAS mount as data footprint requirements expand. Just replace the <code>UPLOAD_DIR</code> variable inside <code>info-hub/src/app/actions/attachments.ts</code> and <code>info-hub/src/app/api/attachments/[filename]/route.ts</code>.</p>
 </details>
 <h3 id="32-thresholds-validation-rules">3.2 Thresholds &amp; Validation Rules</h3>
 <p>The application layer strictly enforces file safety protocols before passing records down to the file system or recording a reference URL (<code>/api/attachments/[filename]</code>) inside the database:</p>
@@ -1274,10 +1274,20 @@
 </ul>
 </li>
 </ul>
+<details class="note">
+<summary>Note</summary>
+<p>This behavior can be changed by updating the <code>MAX_FILE_SIZE</code> and <code>ALLOWED_TYPES</code> variables under <code>create-post-client.tsx</code> and <code>edit-post-client.tsx</code>.</p>
+</details>
 <h3 id="33-security-check-media-streaming-routets">3.3 Security Check &amp; Media Streaming (<code>route.ts</code>)</h3>
-<p>When an authorized user attempts to retrieve an attachment via the <code>/api/attachments/[filename]</code> API route, the system handles data transport with these operational constraints:
-1. <strong>Domain Isolation:</strong> The route validates the active session token and explicitly rejects any email addresses that do not end with the corporate domain suffix: <strong><code>@ssiph.com</code></strong>.
-2. <strong>Byte-Range Seeking (<code>Accept-Ranges: bytes</code>):</strong> The server streams the file from the disk using a native Web Stream chunking procedure. This allows the browser to populate the file progress indicator and allows users to fluidly "scrub" back and forth through timelines of embedded <code>.mp4</code> videos or <code>.mp3</code> audio clips.</p>
+<p>When an authorized user attempts to retrieve an attachment via the <code>/api/attachments/[filename]</code> API route, the system handles data transport with these operational constraints:</p>
+<ol>
+<li>
+<p><strong>Domain Isolation:</strong> The route validates the active session token and explicitly rejects any email addresses that do not end with the corporate domain suffix: <strong><code>@ssiph.com</code></strong>.</p>
+</li>
+<li>
+<p><strong>Byte-Range Seeking (<code>Accept-Ranges: bytes</code>):</strong> The server streams the file from the disk using a native Web Stream chunking procedure. This allows the browser to populate the file progress indicator and allows users to fluidly "scrub" back and forth through timelines of embedded <code>.mp4</code> videos or <code>.mp3</code> audio clips.</p>
+</li>
+</ol>
 <hr />
 <h2 id="4-edge-web-server-routing-buffer-adjustments-nginx">4. Edge Web Server Routing &amp; Buffer Adjustments (Nginx)</h2>
 <p>Because the application processes large media uploads up to 100MB, the default Nginx configuration must be widened. Failing to increase these boundaries will cause Nginx to drop file upload streams, returning <strong>HTTP 413 Payload Too Large</strong> or <strong>HTTP 502 Bad Gateway</strong> errors before the Next.js runtime can intercept them.</p>

@@ -40,7 +40,7 @@ If you are an active maintainer, developer, or administrative lead responsible f
 * [**Setup and Maintenance Guide**](admin/setup.md): A step-by-step manual to provision a fresh Linux server instance, install critical systems (Node.js, PostgreSQL), and get the app live.
 * [**System Architecture & Diagrams**](admin/architecture.md): Visual layouts detailing the Drizzle ORM entity relationships, polymorphic schemas, and application routing hierarchies.
 * [**System Configurations**](admin/configurations.md): Explicit operational manuals for overriding baseline network rules, changing IP/Port binds, altering upload storage caps, and swapping environment variables.
-* [**Development & Production Safety**](admin/testing-environments.md): Guidelines for setting up isolated local testing environments and critical warnings for protecting the production database layer.
+* [**Testing & Staging Environments Manual**](admin/testing-environments.md): Guidelines for setting up isolated local testing environments and critical warnings for protecting the production database layer.
 
 ---
 

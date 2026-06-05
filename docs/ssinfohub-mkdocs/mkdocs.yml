@@ -48,6 +48,6 @@ nav:
       - Setup and Maintenance: admin/setup.md
       - System Architecture & Diagrams: admin/architecture.md
       - System Configurations: admin/configurations.md
-      - Development, Seeding & Prod Safety: admin/testing-environments.md
+      - Testing & Staging: admin/testing-environments.md
   - ❓ Support Hub:
       - Frequently Asked Questions: faqs.md
