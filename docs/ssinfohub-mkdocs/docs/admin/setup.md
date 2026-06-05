@@ -29,7 +29,7 @@ SSI Info Hub relies on Node.js for the Next.js application cluster and Python fo
 
 ```bash
 # Provision Node.js v20.x
-curl -fsSL [https://rpm.nodesource.com/setup_20.x](https://rpm.nodesource.com/setup_20.x) | sudo bash -
+curl -fsSL https://rpm.nodesource.com/setup_20.x | sudo bash -
 sudo dnf install nodejs -y
 
 # Provision Python 3 and pip
@@ -58,7 +58,7 @@ Instead of bootstrapping a new application, clone the centralized SSI Info Hub G
 
 ```bash
 # Clone the repository (Replace with actual internal Git URL)
-git clone https://your-internal-git-server.com/ssi/SSI Info Hub.git /root/ssi-info-hub
+git clone <GIT_HTTPS/SSH_REPO_URL>
 
 # Navigate to the primary application directory
 cd /root/ssi-info-hub/info-hub
@@ -187,7 +187,7 @@ sudo -u postgres pg_dump infohub_db > /root/backups/infohub_backup_$(date +%F).s
 When performing validation checks or confirming database health, log directly into the local PostgreSQL instance using the application administrative profile to check records.
 
 ```bash
-postgresql://<DB_USER>:<DB_PASSWORD>@localhost:5432/<DB_NAME> #Replace the placeholder values
+psql postgresql://<DB_USER>:<DB_PASSWORD>@localhost:5432/<DB_NAME> #Replace the placeholder values
 ```
 
 ??? example
