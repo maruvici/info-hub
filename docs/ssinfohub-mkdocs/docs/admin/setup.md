@@ -237,6 +237,20 @@ proxy_set_header Connection 'upgrade';
 proxy_set_header Host $host:$server_port;
 ```
 
+### 2.7 Troubleshooting Forgotten Password Issues (Temporary Solution)
+
+If a user forgot their password and requests for a password change, Admins must verify that the request is valid. Once proven, they may run the following commands:
+
+```bash
+# Move to the script directory
+cd info-hub/scripts/replace-password/
+
+# Give it execution permissions
+chmod +x replace-password.sh
+
+# Run it
+./replace-password.sh <SSI_EMAIL> <NEW_PASSWORD>
+```
 
 ## Appendix: Exhaustive Ecosystem Dependency Manifest
 
