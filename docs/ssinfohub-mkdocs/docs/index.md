@@ -44,7 +44,7 @@ If you are an active maintainer, developer, or administrative lead responsible f
 
 ---
 
-### ❓ Having Troubles?
+### ❓ Having Trouble?
 If you are facing an active system error, file size validation rejection, or authentication lockout, skip directly to the [**Support Hub & FAQs**](faqs.md) to discover pre-emptively addressed solutions to common roadblocks.
 
 !!! info "Document Version Control"

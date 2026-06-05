@@ -750,6 +750,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#27-troubleshooting-forgotten-password-issues-temporary-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.7 Troubleshooting Forgotten Password Issues (Temporary Solution)
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1234,6 +1245,17 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#27-troubleshooting-forgotten-password-issues-temporary-solution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.7 Troubleshooting Forgotten Password Issues (Temporary Solution)
+      
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1353,7 +1375,7 @@
 <h3 id="12-runtime-environments">1.2 Runtime Environments</h3>
 <p>SSI Info Hub relies on Node.js for the Next.js application cluster and Python for compiling the static MkDocs documentation portal.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Provision Node.js v20.x</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span><span class="o">[</span>https://rpm.nodesource.com/setup_20.x<span class="o">](</span>https://rpm.nodesource.com/setup_20.x<span class="o">)</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>bash<span class="w"> </span>-
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>curl<span class="w"> </span>-fsSL<span class="w"> </span>https://rpm.nodesource.com/setup_20.x<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>bash<span class="w"> </span>-
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>nodejs<span class="w"> </span>-y
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
 </span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1"># Provision Python 3 and pip</span>
@@ -1376,7 +1398,7 @@
 <h3 id="14-codebase-integration">1.4 Codebase Integration</h3>
 <p>Instead of bootstrapping a new application, clone the centralized SSI Info Hub Git repository directly into the root directory.</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Clone the repository (Replace with actual internal Git URL)</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>git<span class="w"> </span>clone<span class="w"> </span>https://your-internal-git-server.com/ssi/SSI<span class="w"> </span>Info<span class="w"> </span>Hub.git<span class="w"> </span>/root/ssi-info-hub
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>git<span class="w"> </span>clone<span class="w"> </span>&lt;GIT_HTTPS/SSH_REPO_URL&gt;
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
 </span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># Navigate to the primary application directory</span>
 </span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="nb">cd</span><span class="w"> </span>/root/ssi-info-hub/info-hub
@@ -1528,6 +1550,17 @@ Verify that /etc/nginx/conf.d/info-hub.conf passes the authorization payloads wi
 </span></code></pre></div></p>
 </li>
 </ol>
+<h3 id="27-troubleshooting-forgotten-password-issues-temporary-solution">2.7 Troubleshooting Forgotten Password Issues (Temporary Solution)</h3>
+<p>If a user forgot their password and requests for a password change, Admins must verify that the request is valid. Once proven, they may run the following commands:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1"># Move to the script directory</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="nb">cd</span><span class="w"> </span>info-hub/scripts/replace-password/
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="c1"># Give it execution permissions</span>
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>chmod<span class="w"> </span>+x<span class="w"> </span>replace-password.sh
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="c1"># Run it</span>
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>./replace-password.sh<span class="w"> </span>&lt;SSI_EMAIL&gt;<span class="w"> </span>&lt;NEW_PASSWORD&gt;
+</span></code></pre></div>
 <h2 id="appendix-exhaustive-ecosystem-dependency-manifest">Appendix: Exhaustive Ecosystem Dependency Manifest</h2>
 <p>The following manifest tables document all structural dependencies running inside the SSI Info Hub application layer for system reference.</p>
 <h3 id="1-framework-interface-layer">1. Framework &amp; Interface Layer</h3>
