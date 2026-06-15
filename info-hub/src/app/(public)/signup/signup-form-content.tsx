@@ -49,7 +49,7 @@ export default function SignupFormContent() {
         </div>
 
         <div className="md:col-span-2">
-          <CustomInput name="email" defaultValue={msData.email} label="Email Address" placeholder="juandelacruz@ssiph.com" icon={Mail} type="email" readOnly={!!msData.email} required />
+          <CustomInput name="email" defaultValue={msData.email} label="Email Address" placeholder="juandelacruz@domain.com" icon={Mail} type="email" readOnly={!!msData.email} required />
           {state?.error?.email && <p className="text-red-500 text-[10px] font-bold mt-1 ml-2">{state.error.email}</p>}
         </div>
 

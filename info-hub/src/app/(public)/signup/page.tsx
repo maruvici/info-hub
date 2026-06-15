@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import SignupFormContent from "./signup-form-content";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import Link from "next/link";
+import { BookOpen } from "lucide-react";
 
 export default function SignUpPage() {
   return (
@@ -15,18 +16,8 @@ export default function SignUpPage() {
         
         <div className="text-center space-y-3">
           <Link href="/" className="flex items-center justify-center gap-3 md:gap-4 font-bold text-3xl md:text-5xl text-gradient">
-            <span 
-              className="bg-primary-gradient shrink-0" 
-              style={{
-                height: '1em', 
-                width: '0.5em',
-                WebkitMaskImage: 'url(/ssi-logo.svg)',
-                maskImage: 'url(/ssi-logo.svg)',
-                maskRepeat: 'no-repeat',
-                maskSize: 'contain'
-              }}
-            />
-            <span className="text-gradient">SSI Info Hub</span>
+            <BookOpen />
+            <span className="text-gradient">Info Hub</span>
           </Link>
           <p className="text-sm md:text-base text-muted-foreground font-medium px-4">
             Create your account to start sharing knowledge.

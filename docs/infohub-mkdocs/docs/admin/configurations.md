@@ -1,6 +1,6 @@
 # System Configuration Manual
 
-This document serves as the authoritative architectural blueprint for the **SSI Info Hub** system configuration. It outlines the absolute server paths, environment properties, reverse proxy constraints, process cluster limits, and data streaming parameters required to run the application in a hardened RHEL environment.
+This document serves as the authoritative architectural blueprint for the **Info Hub** system configuration. It outlines the absolute server paths, environment properties, reverse proxy constraints, process cluster limits, and data streaming parameters required to run the application in a hardened RHEL environment.
 
 ---
 
@@ -58,7 +58,7 @@ The Next.js framework ingests 7 mandatory parameters to securely establish datab
 
 ## 3. Storage Architecture & Media Attachment Rules
 
-SSI Info Hub runs a highly secure, buffered physical storage processing engine configured under `/root/ssi-info-hub/info-hub/src/app/actions/attachments.ts`.
+Info Hub runs a highly secure, buffered physical storage processing engine configured under `/root/ssi-info-hub/info-hub/src/app/actions/attachments.ts`.
 
 ### 3.1 Storage Directory Allocation
 All physical binary items, graphics, videos, or documents uploaded by users are saved directly onto the server at `/mnt/internaltool`
@@ -187,7 +187,7 @@ module.exports = {
 
 ## 6. Relational Database Storage Pooling (PostgreSQL)
 
-SSI Info Hub relies on *drizzle-orm* wrapping a high-performance postgres.js client adapter (`src/db/index.ts`).
+Info Hub relies on *drizzle-orm* wrapping a high-performance postgres.js client adapter (`src/db/index.ts`).
 
 ### 6.1 Database Connection Mapping
 

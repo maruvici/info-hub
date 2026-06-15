@@ -1,12 +1,12 @@
 # Testing & Staging Environments Manual
 
-This document outlines the standard operational protocols for deploying, isolating, and validating non-production instances of the **SSI Info Hub**. It ensures that developers and system administrators can simulate system states, seed mock content, and test structural code modifications cleanly without risking data loss, token collisions, or storage leakage on the production system.
+This document outlines the standard operational protocols for deploying, isolating, and validating non-production instances of the **Info Hub**. It ensures that developers and system administrators can simulate system states, seed mock content, and test structural code modifications cleanly without risking data loss, token collisions, or storage leakage on the production system.
 
 ---
 
 ## 1. Environment Isolation Topology
 
-The SSI Info Hub architecture maintains strict runtime isolation across its operational scopes. Administrators must never point a non-production application cluster at a production storage volume or database instance.
+The Info Hub architecture maintains strict runtime isolation across its operational scopes. Administrators must never point a non-production application cluster at a production storage volume or database instance.
 
 | Operational Attribute | Local Development Environment | Staging / Sandbox Environment | Production Environment |
 | :--- | :--- | :--- | :--- |
@@ -41,7 +41,7 @@ To initialize an isolated sandbox or staging instance on the server, create a de
 
 ## 3. Automated Seeding & Database States
 
-The SSI Info Hub features built-in pipeline scripts to clear out target tables and programmatically generate high-fidelity mock records. This enables quick frontend rendering and layout testing.
+The Info Hub features built-in pipeline scripts to clear out target tables and programmatically generate high-fidelity mock records. This enables quick frontend rendering and layout testing.
 
 ### 3.1 The Clean State Pipeline
 Before running an environment integration test or deploying a new relational column schema via Drizzle ORM, clear out the target staging database. Use the exact configuration path pointer flags below to target your non-production profile:
@@ -75,7 +75,7 @@ To test user access controls, group privileges, and sign-on handshakes without d
 
 1. Log into the Entra console and navigate to **App registrations > New registration**.
 
-2. Name the registration explicitly: `SSI Info Hub - Staging Sandbox`.
+2. Name the registration explicitly: `Info Hub - Staging Sandbox`.
 
 3. Under the **Authentication** configuration tab, add a Web Platform component and register the staging-specific callback URI: `https://<STAGING_SERVER_IP>:3005/api/auth/callback/azure-ad`
 

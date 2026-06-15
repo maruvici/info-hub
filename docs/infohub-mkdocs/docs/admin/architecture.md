@@ -1,12 +1,12 @@
 # System Architecture & Schema Relations Manual
 
-This document outlines the system architecture, infrastructure topology, data flow lifecycles, and relational database schema constraints for the **SSI Info Hub**. It serves as a technical blueprint for understanding how data moves from a client interaction down to physical table allocations.
+This document outlines the system architecture, infrastructure topology, data flow lifecycles, and relational database schema constraints for the **Info Hub**. It serves as a technical blueprint for understanding how data moves from a client interaction down to physical table allocations.
 
 ---
 
 ## 1. High-Level System Architecture & Data Flow
 
-The SSI Info Hub operates as a multi-threaded, reverse-proxied Next.js deployment hosted on a Red Hat Enterprise Linux (RHEL) server. 
+The Info Hub operates as a multi-threaded, reverse-proxied Next.js deployment hosted on a Red Hat Enterprise Linux (RHEL) server. 
 
 ### 1.1 Component Topology
 The diagram below illustrates how an inbound user request passes through the server boundary and branches out to memory, storage, and database runtimes:

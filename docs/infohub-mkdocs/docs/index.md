@@ -1,14 +1,14 @@
-# Welcome to the SSI Info Hub Documentation Portal
+# Welcome to the Info Hub Documentation Portal
 
-Welcome to the central documentation and operating manual hub for **SSI Info Hub**—the dedicated internal forum and knowledge-sharing web application for the employees of Strategic Synergy Incorporated (SSI). 
+Welcome to the central documentation and operating manual hub for **Info Hub**—the dedicated internal forum and knowledge-sharing web application for the employees of our organization. 
 
-SSI Info Hub serves as our corporate knowledge base where team members across the organization can collaborate, post technical insights, engage in open discussions, log systemic inquiries, and archive critical operational intelligence.
+Info Hub serves as our corporate knowledge base where team members across the organization can collaborate, post technical insights, engage in open discussions, log systemic inquiries, and archive critical operational intelligence.
 
 ---
 
-## 💡 What is SSI Info Hub?
+## 💡 What is Info Hub?
 
-At its core, SSI Info Hub functions as a modernized, secure, forum-style platform designed specifically to break down information silos between teams. The platform revolves around three primary types of posts:
+At its core, Info Hub functions as a modernized, secure, forum-style platform designed specifically to break down information silos between teams. The platform revolves around three primary types of posts:
 
 * **📰 Articles:** Structured knowledge base entries, documentation pieces, tutorials, and persistent reference guides.
 * **💬 Discussions:** Open-ended collaborative spaces for brainstorming ideas, planning initiatives, and sharing general updates.
@@ -48,6 +48,6 @@ If you are an active maintainer, developer, or administrative lead responsible f
 If you are facing an active system error, file size validation rejection, or authentication lockout, skip directly to the [**Support Hub & FAQs**](faqs.md) to discover pre-emptively addressed solutions to common roadblocks.
 
 !!! info "Document Version Control"
-    * **Application Target:** SSI Info Hub Production Web Application
+    * **Application Target:** Info Hub Production Web Application
     * **Baseline Stack:** Next.js (App Router), TypeScript, Tailwind CSS, Drizzle ORM, PostgreSQL, PM2, Nginx
     * **Documentation Port:** `3002` (Static Servicing Container)

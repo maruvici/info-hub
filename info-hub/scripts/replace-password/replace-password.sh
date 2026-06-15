@@ -13,7 +13,7 @@ NEW_PASSWORD="$2"
 
 if [ -z "$TARGET_EMAIL" ] || [ -z "$NEW_PASSWORD" ]; then
     echo "====================================================================="
-    echo "⚠️  SSI Info Hub - Manual Account Password Overrider"
+    echo "⚠️  Info Hub - Manual Account Password Overrider"
     echo "====================================================================="
     echo "Usage:   ./replace-password.sh <user@ssiph.com> <NewPassword123!>"
     echo "Example: ./replace-password.sh j.doe@ssiph.com Password_ABC_987"

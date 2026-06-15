@@ -1,15 +1,15 @@
 #!/bin/bash
 
 # Configuration
-PROJECT_DIR="/root/ssi-info-hub/info-hub"
-DOCS_DIR="/root/ssi-info-hub/docs/ssinfohub-mkdocs"
+PROJECT_DIR="/root/info-hub/info-hub"
+DOCS_DIR="/root/info-hub/docs/infohub-mkdocs"
 ECOSYSTEM_FILE="ecosystem.config.js"
 DOCS_PORT="3005"  # FIXED: PM2 runs internally on 3005; Nginx serves it publicly on 3002
-DOCS_NAME="ssinfohub-docs"
+DOCS_NAME="infohub-docs"
 IP_ADDRESS="172.1.87.204"
 
 echo "------------------------------------------"
-echo " SSI Info-Hub Deployment Script Started"
+echo " Info-Hub Deployment Script Started"
 echo "------------------------------------------"
 
 cd $PROJECT_DIR || { echo "❌ Error: Could not find project directory"; exit 1; }

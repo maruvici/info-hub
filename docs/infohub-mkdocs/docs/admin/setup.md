@@ -1,6 +1,6 @@
 # Setup and Maintenance Manual
 
-This document serves as the authoritative operational manual for System Administrators and DevOps Engineers managing the **SSI Info Hub** environment. 
+This document serves as the authoritative operational manual for System Administrators and DevOps Engineers managing the **Info Hub** environment. 
 
 It is divided into two primary matrices:
 
@@ -25,7 +25,7 @@ sudo dnf install curl git tar wget coreutils policycoreutils-python-utils -y
 ```
 
 ### 1.2 Runtime Environments
-SSI Info Hub relies on Node.js for the Next.js application cluster and Python for compiling the static MkDocs documentation portal.
+Info Hub relies on Node.js for the Next.js application cluster and Python for compiling the static MkDocs documentation portal.
 
 ```bash
 # Provision Node.js v20.x
@@ -54,7 +54,7 @@ sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE <DB_NAME> TO <DB_USER
 ```
 
 ### 1.4 Codebase Integration
-Instead of bootstrapping a new application, clone the centralized SSI Info Hub Git repository directly into the root directory.
+Instead of bootstrapping a new application, clone the centralized Info Hub Git repository directly into the root directory.
 
 ```bash
 # Clone the repository (Replace with actual internal Git URL)
@@ -65,7 +65,7 @@ cd /root/ssi-info-hub/info-hub
 ```
 
 !!! note
-    The repository contains two operational directories: `/info-hub` (Next.js Application) and `/docs/SSI Info Hub-mkdocs` (MkDocs Portal).
+    The repository contains two operational directories: `/info-hub` (Next.js Application) and `/docs/Info Hub-mkdocs` (MkDocs Portal).
 
 ### 1.5 Environment Configuration
 The .env.local file is explicitly ignored by Git for security purposes. You must create it manually and inject the 7 required authentication and database variables.
@@ -75,7 +75,7 @@ nano /root/ssi-info-hub/info-hub/.env.local
 ```
 
 !!! info
-    Visit [Microsoft Entra ID](https://entra.microsoft.com/) and go to ***Home > Enterprise Apps > SSI Info Hub*** for the API keys.
+    Visit [Microsoft Entra ID](https://entra.microsoft.com/) and go to ***Home > Enterprise Apps > Info Hub*** for the API keys.
 
 ??? example
     Below is a sample template for the environment variables file. Make sure to replace the placeholder values enclosed with <>
@@ -153,7 +153,7 @@ The Next.js cluster and the MkDocs server are managed independently via PM2.
 
 - **View Active Processes & Metrics**: `pm2 list`
 - **Zero-Downtime Reload (Next.js)**: `pm2 reload ecosystem.config.js`
-- **Restart Documentation Server**: `pm2 restart SSI Info Hub-docs`
+- **Restart Documentation Server**: `pm2 restart Info Hub-docs`
 - **Save State Across Reboots**: `pm2 save`
 
 ### 2.2 Application Updates
@@ -254,10 +254,10 @@ chmod +x replace-password.sh
 
 ## Appendix: Exhaustive Ecosystem Dependency Manifest
 
-The following manifest tables document all structural dependencies running inside the SSI Info Hub application layer for system reference.
+The following manifest tables document all structural dependencies running inside the Info Hub application layer for system reference.
 
 ### 1. Framework & Interface Layer
-| Package | Version Range | Operational Scope within SSI Info Hub |
+| Package | Version Range | Operational Scope within Info Hub |
 | :--- | :--- | :--- |
 | `lucide-react` | Latest | Renders the interface icon sets (dashboard navigation metrics, attachments, profile elements). |
 | `clsx` | Latest | Manages conditional style definitions and clean CSS string formatting. |
@@ -266,7 +266,7 @@ The following manifest tables document all structural dependencies running insid
 | `framer-motion` | Latest | Powers responsive layout transitions and animation actions across elements. |
 
 ### 2. Database & Data Validation Core
-| Package | Version Range | Operational Scope within SSI Info Hub |
+| Package | Version Range | Operational Scope within Info Hub |
 | :--- | :--- | :--- |
 | `postgres` | Latest | High-performance, plain-text client used to run raw connection streams to the database server. |
 | `drizzle-orm` | Latest | Type-safe query engine linking tables to TypeScript structures without complex resource overhead. |
@@ -276,14 +276,14 @@ The following manifest tables document all structural dependencies running insid
 | `uuid` | Latest | Generates unique 128-bit object hashes used to securely separate server files and user scopes. |
 
 ### 3. Authentication & Access Management
-| Package | Version Range | Operational Scope within SSI Info Hub |
+| Package | Version Range | Operational Scope within Info Hub |
 | :--- | :--- | :--- |
 | `next-auth` | Beta | Core cryptographic security layer running token-based session handling. |
 | `@auth/drizzle-adapter` | Latest | Intercepts session states and automatically maps successful profiles to your PostgreSQL tables. |
 | `bcrypt` | Latest | Fallback mechanism that salts and hashes local access keys. |
 
 ### 4. Rich-Text Engine & Document Export Suite
-| Package | Version Range | Operational Scope within SSI Info Hub |
+| Package | Version Range | Operational Scope within Info Hub |
 | :--- | :--- | :--- |
 | `@tiptap/react` | Latest | Headless editor environment powering the application's WYSIWYG text inputs. |
 | `@tiptap/starter-kit` | Latest | Group package enabling essential editor controls like bolding, headers, lists, and quote blocks. |
@@ -295,6 +295,6 @@ The following manifest tables document all structural dependencies running insid
 | `jszip` | Latest | Compresses and bundles large, multi-file document downloads into a single archive file. |
 
 ### 5. Isolated Staging & Data Engineering
-| Package | Version Range | Operational Scope within SSI Info Hub |
+| Package | Version Range | Operational Scope within Info Hub |
 | :--- | :--- | :--- |
 | `@faker-js/faker` | DevDependency | Programmatically structures realistic user data records to populate schemas during staging. |

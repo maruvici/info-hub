@@ -1121,10 +1121,10 @@
 
 
 <h1 id="system-architecture-schema-relations-manual">System Architecture &amp; Schema Relations Manual</h1>
-<p>This document outlines the system architecture, infrastructure topology, data flow lifecycles, and relational database schema constraints for the <strong>SSI Info Hub</strong>. It serves as a technical blueprint for understanding how data moves from a client interaction down to physical table allocations.</p>
+<p>This document outlines the system architecture, infrastructure topology, data flow lifecycles, and relational database schema constraints for the <strong>Info Hub</strong>. It serves as a technical blueprint for understanding how data moves from a client interaction down to physical table allocations.</p>
 <hr />
 <h2 id="1-high-level-system-architecture-data-flow">1. High-Level System Architecture &amp; Data Flow</h2>
-<p>The SSI Info Hub operates as a multi-threaded, reverse-proxied Next.js deployment hosted on a Red Hat Enterprise Linux (RHEL) server. </p>
+<p>The Info Hub operates as a multi-threaded, reverse-proxied Next.js deployment hosted on a Red Hat Enterprise Linux (RHEL) server. </p>
 <h3 id="11-component-topology">1.1 Component Topology</h3>
 <p>The diagram below illustrates how an inbound user request passes through the server boundary and branches out to memory, storage, and database runtimes:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>                  [ External Enterprise User Browser ]

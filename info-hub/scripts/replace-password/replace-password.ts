@@ -12,10 +12,10 @@ async function main() {
     process.exit(1);
   }
 
-  if (!email.endsWith("@ssiph.com")) {
-    console.error("❌ Error: Targeted email must belong to the @ssiph.com domain.");
-    process.exit(1);
-  }
+  // if (!email.endsWith("@ssiph.com")) {
+  //   console.error("❌ Error: Targeted email must belong to the @ssiph.com domain.");
+  //   process.exit(1);
+  // }
 
   console.log(`⏳ Locating user profile for: ${email}...`);
 

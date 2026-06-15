@@ -1,4 +1,4 @@
-import { User } from "lucide-react";
+import { User, BookOpen } from "lucide-react";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import Link from "next/link";
 import { auth } from "@/auth";
@@ -30,16 +30,8 @@ export default async function PlatformLayout({ children }: { children: React.Rea
         <div className="container mx-auto px-2 sm:px-4 h-16 flex items-center gap-2 md:gap-4">
           {/* Logo - Text hidden on smallest screens to save space */}
           <Link href="/dashboard" className="flex items-center gap-2 font-bold text-lg md:text-xl text-gradient shrink-0">
-            <span 
-              className="w-4 h-7 md:h-8 bg-primary-gradient shrink-0" 
-              style={{
-                WebkitMaskImage: 'url(/ssi-logo.svg)',
-                maskImage: 'url(/ssi-logo.svg)',
-                maskRepeat: 'no-repeat',
-                maskSize: 'contain'
-              }}
-            />
-            <span className="text-gradient after:content-[var(--content)] [--content:'SSI Info Hub'] md:[--content:'SSI_Info_Hub']"></span>
+            <BookOpen />
+            <span className="text-gradient after:content-[var(--content)] [--content:'Info Hub'] md:[--content:'Info_Hub']"></span>
           </Link>
 
           {/* Search - Takes up all available middle space */}

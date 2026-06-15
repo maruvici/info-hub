@@ -67,9 +67,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (account?.provider === "microsoft-entra-id") {
         const email = (profile?.email || user.email) as string;
 
-        if (!email || !email.endsWith("@ssiph.com")) {
-          return "/login?error=InvalidDomain";
-        }
+        // if (!email || !email.endsWith("@ssiph.com")) {
+        //   return "/login?error=InvalidDomain";
+        // }
 
         const existingUser = await db.query.users.findFirst({
           where: eq(users.email, email)

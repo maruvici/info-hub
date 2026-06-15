@@ -1,6 +1,6 @@
 # Feature Guide
 
-Welcome to your central home for team knowledge, corporate documentation, and announcements! The **SSI Info Hub** is designed to be a simple, collaborative space where you can quickly find the information you need, share your insights, and connect with your colleagues. 
+Welcome to your central home for team knowledge, corporate documentation, and announcements! The **Info Hub** is designed to be a simple, collaborative space where you can quickly find the information you need, share your insights, and connect with your colleagues. 
 
 This guide will walk you through everything you need to know to get comfortable using the platform. **No technical experience required!**
 
@@ -10,8 +10,8 @@ This guide will walk you through everything you need to know to get comfortable 
 
 Accessing the platform is quick and secure using your corporate Microsoft account.
 
-* **One-Click Sign-In:** When you navigate to the SSI Info Hub, simply log in using your standard `@ssiph.com` email address. 
-* **Your Hub Password:** While you use your Microsoft email to log in, your account on the Hub uses a **local password**. When you first create or register your account, you will be prompted to set this password. It is unique to the SSI Info Hub and can be different from your main Microsoft password!
+* **One-Click Sign-In:** When you navigate to the Info Hub, simply log in using your standard `@ssiph.com` email address. 
+* **Your Hub Password:** While you use your Microsoft email to log in, your account on the Hub uses a **local password**. When you first create or register your account, you will be prompted to set this password. It is unique to the Info Hub and can be different from your main Microsoft password!
 
 ---
 
@@ -41,7 +41,7 @@ Sharing your knowledge with the team takes just a few clicks.
 
 ## 4. Community Interactions
 
-The SSI Info Hub is a collaborative space. We encourage you to interact with the content your colleagues share!
+The Info Hub is a collaborative space. We encourage you to interact with the content your colleagues share!
 
 * **Views & Likes:** At the bottom of every article, you will see how many times it has been viewed. If you found the post helpful, click the **Heart / Like** button to show your support!
 * **Comments:** Have a question or an insight to add? Scroll down to the **Discussion** section and use the comment box to join the conversation. 

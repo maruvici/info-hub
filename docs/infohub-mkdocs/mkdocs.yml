@@ -1,6 +1,6 @@
-site_name: SSI InfoHub Portal Manual & Documentation
+site_name: InfoHub Portal Manual & Documentation
 site_url: http://172.1.87.204:3002
-site_description: Comprehensive deployment, user, and engineering documentation for SSI InfoHub.
+site_description: Comprehensive deployment, user, and engineering documentation for InfoHub.
 
 theme:
   name: material

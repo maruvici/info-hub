@@ -1087,10 +1087,10 @@
 
 
 <h1 id="testing-staging-environments-manual">Testing &amp; Staging Environments Manual</h1>
-<p>This document outlines the standard operational protocols for deploying, isolating, and validating non-production instances of the <strong>SSI Info Hub</strong>. It ensures that developers and system administrators can simulate system states, seed mock content, and test structural code modifications cleanly without risking data loss, token collisions, or storage leakage on the production system.</p>
+<p>This document outlines the standard operational protocols for deploying, isolating, and validating non-production instances of the <strong>Info Hub</strong>. It ensures that developers and system administrators can simulate system states, seed mock content, and test structural code modifications cleanly without risking data loss, token collisions, or storage leakage on the production system.</p>
 <hr />
 <h2 id="1-environment-isolation-topology">1. Environment Isolation Topology</h2>
-<p>The SSI Info Hub architecture maintains strict runtime isolation across its operational scopes. Administrators must never point a non-production application cluster at a production storage volume or database instance.</p>
+<p>The Info Hub architecture maintains strict runtime isolation across its operational scopes. Administrators must never point a non-production application cluster at a production storage volume or database instance.</p>
 <table>
 <thead>
 <tr>
@@ -1157,7 +1157,7 @@ the one used in production.</p>
 </details>
 <hr />
 <h2 id="3-automated-seeding-database-states">3. Automated Seeding &amp; Database States</h2>
-<p>The SSI Info Hub features built-in pipeline scripts to clear out target tables and programmatically generate high-fidelity mock records. This enables quick frontend rendering and layout testing.</p>
+<p>The Info Hub features built-in pipeline scripts to clear out target tables and programmatically generate high-fidelity mock records. This enables quick frontend rendering and layout testing.</p>
 <h3 id="31-the-clean-state-pipeline">3.1 The Clean State Pipeline</h3>
 <p>Before running an environment integration test or deploying a new relational column schema via Drizzle ORM, clear out the target staging database. Use the exact configuration path pointer flags below to target your non-production profile:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># 1. Purge all existing tables, rows, relationships, and metadata trackers</span>
@@ -1186,7 +1186,7 @@ the one used in production.</p>
 <p>Log into the Entra console and navigate to <strong>App registrations &gt; New registration</strong>.</p>
 </li>
 <li>
-<p>Name the registration explicitly: <code>SSI Info Hub - Staging Sandbox</code>.</p>
+<p>Name the registration explicitly: <code>Info Hub - Staging Sandbox</code>.</p>
 </li>
 <li>
 <p>Under the <strong>Authentication</strong> configuration tab, add a Web Platform component and register the staging-specific callback URI: <code>https://&lt;STAGING_SERVER_IP&gt;:3005/api/auth/callback/azure-ad</code></p>

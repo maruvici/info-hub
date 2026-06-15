@@ -15,9 +15,9 @@ export async function GET(
   const session = await auth();
   const userEmail = session?.user?.email;
 
-  if (!userEmail || !userEmail.endsWith("@ssiph.com")) {
-    return new NextResponse("Unauthorized: Access restricted to SSI domain.", { status: 403 });
-  }
+  // if (!userEmail || !userEmail.endsWith("@ssiph.com")) {
+  //   return new NextResponse("Unauthorized: Access restricted to SSI domain.", { status: 403 });
+  // }
 
   // 2. Unpack Params (Next.js 16 requirement)
   const { filename } = await params;

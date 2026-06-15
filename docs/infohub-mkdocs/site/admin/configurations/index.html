@@ -1155,7 +1155,7 @@
 
 
 <h1 id="system-configuration-manual">System Configuration Manual</h1>
-<p>This document serves as the authoritative architectural blueprint for the <strong>SSI Info Hub</strong> system configuration. It outlines the absolute server paths, environment properties, reverse proxy constraints, process cluster limits, and data streaming parameters required to run the application in a hardened RHEL environment.</p>
+<p>This document serves as the authoritative architectural blueprint for the <strong>Info Hub</strong> system configuration. It outlines the absolute server paths, environment properties, reverse proxy constraints, process cluster limits, and data streaming parameters required to run the application in a hardened RHEL environment.</p>
 <hr />
 <h2 id="1-absolute-system-pathing-matrix">1. Absolute System Pathing Matrix</h2>
 <p>To simplify audits and cross-service diagnostics, utilize this master directory matrix to locate active configuration boundaries on the server:</p>
@@ -1255,7 +1255,7 @@
 </ul>
 <hr />
 <h2 id="3-storage-architecture-media-attachment-rules">3. Storage Architecture &amp; Media Attachment Rules</h2>
-<p>SSI Info Hub runs a highly secure, buffered physical storage processing engine configured under <code>/root/ssi-info-hub/info-hub/src/app/actions/attachments.ts</code>.</p>
+<p>Info Hub runs a highly secure, buffered physical storage processing engine configured under <code>/root/ssi-info-hub/info-hub/src/app/actions/attachments.ts</code>.</p>
 <h3 id="31-storage-directory-allocation">3.1 Storage Directory Allocation</h3>
 <p>All physical binary items, graphics, videos, or documents uploaded by users are saved directly onto the server at <code>/mnt/internaltool</code></p>
 <details class="note">
@@ -1376,7 +1376,7 @@
 </ul>
 <hr />
 <h2 id="6-relational-database-storage-pooling-postgresql">6. Relational Database Storage Pooling (PostgreSQL)</h2>
-<p>SSI Info Hub relies on <em>drizzle-orm</em> wrapping a high-performance postgres.js client adapter (<code>src/db/index.ts</code>).</p>
+<p>Info Hub relies on <em>drizzle-orm</em> wrapping a high-performance postgres.js client adapter (<code>src/db/index.ts</code>).</p>
 <h3 id="61-database-connection-mapping">6.1 Database Connection Mapping</h3>
 <div class="language-typescript highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">drizzle</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;drizzle-orm/postgres-js&quot;</span><span class="p">;</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="k">import</span><span class="w"> </span><span class="nx">postgres</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;postgres&quot;</span><span class="p">;</span>

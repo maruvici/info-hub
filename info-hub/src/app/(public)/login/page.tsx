@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
-import { Mail, Lock, ArrowRight, CheckCircle2 } from "lucide-react";
+import { BookOpen, Mail, Lock, ArrowRight, CheckCircle2 } from "lucide-react";
 import { useActionState, Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { loginUser, loginWithMicrosoft } from "@/app/actions/auth";
@@ -46,16 +46,8 @@ export default function LoginPage() {
         {/* Branding Section */}
         <div className="text-center space-y-3">
           <Link href="/" className="inline-flex items-center gap-3 font-bold text-3xl md:text-4xl text-gradient group">
-            <span 
-              className="w-5 h-10 bg-primary-gradient transition-transform group-hover:scale-110" 
-              style={{
-                WebkitMaskImage: 'url(/ssi-logo.svg)',
-                maskImage: 'url(/ssi-logo.svg)',
-                maskRepeat: 'no-repeat',
-                maskSize: 'contain'
-              }}
-            />
-            <span className="text-gradient">SSI Info Hub</span>
+            <BookOpen />
+            <span className="text-gradient">Info Hub</span>
           </Link>
           <p className="text-muted-foreground font-medium text-sm md:text-base">
             Welcome back! Login to access the knowledge base.
@@ -89,7 +81,7 @@ export default function LoginPage() {
                     name="email"
                     type="email" 
                     required
-                    placeholder="name@ssiph.com"
+                    placeholder="name@domain.com"
                     className="w-full pl-12 pr-4 py-4 bg-background/50 rounded-2xl border-none outline-none focus:ring-2 focus:ring-primary/20 transition-all font-bold text-sm placeholder:opacity-30" 
                   />
                 </div>

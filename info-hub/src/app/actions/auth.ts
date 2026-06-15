@@ -46,11 +46,11 @@ export async function signUpUser(prevState: ActionState, formData: FormData): Pr
   }
 
   // 5. Strict Domain Validation
-  if (!email.toLowerCase().endsWith("@ssiph.com")) {
-    return {
-      error: { message: "Access restricted. You must use an @ssiph.com email address." }
-    };
-  }
+  // if (!email.toLowerCase().endsWith("@ssiph.com")) {
+  //   return {
+  //     error: { message: "Access restricted. You must use an @ssiph.com email address." }
+  //   };
+  // }
 
   try {
     const hashedPassword = await hash(password, 10);

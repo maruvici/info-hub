@@ -41,16 +41,8 @@ export default function LandingPage() {
       <header className="sticky top-0 z-50 w-full bg-card/70 backdrop-blur-xl border-b border-primary/5 px-2 sm:px-4">
         <div className="container mx-auto h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 sm:gap-3 font-bold text-lg sm:text-xl text-gradient truncate">
-            <span 
-              className="w-4 h-6 sm:h-8 bg-primary-gradient shrink-0" 
-              style={{
-                WebkitMaskImage: 'url(/ssi-logo.svg)',
-                maskImage: 'url(/ssi-logo.svg)',
-                maskRepeat: 'no-repeat',
-                maskSize: 'contain'
-              }}
-            />
-            <span className="text-gradient truncate">SSI Info Hub</span>
+            <BookOpen/>
+            <span className="text-gradient truncate">Info Hub</span>
           </Link>
           <div className="flex items-center gap-2 sm:gap-4">
             <ThemeToggle />
@@ -104,7 +96,7 @@ export default function LandingPage() {
           >
             {/* Hero Text */}
             <h1 className="text-2xl sm:text-4xl md:text-6xl font-extrabold tracking-tight leading-tight">
-              StrategicSynergy's Central <br className="hidden sm:block" />
+              Our Organization's Central <br className="hidden sm:block" />
               <span className="bg-primary-gradient bg-clip-text text-transparent">
                 Knowledge Engine
               </span>
