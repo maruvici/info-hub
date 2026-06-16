@@ -8,7 +8,7 @@ export function LinkFAB() {
 
   const links = {
     bugReport: "https://forms.cloud.microsoft/r/dmEmaxjTtY",
-    docs: "https://172.1.87.204:3002",
+    docs: process.env.NEXT_PUBLIC_DOCS_URL ?? "http://localhost:3002",
   };
 
   return (
