@@ -1,6 +1,6 @@
 # Info-Hub — Internal Knowledge Base Web Application
 
-#### Video Demo: `[INSERT VIDEO URL HERE]`
+#### Video Demo: https://youtu.be/is0Va6qO7Ik
 
 ---
 

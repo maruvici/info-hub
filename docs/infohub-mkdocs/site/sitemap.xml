@@ -2,30 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>http://172.1.87.204:3002/</loc>
-         <lastmod>2026-06-05</lastmod>
+         <lastmod>2026-06-16</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://172.1.87.204:3002/faqs/</loc>
-         <lastmod>2026-06-05</lastmod>
+         <lastmod>2026-06-16</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://172.1.87.204:3002/admin/architecture/</loc>
-         <lastmod>2026-06-05</lastmod>
+         <lastmod>2026-06-16</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://172.1.87.204:3002/admin/configurations/</loc>
-         <lastmod>2026-06-05</lastmod>
+         <lastmod>2026-06-16</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://172.1.87.204:3002/admin/setup/</loc>
-         <lastmod>2026-06-05</lastmod>
+         <lastmod>2026-06-16</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://172.1.87.204:3002/admin/testing-environments/</loc>
-         <lastmod>2026-06-05</lastmod>
+         <lastmod>2026-06-16</lastmod>
+         <changefreq>daily</changefreq>
     </url>
     <url>
          <loc>http://172.1.87.204:3002/user_manual/feature-guide/</loc>
-         <lastmod>2026-06-05</lastmod>
+         <lastmod>2026-06-16</lastmod>
+         <changefreq>daily</changefreq>
     </url>
 </urlset>

@@ -70,8 +70,8 @@ cd /root/ssi-info-hub/info-hub
 ### 1.5 Environment Configuration
 The .env.local file is explicitly ignored by Git for security purposes. You must create it manually and inject the 7 required authentication and database variables.
 ```bash
-touch /root/ssi-info-hub/info-hub/.env.local
-nano /root/ssi-info-hub/info-hub/.env.local
+touch /root/info-hub/info-hub/.env.local
+nano /root/info-hub/info-hub/.env.local
 ```
 
 !!! info
@@ -84,6 +84,7 @@ nano /root/ssi-info-hub/info-hub/.env.local
     DATABASE_URL="postgresql://<DB_USER>:<DB_PASSWORD>@localhost:5432/<DB_NAME>"  
     AUTH_SECRET="<32BIT_STRING>" # Generate via: npx auth secret  
     NEXTAUTH_URL="https://<IP_ADDR>:<PORT>" # Port is set to 3000 by default  
+    NEXT_PUBLIC_DOCS_URL="http://<IP_ADDR>:<PORT>"  # Port is set to 3002 by default  
     AUTH_MICROSOFT_ENTRA_ID_ID="<ENTRA_CLIENT_ID>"  
     AUTH_MICROSOFT_ENTRA_ID_TENANT_ID="<ENTRA_TENANT_ID>"  
     AUTH_MICROSOFT_ENTRA_ID_SECRET="<ENTRA_CLIENT_SECRET>"  
